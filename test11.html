@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tool & Tech Store</title>
+    <style>
+        :root {
+            --primary: #2563eb;
+            --secondary: #64748b;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #1e293b;
+            --accent: #f59e0b;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            background-color: var(--bg);
+            color: var(--text);
+        }
+
+        /* --- Top Navigation & Controls --- */
+        .top-nav {
+            background-color: white;
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .total-price-box {
+            background: var(--text);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            min-width: 150px;
+            text-align: center;
+        }
+
+        .controls-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            align-items: center;
+            flex-grow: 1;
+            justify-content: flex-end;
+        }
+
+        .filter-group {
+            display: flex;
+            gap: 5px;
+            flex-wrap: wrap;
+        }
+
+        button.filter-btn {
+            padding: 8px 16px;
+            border: 1px solid #e2e8f0;
+            background: white;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9rem;
+            transition: all 0.2s;
+            color: var(--secondary);
+        }
+
+        button.filter-btn:hover {
+            background: #f1f5f9;
+            border-color: var(--secondary);
+        }
+
+        button.filter-btn.active {
+            background: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+
+        select.sort-select {
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: 1px solid #e2e8f0;
+            background-color: white;
+            cursor: pointer;
+            font-size: 0.9rem;
+            outline: none;
+        }
+
+        /* --- Product Grid --- */
+        .container {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .card-image {
+            height: 150px;
+            background-color: #cbd5e1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #64748b;
+            font-size: 3rem;
+        }
+
+        .card-body {
+            padding: 1.2rem;
+            display: flex;
+            flex-direction: column;
+            flex-grow: 1;
+        }
+
+        .card-category {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .card-title {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 0 0 0.5rem 0;
+            color: var(--text);
+        }
+
+        .badges {
+            display: flex;
+            gap: 5px;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .badge {
+            font-size: 0.7rem;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: 600;
+        }
+
+        .badge-essential { background: #fee2e2; color: #991b1b; }
+        .badge-source { background: #e0f2fe; color: #075985; }
+
+        .card-footer {
+            margin-top: auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid #f1f5f9;
+        }
+
+        .price {
+            font-size: 1.25rem;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .add-btn {
+            background: var(--text);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+        
+        .add-btn:hover { background: #334155; }
+
+    </style>
+</head>
+<body>
+
+    <nav class="top-nav">
+        <div class="total-price-box">
+            Total: $<span id="total-price">0.00</span>
+        </div>
+
+        <div class="controls-container">
+            <div class="filter-group">
+                <button class="filter-btn active" onclick="filterProducts('all')">All</button>
+                <button class="filter-btn" onclick="filterProducts('Learning')">Learning Tools</button>
+                <button class="filter-btn" onclick="filterProducts('Repair')">Repair Tools</button>
+                <button class="filter-btn" onclick="filterProducts('Productivity')">Productivity</button>
+                <button class="filter-btn" onclick="filterProducts('AliExpress')">AliExpress</button>
+                <button class="filter-btn" onclick="filterProducts('Jumia')">Jumia</button>
+                <button class="filter-btn" onclick="filterProducts('essential')">Essentials</button>
+            </div>
+
+            <div style="border-left: 1px solid #cbd5e1; height: 30px; margin: 0 10px;"></div>
+
+            <select class="sort-select" id="sort-select" onchange="sortProducts()">
+                <option value="default">Sort By</option>
+                <option value="price-asc">Price: Low to High</option>
+                <option value="price-desc">Price: High to Low</option>
+                <option value="essential">Most Essential</option>
+            </select>
+        </div>
+    </nav>
+
+    <div class="container">
+        <h3 style="margin-bottom: 20px; color: var(--secondary);">Showing <span id="count">50</span> products</h3>
+        <div class="product-grid" id="product-grid">
+            </div>
+    </div>
+
+    <script>
+        // --- 1. Data Generation ---
+        const categories = ['Learning', 'Repair', 'Productivity'];
+        const sources = ['AliExpress', 'Jumia'];
+        
+        // Helper to generate random number
+        const randomInt = (min, max) => Math.floor(Math.random() * (max - min + 1) + min);
+
+        // Product names database
+        const productNames = [
+            "Digital Multimeter", "Soldering Iron Kit", "Python Coding Book", "Ergonomic Mouse", "Mechanical Keyboard",
+            "Precision Screwdrivers", "Noise Cancelling Headphones", "Webcam 1080p", "Desk Lamp LED", "Notebook Set",
+            "Arduino Starter Kit", "Raspberry Pi 4", "Laptop Stand", "Cable Organizer", "thermal Paste",
+            "Anti-Static Mat", "Magnifying Glass", "Scientific Calculator", "Planner 2024", "Whiteboard Markers",
+            "USB-C Hub", "External SSD 1TB", "Wireless Charger", "Monitor Arm", "Blue Light Glasses",
+            "Wire Strippers", "Heat Gun", "Glue Gun", "Online Course Voucher", "Kindle E-reader",
+            "Stylus Pen", "Tablet Stand", "Microscope USB", "3D Printer Filament", "Tool Box Organizer",
+            "Pliers Set", "Wrench Set", "Focus Timer", "Post-it Notes Pack", "Desk Mat",
+            "Ethernet Cable", "Wi-Fi Extender", "Bluetooth Adapter", "Screen Cleaning Kit", "Air Duster",
+            "Flash Drive 64GB", "Power Bank 20000mAh", "Label Printer", "Drawing Tablet", "Projector Mini"
+        ];
+
+        // Generate 50 Products
+        let products = productNames.map((name, index) => {
+            const category = categories[randomInt(0, 2)];
+            const source = sources[randomInt(0, 1)];
+            const isEssential = Math.random() < 0.3; // 30% chance to be essential
+            const price = randomInt(5, 150) + 0.99;
+
+            return {
+                id: index + 1,
+                name: name,
+                category: category,
+                source: source,
+                price: price,
+                isEssential: isEssential,
+                image: "📦" // Simple emoji placeholder
+            };
+        });
+
+        // --- 2. State Management ---
+        let currentFilter = 'all';
+        let currentSort = 'default';
+
+        // --- 3. Render Function ---
+        const grid = document.getElementById('product-grid');
+        const totalPriceEl = document.getElementById('total-price');
+        const countEl = document.getElementById('count');
+
+        function renderProducts(list) {
+            grid.innerHTML = '';
+            let total = 0;
+
+            list.forEach(product => {
+                total += product.price;
+
+                const card = document.createElement('div');
+                card.className = 'card';
+                card.innerHTML = `
+                    <div class="card-image">${product.image}</div>
+                    <div class="card-body">
+                        <div class="card-category">${product.category}</div>
+                        <div class="card-title">${product.name}</div>
+                        <div class="badges">
+                            ${product.isEssential ? '<span class="badge badge-essential">Essential</span>' : ''}
+                            <span class="badge badge-source">From ${product.source}</span>
+                        </div>
+                        <div class="card-footer">
+                            <div class="price">$${product.price.toFixed(2)}</div>
+                            <button class="add-btn">Add to Cart</button>
+                        </div>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+
+            // Update Total Price at top
+            totalPriceEl.textContent = total.toFixed(2);
+            countEl.textContent = list.length;
+        }
+
+        // --- 4. Filtering Logic ---
+        function filterProducts(criteria) {
+            currentFilter = criteria;
+
+            // Update active button styling
+            document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+
+            let filteredList = products;
+
+            if (criteria === 'all') {
+                filteredList = products;
+            } else if (criteria === 'essential') {
+                filteredList = products.filter(p => p.isEssential);
+            } else if (criteria === 'AliExpress' || criteria === 'Jumia') {
+                filteredList = products.filter(p => p.source === criteria);
+            } else {
+                // Filter by Category (Learning, Repair, Productivity)
+                filteredList = products.filter(p => p.category === criteria);
+            }
+
+            applySortAndRender(filteredList);
+        }
+
+        // --- 5. Sorting Logic ---
+        function sortProducts() {
+            const sortValue = document.getElementById('sort-select').value;
+            currentSort = sortValue;
+            
+            // We need to re-apply the filter first to get the current list
+            // (In a real app, we'd keep 'currentList' in state)
+            const activeBtn = document.querySelector('.filter-btn.active');
+            // Re-trigger the filter logic logic but manually
+            let criteria = 'all';
+            if (activeBtn) {
+                // Determine criteria based on button text or onclick handler
+                // For simplicity, let's grab the onclick attribute string to parse criteria
+                const onClickStr = activeBtn.getAttribute('onclick');
+                criteria = onClickStr.split("'")[1];
+            }
+            
+            // Re-calculate filtered list
+            let filteredList = products;
+            if (criteria !== 'all') {
+                if (criteria === 'essential') {
+                    filteredList = products.filter(p => p.isEssential);
+                } else if (criteria === 'AliExpress' || criteria === 'Jumia') {
+                    filteredList = products.filter(p => p.source === criteria);
+                } else {
+                    filteredList = products.filter(p => p.category === criteria);
+                }
+            }
+
+            applySortAndRender(filteredList);
+        }
+
+        function applySortAndRender(list) {
+            // Create a copy to avoid mutating original
+            let sortedList = [...list];
+
+            if (currentSort === 'price-asc') {
+                sortedList.sort((a, b) => a.price - b.price);
+            } else if (currentSort === 'price-desc') {
+                sortedList.sort((a, b) => b.price - a.price);
+            } else if (currentSort === 'essential') {
+                // Sort Essentials to the top
+                sortedList.sort((a, b) => (a.isEssential === b.isEssential) ? 0 : a.isEssential ? -1 : 1);
+            }
+
+            renderProducts(sortedList);
+        }
+
+        // Initial Render
+        renderProducts(products);
+
+    </script>
+</body>
+</html>

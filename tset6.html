@@ -1,0 +1,768 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cure's Inventory Prospects 2025 - Eccentric Edition</title>
+    <style>
+        /* ----------------------------------------------------------------- */
+        /* 1. NEW ECCENTRIC & ELEGANT BASE STYLES */
+        /* ----------------------------------------------------------------- */
+        :root {
+            /* NEW ECCENTRIC COLOR PALETTE */
+            --color-primary: #5A189A;   /* Deep Violet/Majesty */
+            --color-gold: #FFC300;      /* Gold Accent */
+            --color-teal: #00BFA5;      /* Secondary Teal Accent */
+            --color-cosmos: #1A1A2E;    /* Deep Night Blue Background */
+            --color-surface: #F0F4F8;   /* Light Card Surface */
+            --color-text-light: #F0F4F8;
+            --color-text-dark: #1A1A2E;
+            --border-color: #eee;
+            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            --transition-speed: 0.3s;
+        }
+        
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif; /* Elegant Font Choice */
+            color: var(--color-text-dark);
+            background-color: var(--color-surface);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3, .detail-price strong {
+            font-weight: 600;
+            margin-top: 0;
+            color: var(--color-text-dark);
+        }
+
+        a {
+            color: var(--color-teal);
+            text-decoration: none;
+            transition: color var(--transition-speed);
+        }
+        a:hover {
+            color: var(--color-gold);
+        }
+
+        /* ----------------------------------------------------------------- */
+        /* 2. NAVIGATION (Retained Minimalist Structure, Updated Colors) */
+        /* ----------------------------------------------------------------- */
+        .nav-section {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            background-color: var(--color-primary); /* Deep Violet Nav */
+            box-shadow: var(--card-shadow);
+        }
+        .nav-container {
+            width: clamp(4rem, 90%, 60rem);
+            height: 4rem;
+        }
+        .sub-nav a, .drop-down-btn {
+            color: var(--color-text-light);
+            transition: background-color 0.2s, color 0.2s;
+        }
+        .sub-nav a:hover, .drop-down-btn:hover {
+            background-color: #4B107E; /* Slightly darker violet */
+            color: var(--color-gold);
+        }
+        .pros-drop-down:hover {
+            height: 16rem !important; 
+        }
+        .pros-cat-drop {
+            background-color: var(--color-primary);
+            border: 1px solid var(--color-text-light);
+            border-top: none;
+        }
+        .pros-cat-drop a {
+             color: var(--color-text-light);
+             padding: 10px 15px;
+        }
+        .pros-cat-drop a:hover {
+            background-color: #4B107E;
+        }
+
+
+        /* ----------------------------------------------------------------- */
+        /* 3. PRODUCT LISTING & DETAIL (Retained Functional Structure) */
+        /* ----------------------------------------------------------------- */
+        .tool-bag-container{
+            background-color: var(--color-surface);
+            padding: 40px 0;
+        }
+        .tools-group {
+            width: clamp(4rem, 90%, 60rem);
+            margin: 0 auto;
+        }
+        .tool-bag-brief {
+            background-color: var(--color-surface);
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+        }
+        .tool-bag-brief-price p {
+            color: var(--color-primary);
+        }
+        
+        .tool-bag-grid {
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 20px;
+        }
+        
+        .tool-card {
+            background-color: white;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        }
+        .tool-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+            border-color: var(--color-primary);
+        }
+        .tool-card h1.tool-price {
+            color: var(--color-primary);
+        }
+
+        /* Detail View Styling (Retained Minimalist, Enhanced Color) */
+        .tool-bag-tdescr {
+            background-color: white; 
+            border: 1px solid var(--border-color);
+        }
+        .detail-price {
+            color: var(--color-primary); 
+        }
+        .detail-link {
+            background-color: var(--color-teal);
+        }
+        .detail-link:hover {
+            background-color: #008f7a;
+        }
+        /* Landing/Home Section Cleanup */
+        .landing-page, .home-headline-container, .summary-brief-container {
+             background: var(--color-surface);
+             padding: 60px 0;
+        }
+        .landing-message, .home-headline {
+            width: clamp(300px, 80%, 800px);
+            margin: 0 auto;
+        }
+
+
+        /* ----------------------------------------------------------------- */
+        /* 4. SUMMARY PAGE OVERHAUL (The £5000-Website Look) */
+        /* ----------------------------------------------------------------- */
+        .summary-page {
+            min-height: 100vh;
+            background-color: var(--color-cosmos); /* Deep Night Blue */
+            color: var(--color-text-light);
+            padding: 80px 0;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .summary-brief-container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+        }
+
+        .summary-brief {
+            background: none;
+            border: none;
+            color: var(--color-text-light);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--color-primary);
+            padding-bottom: 30px;
+            margin-bottom: 30px;
+        }
+        .summary-brief h1 {
+            color: var(--color-text-light);
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        .summary-brief p {
+            color: var(--color-text-light);
+            opacity: 0.8;
+            max-width: 700px;
+        }
+        .summary-price {
+            background: none !important;
+            text-align: right;
+        }
+        .summary-price p:first-child {
+            color: var(--color-text-light);
+            margin: 0;
+            font-size: 1rem;
+        }
+        .summary-price p:last-child {
+            color: var(--color-gold);
+            font-size: 3rem;
+            font-weight: 700;
+            margin: 5px 0 0 0;
+            letter-spacing: 2px;
+        }
+
+        /* --- Filtering Bar (The Elegant Control Center) --- */
+        .filter-bar {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto 50px auto;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            padding: 20px;
+            background: rgba(90, 24, 154, 0.4); /* Primary color with transparency */
+            border-radius: 12px;
+            backdrop-filter: blur(5px);
+            box-shadow: inset 0 0 10px rgba(255, 195, 0, 0.1);
+        }
+
+        .filter-button {
+            background: none;
+            color: var(--color-text-light);
+            border: 2px solid var(--color-text-light);
+            padding: 10px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease-in-out;
+            letter-spacing: 0.5px;
+        }
+
+        .filter-button:hover:not(.active) {
+            background-color: rgba(255, 255, 255, 0.1);
+            border-color: var(--color-gold);
+            transform: translateY(-2px);
+        }
+
+        .filter-button.active {
+            background-color: var(--color-teal);
+            border-color: var(--color-teal);
+            color: var(--color-cosmos);
+            box-shadow: 0 0 15px var(--color-teal);
+        }
+
+        /* --- Summary Grid and Cards --- */
+        .summary-grid-container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+            padding: 0;
+            background: none;
+            min-height: 400px;
+        }
+
+        .summary-tool-card {
+            background-color: white;
+            color: var(--color-text-dark);
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.4);
+            position: relative;
+            overflow: hidden;
+            transition: transform var(--transition-speed) ease-out, box-shadow var(--transition-speed);
+            cursor: pointer;
+            border-top: 5px solid var(--color-primary);
+            
+            /* Initial state for animation */
+            opacity: 0;
+            transform: translateY(20px);
+            animation: card-fade-in 0.5s ease forwards;
+        }
+        
+        .summary-tool-card:hover {
+            /* 3D Tilt and Lift on hover */
+            transform: translateY(-10px) rotateX(2deg) rotateY(2deg);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.6);
+            border-color: var(--color-gold);
+            z-index: 5;
+        }
+
+        /* Hide images for now, focus on typography and price badge */
+        .summary-tool-pics-container { display: none; } 
+        
+        .summary-tool-card h1 {
+            font-size: 1.4rem;
+            margin-bottom: 5px;
+            color: var(--color-primary);
+        }
+        .summary-tool-card h2 {
+            font-size: 0.9rem;
+            color: #666;
+            font-weight: 400;
+            margin-bottom: 15px;
+        }
+        .summary-tool-card p {
+            font-size: 0.95rem;
+            color: var(--color-text-dark);
+            line-height: 1.4;
+            min-height: 40px; /* Consistent height */
+        }
+        
+        /* The Price Badge (Eccentric/Gold Highlight) */
+        .summary-tool-price {
+            position: absolute;
+            top: 0px;
+            right: 0px;
+            background-color: var(--color-gold);
+            color: var(--color-cosmos);
+            font-weight: 700;
+            padding: 10px 15px;
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 75%); /* Unique shape */
+            font-size: 1.1rem;
+            letter-spacing: 0.5px;
+            box-shadow: -2px 2px 10px rgba(0, 0, 0, 0.2);
+            z-index: 2;
+        }
+        
+        /* --- Animations --- */
+        @keyframes card-fade-in {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        .is-filtering {
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        
+        /* --- Background Decoration (Eccentricity) --- */
+        .summary-page::before {
+            content: '';
+            position: absolute;
+            top: -200px;
+            left: -200px;
+            width: 500px;
+            height: 500px;
+            background: var(--color-teal);
+            border-radius: 50%;
+            opacity: 0.1;
+            filter: blur(100px);
+            animation: float-blob 20s infinite alternate ease-in-out;
+        }
+        .summary-page::after {
+            content: '';
+            position: absolute;
+            bottom: -200px;
+            right: -200px;
+            width: 700px;
+            height: 700px;
+            background: var(--color-gold);
+            border-radius: 50%;
+            opacity: 0.05;
+            filter: blur(120px);
+            animation: float-blob 25s infinite alternate-reverse ease-in-out;
+        }
+
+        @keyframes float-blob {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(50px, -50px) scale(1.05); }
+        }
+
+
+        /* ----------------------------------------------------------------- */
+        /* 5. CLOSING SECTION */
+        /* ----------------------------------------------------------------- */
+        .closing {
+            background-color: var(--color-surface) !important;
+            text-align: center; 
+            padding: 50px; 
+        }
+        .closing h2 {
+            color: var(--color-primary);
+        }
+        .closing .detail-link {
+            background: var(--color-teal);
+        }
+        .closing .detail-link:hover {
+            background: #008f7a;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="nav-section">
+            <div id="navContainer" class="nav-container">
+                <div class="sub-nav">
+                    <a href="#home">Home</a>
+                    <div id="prosCatDrop" class="pros-drop-down">
+                        <div class="shown">
+                            <a href="#prospects">Prospects</a>
+                            <div class="drop-down-btn" onclick="navDropDown()">
+                              ▽</div>                       
+                        </div>                        
+                        <div class="pros-cat-drop">
+                            <a href="#learn-tools">Learning</a>
+                            <a href="#repair-tools">Repairs</a>
+                            <a href="#prod-tools">Productivity</a>
+                        </div> 
+                    </div>                   
+                    <a href="#summary-page">Summary</a>
+                    <a href="#closing">Contact</a>
+                </div>
+            </div>
+    </div>
+            
+    <section class="landing-page">
+        <div class="landing-grid0">
+            <div class="landing-header">
+                <h1>A Message From Stefan</h1>
+            </div>
+
+            <div class="landing-message">
+                <p> I’ve been thinking of running a small business called CURE – Computer Upgrade and Repair Environment... This is a webpage listing tools to realize my business plan and aid my engineering mindset. The total list adds to £367. The essential list adds up to £197. Thanks💪
+                </p>
+                <p>— Stefan (Founder of CURE)</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="home" class="home">
+        <div class="home-headline-container">
+            <div class="home-headline">     
+                <h2>Welcome to Stefan's New Prospect (2025 - 2026)</h2>
+                <p>This is an inventory of tools to enhance my learning environment and commence my business idea. They are categorized into 3 groups.</p>
+
+                <div class="tool-bag-link">
+                    <button class="tools-connect"><a href="#learn-tools">Learning</a></button>
+                    <button class="tools-connect"><a href="#repair-tools">Repairs</a></button>
+                    <button class="tools-connect"><a href="#prod-tools">Productivity</a></button>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="prospects" class="tool-bag-container">
+        <div class="tool-bag">
+            
+            <div id="learn-tools" class="learn-tools tools-group">
+                <div class="tool-bag-brief-container">
+                    <div class="tool-bag-brief">
+                        <div class="tool-bag-brief-brief"><h1>Learning Tools</h1><p>These are some tools I need in 300L.</p></div>
+                        <div class="tool-bag-brief-price"><p>Total: £78</p></div>
+                    </div>
+                </div>
+
+                <div class="tool-bag-grid-container">
+                    <div class="tool-bag-grid">
+                        
+                        <div class="tool-card"
+                            data-product-details='{
+                                "description": "The Arduino Starter Kit provides all the necessary components and documentation to begin learning embedded systems and basic electronics programming. This is essential for 300L projects.",
+                                "images": ["https://via.placeholder.com/350x250?text=Arduino+Kit+Front", "https://via.placeholder.com/350x250?text=Arduino+Components"],
+                                "price": "£55.99",
+                                "specs": ["Microcontroller: Uno R3", "Required OS: Windows, Mac, Linux", "Skill Level: Beginner"],
+                                "store": "Amazon", "link": "#"
+                            }'>
+                            <h1 class="tool-name">Arduino Starter Kit</h1><h2 class="tool-store">Amazon</h2><p class="tool-brief">Basic electronics and programming kit.</p><h1 class="tool-price">£55.99</h1>   
+                            <div class="go-to-page"><a href="#">Go to Page ➔</a></div>  
+                        </div>
+
+                        <div class="tool-card"
+                            data-product-details='{
+                                "description": "This is a comprehensive laptop repair toolkit featuring precision screwdrivers, spudgers, and anti-static tools for safe disassembly and repair. A must-have for the new business.",
+                                "images": ["https://via.placeholder.com/350x250?text=Repair+Toolkit+Box", "https://via.placeholder.com/350x250?text=Repair+Toolkit+Tools"],
+                                "price": "£39.99",
+                                "specs": ["Pieces: 64", "Case: Magnetic", "Anti-Static: Yes", "Material: S2 Steel"],
+                                "store": "iFixit", "link": "#"
+                            }'>
+                            <h1 class="tool-name">64-Bit Repair Toolkit</h1><h2 class="tool-store">iFixit</h2><p class="tool-brief">Precision toolkit for laptop and PC repair.</p><h1 class="tool-price">£39.99</h1>   
+                            <div class="go-to-page"><a href="#">Go to Page ➔</a></div>  
+                        </div> 
+                        
+                        <div class="tool-card"><h1 class="tool-name">Tool 3</h1><h2 class="tool-store">Store B</h2><p class="tool-brief">Brief summary.</p><h1 class="tool-price">£12.00</h1><div class="go-to-page"><a href="#">Go to Page ➔</a></div></div>
+                        <div class="tool-card"><h1 class="tool-name">Tool 4</h1><h2 class="tool-store">Store C</h2><p class="tool-brief">Brief summary.</p><h1 class="tool-price">£8.00</h1><div class="go-to-page"><a href="#">Go to Page ➔</a></div></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="repair-tools" class="repair-tools tools-group">
+                <div class="tool-bag-brief-container">
+                    <div class="tool-bag-brief"><div class="tool-bag-brief-brief"><h1>Repair Tools</h1><p>Tools essential for computer upgrade and repair services.</p></div><div class="tool-bag-brief-price"><p>Total: £150</p></div></div>
+                </div>
+                <div class="tool-bag-grid-container"><div class="tool-bag-grid">
+                    <div class="tool-card"><h1 class="tool-name">Soldering Iron</h1><h2 class="tool-store">Store X</h2><p class="tool-brief">High-precision electronic repairs.</p><h1 class="tool-price">£50.00</h1><div class="go-to-page"><a href="#">Go to Page ➔</a></div></div>
+                    <div class="tool-card"><h1 class="tool-name">Multimeter</h1><h2 class="tool-store">Store Y</h2><p class="tool-brief">For diagnosing circuits.</p><h1 class="tool-price">£30.00</h1><div class="go-to-page"><a href="#">Go to Page ➔</a></div></div>
+                </div></div>
+            </div>
+
+            <div id="prod-tools" class="prod-tools tools-group">
+                <div class="tool-bag-brief-container">
+                    <div class="tool-bag-brief"><div class="tool-bag-brief-brief"><h1>Productivity and Troubleshooting</h1><p>Software and hardware for workflow enhancement.</p></div><div class="tool-bag-brief-price"><p>Total: £120</p></div></div>
+                </div>
+                <div class="tool-bag-grid-container"><div class="tool-bag-grid">
+                    <div class="tool-card"><h1 class="tool-name">Diagnostic Software</h1><h2 class="tool-store">Licence Co.</h2><p class="tool-brief">OS and hardware checks.</p><h1 class="tool-price">£80.00</h1><div class="go-to-page"><a href="#">Go to Page ➔</a></div></div>
+                    <div class="tool-card"><h1 class="tool-name">External Drive</h1><h2 class="tool-store">Store Z</h2><p class="tool-brief">Data backup and transfer.</p><h1 class="tool-price">£40.00</h1><div class="go-to-page"><a href="#">Go to Page ➔</a></div></div>
+                </div></div>
+            </div>
+
+            <div class="tool-group-spacerz1"></div>
+        </div>
+    </section>
+
+    <section id="summary-page" class="summary-page">
+        <div class="summary-brief-container">
+            <div class="summary-brief">
+                <div class="summary-text">
+                    <h1>The Grand Inventory Summary</h1>
+                    <p>A comprehensive catalog of all 50 items across every category. Use the filter bar below to explore the essential tools, learning components, and exotic items needed to launch CURE.</p>
+                </div>
+                <div class="summary-price">
+                    <p>Grand Total</p>
+                    <p>£367</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="filter-bar">
+            <button class="filter-button active" data-filter="All">All Items (50)</button>
+            <button class="filter-button" data-filter="Essential">Essential (10)</button>
+            <button class="filter-button" data-filter="Learning">Learning (15)</button>
+            <button class="filter-button" data-filter="Repair">Repair (15)</button>
+            <button class="filter-button" data-filter="Productivity">Productivity (5)</button>
+            <button class="filter-button" data-filter="Exotic">Exotic (5)</button>
+        </div>
+
+        <div class="summary-grid-container">
+            <div id="summaryGrid" class="summary-grid">
+                </div>
+        </div>
+    </section>
+
+    <section id="closing" class="closing">
+          <div class="closing-summary-download">
+                <h2>CURE - Contact & Downloads</h2>
+                <p>Ready to support the vision? Download an offline copy of the full inventory or reach out.</p>
+                <div class="download-btn dld-pdf" style="display: inline-block; margin: 10px;"> 
+                    <a href="#" class="detail-link">Download Full PDF</a>
+                </div>
+                <div class="download-btn dld-img" style="display: inline-block; margin: 10px;">
+                    <a href="#" class="detail-link">Contact Stefan</a>
+                </div>
+            </div>
+    </section>
+
+    <script>
+        /* --- Existing Nav Dropdown Logic --- */
+        function navDropDown() {
+          document.getElementById("prosCatDrop").style.height = "16rem";
+        }
+
+        window.onclick = function(e) {
+          if (!e.target.matches('.drop-down-btn')) {
+          var myDropdown = document.getElementById("prosCatDrop");
+            if (myDropdown && myDropdown.style.height === "16rem") { 
+              myDropdown.style.height = "4rem";
+            }
+          }
+        }
+        
+        /* --- Prospects Detail Card Logic (Retained from previous steps) --- */
+        document.addEventListener('DOMContentLoaded', () => {
+            const toolCards = document.querySelectorAll('.tool-card');
+            if (toolCards.length > 0) {
+                toolCards.forEach(card => {
+                    card.addEventListener('click', () => {
+                        const gridContainer = card.closest('.tool-bag-grid-container');
+                        if (!gridContainer) return;
+                        const detailsString = card.getAttribute('data-product-details');
+                        if (!detailsString) { return; }
+
+                        let product;
+                        try {
+                            product = JSON.parse(detailsString);
+                        } catch (e) {
+                            console.error("Error parsing product details JSON:", e);
+                            return;
+                        }
+
+                        const existingDescr = gridContainer.querySelector('.tool-bag-tdescr');
+                        if (existingDescr) { existingDescr.remove(); }
+
+                        const newHTML = buildDescriptionHTML(card, product);
+                        gridContainer.insertAdjacentHTML('beforeend', newHTML);
+                    });
+                });
+            }
+            
+            // Initial call to render the summary items when the page loads
+            renderSummaryItems(allSummaryItems);
+            setupFiltering();
+        });
+
+        function buildDescriptionHTML(cardElement, productDetails) {
+            const toolName = cardElement.querySelector('.tool-name')?.textContent.trim() || 'Product Details';
+            const imageHTML = (productDetails.images && productDetails.images.length > 0) 
+                ? productDetails.images.map(src => `<img src="${src}" alt="Product Image" class="product-detail-img">`).join('')
+                : '<p style="color:#666;">No images available. (Using placeholders in the demo)</p>';
+            const specsHTML = (productDetails.specs && productDetails.specs.length > 0)
+                ? productDetails.specs.map(spec => `<li>${spec}</li>`).join('')
+                : '<li>No detailed specifications listed.</li>';
+            const description = productDetails.description || 'No detailed description available.';
+            const price = productDetails.price || 'Price not listed';
+            const store = productDetails.store || 'Store not specified';
+            const link = productDetails.link || '#';
+
+            return `
+                <div class="tool-bag-tdescr">
+                    <h2>${toolName}</h2>
+                    <div class="detail-content-wrapper">
+                        <div class="detail-images">${imageHTML}</div>
+                        <div class="detail-info">
+                            <p class="detail-price">Price: <strong>${price}</strong></p>
+                            <h3>Description</h3><p>${description}</p>
+                            <h3>Specifications</h3><ul>${specsHTML}</ul>
+                            <h3>Online Store</h3>
+                            <p>Available at: ${store}</p>
+                            <a href="${link}" target="_blank" class="detail-link">Visit Store Page ➔</a>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        /* ----------------------------------------------------------------- */
+        /* SUMMARY PAGE DATA AND LOGIC (The New Functionality) */
+        /* ----------------------------------------------------------------- */
+
+        // 1. DATASET: 50 Creative Inventory Items
+        const allSummaryItems = [
+            // Essential (10)
+            { id: 1, name: "Precision HexDriver Set", price: 35.99, category: "Essential", store: "iFixit", brief: "Core 64-bit magnetic driver system." },
+            { id: 2, name: "Digital Multimeter (Fluke)", price: 65.00, category: "Essential", store: "TechSupply", brief: "Reliable voltage and continuity checks." },
+            { id: 3, name: "Compact Soldering Station", price: 75.00, category: "Essential", store: "ElectronicsCo", brief: "Adjustable temp for board repairs." },
+            { id: 4, name: "Anti-Static Wrist Strap", price: 5.99, category: "Essential", store: "Safety First", brief: "Mandatory ESD protection." },
+            { id: 5, name: "Thermal Paste (Arctic)", price: 7.50, category: "Essential", store: "PC Coolers", brief: "High-performance CPU cooling solution." },
+            { id: 6, name: "Nylon Spudger Kit", price: 8.99, category: "Essential", store: "iFixit", brief: "Non-marring tool for prying cases." },
+            { id: 7, name: "Tweezer Set (ESD Safe)", price: 12.00, category: "Essential", store: "ElectronicsCo", brief: "Fine control for small components." },
+            { id: 8, name: "Compressed Air Duster (Refillable)", price: 29.00, category: "Essential", store: "EcoClean", brief: "Sustainable dust removal." },
+            { id: 9, name: "Screen Suction Cup", price: 4.50, category: "Essential", store: "RepairCo", brief: "Safely lifting monitor screens." },
+            { id: 10, name: "HDMI Diagnostic Dongle", price: 15.00, category: "Essential", store: "VideoTools", brief: "Quick video signal testing." },
+            
+            // Learning (15)
+            { id: 11, name: "Arduino Uno R3 Starter Kit", price: 55.99, category: "Learning", store: "Amazon", brief: "Introduction to embedded systems." },
+            { id: 12, name: "Breadboard & Jumper Wires", price: 10.50, category: "Learning", store: "MakerSpace", brief: "Prototyping circuits without soldering." },
+            { id: 13, name: "Raspberry Pi 5 (8GB)", price: 80.00, category: "Learning", store: "PiHut", brief: "Advanced project development platform." },
+            { id: 14, name: "Electronic Components Box", price: 22.00, category: "Learning", store: "ResistorKing", brief: "Assorted resistors, capacitors, LEDs." },
+            { id: 15, name: "Oscilloscope Simulator Licence", price: 40.00, category: "Learning", store: "SimuLab", brief: "Virtual waveform analysis software." },
+            { id: 16, name: "Logic Analyzer (USB)", price: 35.00, category: "Learning", store: "Sigrok", brief: "Digital signal debugging tool." },
+            { id: 17, name: "Book: Practical Electronics", price: 28.50, category: "Learning", store: "University Press", brief: "Essential theory and projects." },
+            { id: 18, name: "3D Printer Filament (PLA)", price: 18.00, category: "Learning", store: "FilamentPro", brief: "Material for custom tool holders." },
+            { id: 19, name: "Python Programming Course", price: 15.00, category: "Learning", store: "CodeAcademy", brief: "Automation and data analysis skill." },
+            { id: 20, name: "Bench Power Supply (Variable)", price: 95.00, category: "Learning", store: "LabEquipment", brief: "Testing circuits under various loads." },
+            { id: 21, name: "ESP32 Wi-Fi Module", price: 8.00, category: "Learning", store: "IoT Store", brief: "Microcontroller with integrated Wi-Fi." },
+            { id: 22, name: "IoT Sensor Kit", price: 25.00, category: "Learning", store: "MakerSpace", brief: "Temperature, humidity, motion sensors." },
+            { id: 23, name: "Li-Po Battery Charger Module", price: 6.00, category: "Learning", store: "PowerLab", brief: "Safe battery charging practice." },
+            { id: 24, name: "Fritzing Software Licence", price: 12.00, category: "Learning", store: "Fritzing", brief: "Diagramming and PCB layout." },
+            { id: 25, name: "Heat Shrink Tubing Assortment", price: 9.00, category: "Learning", store: "WirePro", brief: "Insulation and protection for joins." },
+            
+            // Repair (15)
+            { id: 26, name: "Jig for Screen Separation", price: 45.00, category: "Repair", store: "RepairPro", brief: "Non-destructive phone/tablet opening." },
+            { id: 27, name: "BGA Rework Stencil Kit", price: 32.00, category: "Repair", store: "ChipFix", brief: "Reballing GPU/CPU chips." },
+            { id: 28, name: "Microscope (Digital USB)", price: 70.00, category: "Repair", store: "OpticLab", brief: "High-magnification component inspection." },
+            { id: 29, name: "Solder Wick & Flux", price: 11.50, category: "Repair", store: "ElectronicsCo", brief: "Removing excess solder." },
+            { id: 30, name: "Desoldering Pump (Vacuum)", price: 18.00, category: "Repair", store: "ToolMaster", brief: "Manual solder removal." },
+            { id: 31, name: "Magnifying Lamp (LED)", price: 49.00, category: "Repair", store: "Workshop Gear", brief: "Illuminated hands-free work." },
+            { id: 32, name: "DC Power Supply Benchtop", price: 120.00, category: "Repair", store: "LabEquipment", brief: "Powering devices for diagnostics." },
+            { id: 33, name: "Diagnostic Burn-in Software", price: 60.00, category: "Repair", store: "StressTest", brief: "Testing stability under load." },
+            { id: 34, name: "Pry Tool (Metal, Thin)", price: 5.00, category: "Repair", store: "iFixit", brief: "For tough, sealed cases." },
+            { id: 35, name: "Fiber Optic Cleaning Kit", price: 25.00, category: "Repair", store: "NetTools", brief: "Cleaning network connections." },
+            { id: 36, name: "Logic Probe and Pulser", price: 22.00, category: "Repair", store: "DigitalTools", brief: "Tracing digital signals." },
+            { id: 37, name: "Hot Air Gun (Digital)", price: 85.00, category: "Repair", store: "ElectronicsCo", brief: "SMD component removal." },
+            { id: 38, name: "UV Curing Lamp", price: 15.00, category: "Repair", store: "AdhesivePro", brief: "For curing UV solder mask." },
+            { id: 39, name: "Laptop Screen Adhesive Strips", price: 10.00, category: "Repair", store: "RepairCo", brief: "Re-sealing modern laptops." },
+            { id: 40, name: "Oscilloscope Probes (High-Z)", price: 30.00, category: "Repair", store: "ProbeMaster", brief: "Accurate signal measurement." },
+
+            // Productivity (5)
+            { id: 41, name: "Cloud Storage Subscription", price: 8.00, category: "Productivity", store: "MegaCorp", brief: "Secure client data backup." },
+            { id: 42, name: "Label Maker (Thermal)", price: 45.00, category: "Productivity", store: "Dymo", brief: "Organizing parts and repairs." },
+            { id: 43, name: "Client Management Software", price: 19.99, category: "Productivity", store: "RepairFlow", brief: "Tracking job statuses." },
+            { id: 44, name: "Ergonomic Anti-Fatigue Mat", price: 55.00, category: "Productivity", store: "ComfortZone", brief: "Reducing strain during long repairs." },
+            { id: 45, name: "Wireless Presentation Remote", price: 15.00, category: "Productivity", store: "OfficeGear", brief: "For training and meetings." },
+
+            // Exotic (5)
+            { id: 46, name: "Quantum Flux Capacitor", price: 1500.00, category: "Exotic", store: "TemporalTech", brief: "Experimental component. Use with caution." },
+            { id: 47, name: "Holographic Work Surface", price: 250.00, category: "Exotic", store: "FutureLabs", brief: "Floating component inventory display." },
+            { id: 48, name: "AI Troubleshooting Assistant", price: 99.00, category: "Exotic", store: "SyntaxCorp", brief: "Predictive failure analysis software." },
+            { id: 49, name: "Plasma Etcher Mini", price: 300.00, category: "Exotic", store: "MicroFabrication", brief: "Removing thin layers of material precisely." },
+            { id: 50, name: "DIY Laptop Power Bank Project", price: 110.00, category: "Exotic", store: "BatteryKing", brief: "Components for a high-capacity custom power bank." }
+        ];
+
+        // 2. RENDERING FUNCTION
+        function renderSummaryItems(items) {
+            const grid = document.getElementById('summaryGrid');
+            if (!grid) return;
+
+            // Apply filtering class to gracefully hide old items
+            grid.classList.add('is-filtering');
+
+            // Wait for the fade-out to complete before injecting new content
+            setTimeout(() => {
+                grid.innerHTML = '';
+                
+                items.forEach((item, index) => {
+                    const card = document.createElement('div');
+                    card.className = 'summary-tool-card';
+                    // Apply staggered animation delay
+                    card.style.animationDelay = `${index * 0.03}s`;
+
+                    card.innerHTML = `
+                        <div class="summary-tool-pics-container"></div>
+                        <h1 class="summary-tool-name">${item.name}</h1>
+                        <h2 class="summary-tool-store">${item.category} | ${item.store}</h2>
+                        <p class="summary-tool-brief">${item.brief}</p>
+                        <div class="summary-tool-price">£${item.price.toFixed(2)}</div>
+                    `;
+                    grid.appendChild(card);
+                });
+
+                // Remove filtering class to fade in new items
+                grid.classList.remove('is-filtering');
+            }, 200); // 200ms delay to match opacity transition speed
+        }
+
+        // 3. FILTERING LOGIC
+        function setupFiltering() {
+            const filterButtons = document.querySelectorAll('.filter-button');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const filterCategory = this.getAttribute('data-filter');
+
+                    // Update active state on buttons
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+
+                    let filteredItems;
+                    if (filterCategory === 'All') {
+                        filteredItems = allSummaryItems;
+                    } else {
+                        filteredItems = allSummaryItems.filter(item => item.category === filterCategory);
+                    }
+                    
+                    // Re-render the grid
+                    renderSummaryItems(filteredItems);
+                });
+            });
+        }
+        
+    </script>
+    
+</body>
+</html>

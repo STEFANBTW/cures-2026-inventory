@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CURE Inventory Prospects 2025 - Eccentric Elegance</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+    
+    <style>
+        /* ----------------------------------------------------------------- */
+        /* 1. GLOBAL ECCENTRIC & ELEGANT STYLES */
+        /* ----------------------------------------------------------------- */
+        :root {
+            /* NEW RICH COLOR PALETTE */
+            --color-cosmos: #121223;        /* Deep Night Blue Background */
+            --color-surface: #222238;       /* Lighter Dark Surface for Sections */
+            --color-primary-start: #7A18AA; /* Gradient Start */
+            --color-primary-end: #5A189A;   /* Gradient End (Majesty) */
+            --color-gold: #FFC300;          /* Gold Accent */
+            --color-teal: #00BFA5;          /* Action Teal Accent */
+            --color-text-light: #F0F4F8;    /* General Light Text */
+            --color-text-dim: #A0A0B0;      /* Secondary Dim Text */
+            --card-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
+            --transition-speed: 0.35s;
+        }
+        
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            color: var(--color-text-light);
+            background-color: var(--color-cosmos);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Standardized Section Styling */
+        section {
+            padding: 80px 0;
+            position: relative;
+            z-index: 1;
+            overflow: hidden;
+            transition: background-color 0.5s;
+        }
+
+        h1, h2, h3 {
+            font-weight: 700;
+            margin-top: 0;
+            color: var(--color-text-light);
+        }
+
+        a {
+            color: var(--color-teal);
+            text-decoration: none;
+            transition: color var(--transition-speed);
+        }
+        a:hover {
+            color: var(--color-gold);
+        }
+        
+        /* Utility class for gradient use */
+        .gradient-text {
+            background: linear-gradient(90deg, var(--color-gold), var(--color-teal));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: 900;
+        }
+
+        /* --- Global Animations --- */
+        @keyframes fade-in-up {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .animate-in {
+            animation: fade-in-up 0.8s ease-out forwards;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* ----------------------------------------------------------------- */
+        /* 2. NAVIGATION (Glassmorphism & Gradient) */
+        /* ----------------------------------------------------------------- */
+        .nav-section {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            background-color: rgba(34, 34, 56, 0.5); /* Semi-transparent dark surface */
+            backdrop-filter: blur(10px); /* Glassmorphism effect */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            border-bottom: 1px solid rgba(255, 195, 0, 0.1);
+        }
+        .nav-container {
+            width: clamp(4rem, 90%, 60rem);
+            height: 4rem;
+        }
+        .sub-nav a, .drop-down-btn {
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0 15px;
+            color: var(--color-text-light);
+            font-size: 1rem;
+            text-transform: uppercase;
+            font-weight: 600;
+            transition: all var(--transition-speed);
+        }
+        .sub-nav a:hover, .drop-down-btn:hover {
+            color: var(--color-gold);
+            background: rgba(255, 195, 0, 0.05);
+        }
+        .pros-drop-down {
+            position: relative;
+            height: 4rem; /* Initial fixed height */
+            overflow: hidden;
+            transition: height 0.3s ease;
+        }
+        .pros-drop-down:hover {
+            height: 16rem !important; 
+        }
+        .pros-cat-drop {
+            background-color: var(--color-surface);
+            border: 1px solid var(--color-primary-start);
+            border-top: none;
+            position: absolute;
+            top: 4rem;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        .pros-cat-drop a {
+             color: var(--color-text-light);
+        }
+        .pros-cat-drop a:hover {
+            background-color: var(--color-cosmos);
+        }
+        .drop-down-btn{
+             width: 40px;
+        }
+        .pros-drop-down .shown a {
+            flex-grow: 1;
+        }
+        /* Icon styling */
+        .drop-down-btn::after {
+            content: ' ✦';
+            font-size: 0.8rem;
+            color: var(--color-gold);
+        }
+        .sub-nav {
+            display: flex;
+            height: 100%;
+            align-items: center;
+        }
+
+
+        /* ----------------------------------------------------------------- */
+        /* 3. LANDING & HOME SECTIONS */
+        /* ----------------------------------------------------------------- */
+        .landing-page {
+            min-height: 70vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .landing-grid0, .home-headline-container {
+            width: 90%;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px 0;
+        }
+        .landing-header h1 {
+            font-size: 4rem;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            line-height: 1.1;
+        }
+        .landing-message p:first-of-type {
+            font-size: 1.25rem;
+            color: var(--color-text-dim);
+        }
+        .landing-message p:last-of-type {
+            font-style: italic;
+            font-weight: 600;
+            color: var(--color-gold);
+        }
+        .home-headline h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+        }
+        .home-headline p {
+            font-size: 1.1rem;
+            color: var(--color-text-dim);
+            margin-bottom: 30px;
+        }
+
+        .tools-connect {
+            background: var(--color-surface);
+            border: 2px solid var(--color-primary-start);
+            padding: 10px 25px;
+            border-radius: 50px;
+            margin: 0 10px;
+            cursor: pointer;
+            transition: all var(--transition-speed);
+        }
+        .tools-connect:hover {
+            transform: scale(1.05) translateY(-3px);
+            background: var(--color-teal);
+            border-color: var(--color-teal);
+            box-shadow: 0 8px 15px rgba(0, 191, 165, 0.4);
+        }
+        .tools-connect a {
+            color: var(--color-text-light);
+            font-weight: 600;
+        }
+
+
+        /* ----------------------------------------------------------------- */
+        /* 4. PROSPECTS SECTION (Tool Listing) */
+        /* ----------------------------------------------------------------- */
+        .tool-bag-container{
+            background-color: var(--color-surface); /* Slightly lighter dark background */
+            padding: 80px 0;
+            border-top: 1px solid rgba(255, 195, 0, 0.1);
+        }
+        .tools-group {
+            width: clamp(4rem, 90%, 70rem);
+            margin: 0 auto;
+            padding-top: 40px;
+        }
+        .tool-bag-brief {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: linear-gradient(90deg, var(--color-surface), #1A1A2E);
+            padding: 30px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 195, 0, 0.1);
+            box-shadow: var(--card-shadow);
+            margin-bottom: 30px;
+        }
+        .tool-bag-brief-brief h1 {
+            font-size: 2rem;
+            color: var(--color-gold);
+        }
+        .tool-bag-brief-brief p {
+            color: var(--color-text-dim);
+        }
+        .tool-bag-brief-price p {
+            color: var(--color-teal);
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+        
+        .tool-bag-grid-container {
+            display: block;
+        }
+        .tool-bag-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            gap: 30px;
+        }
+        
+        .tool-card {
+            background-color: var(--color-cosmos);
+            border: 1px solid var(--color-surface);
+            border-radius: 10px;
+            padding: 25px;
+            transition: all var(--transition-speed);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 15px 35px rgba(255, 195, 0, 0.2);
+            border-color: var(--color-gold);
+        }
+        
+        .tool-card h1.tool-name {
+            font-size: 1.4rem;
+            margin: 10px 0 5px 0;
+            color: var(--color-text-light);
+        }
+        .tool-card h2.tool-store {
+            color: var(--color-teal);
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+            font-weight: 400;
+        }
+        .tool-card p.tool-brief {
+            font-size: 0.95rem;
+            color: var(--color-text-dim);
+        }
+        .tool-card h1.tool-price {
+            font-size: 1.6rem;
+            color: var(--color-gold);
+            margin-top: 20px;
+            font-weight: 800;
+        }
+
+        .go-to-page a {
+            color: var(--color-teal);
+            font-weight: 600;
+        }
+        .go-to-page a:hover {
+             text-decoration: underline;
+             color: var(--color-gold);
+        }
+        .go-to-page a::after {
+            content: ' »';
+        }
+        
+        /* --- Detail View Overhaul (Dynamic Insertion) --- */
+        .tool-bag-tdescr {
+            grid-column: 1 / -1; 
+            padding: 50px; 
+            margin: 30px 0; 
+            background-color: var(--color-cosmos); 
+            border: 2px solid var(--color-primary-start);
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(90, 24, 154, 0.4);
+            animation: fadeIn 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+            display: flex;
+            flex-direction: column;
+        }
+        .tool-bag-tdescr h2 {
+            font-size: 2.2rem;
+            border-bottom: 3px solid var(--color-gold);
+            padding-bottom: 15px;
+            margin-bottom: 30px;
+            color: var(--color-text-light);
+        }
+        .detail-content-wrapper {
+            display: flex;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+        .detail-images {
+            flex: 1 1 300px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .detail-images img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+        }
+        .detail-info {
+            flex: 2 1 400px;
+        }
+        .detail-price {
+            font-size: 1.8rem;
+            color: var(--color-gold);
+            font-weight: 700;
+            padding: 15px 0;
+            border-bottom: 1px solid var(--color-surface);
+        }
+        .detail-info h3 {
+            color: var(--color-teal);
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-top: 25px;
+        }
+        .detail-info ul {
+            color: var(--color-text-dim);
+            padding-left: 20px;
+        }
+        .detail-link {
+            display: inline-block;
+            background-image: linear-gradient(90deg, var(--color-teal), #008f7a);
+            color: var(--color-text-light);
+            padding: 12px 30px;
+            border-radius: 50px;
+            margin-top: 30px;
+            transition: all var(--transition-speed);
+        }
+        .detail-link:hover {
+            background-image: linear-gradient(90deg, #008f7a, #00BFA5);
+            box-shadow: 0 5px 20px rgba(0, 191, 165, 0.5);
+            transform: translateY(-2px);
+            color: white;
+        }
+        
+        /* ----------------------------------------------------------------- */
+        /* 5. SUMMARY PAGE (Centerpiece) */
+        /* ----------------------------------------------------------------- */
+        .summary-page {
+            background-color: var(--color-cosmos);
+            border-top: 2px solid var(--color-primary-end);
+        }
+        .summary-brief-container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            position: relative;
+            z-index: 10;
+        }
+        .summary-brief {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--color-primary-start);
+            padding-bottom: 30px;
+            margin-bottom: 30px;
+        }
+        .summary-brief h1 {
+            color: var(--color-gold);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 2.5rem;
+        }
+        .summary-brief p {
+            color: var(--color-text-dim);
+        }
+        .summary-price p:first-child {
+            color: var(--color-text-dim);
+            margin: 0;
+            font-size: 1rem;
+        }
+        .summary-price p:last-child {
+            color: var(--color-gold);
+            font-size: 3rem;
+            font-weight: 700;
+            margin: 5px 0 0 0;
+            letter-spacing: 2px;
+        }
+        .filter-bar {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto 50px auto;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+            padding: 20px;
+            background: linear-gradient(90deg, rgba(90, 24, 154, 0.6), rgba(122, 24, 170, 0.4)); 
+            border-radius: 12px;
+            backdrop-filter: blur(3px);
+            box-shadow: inset 0 0 10px rgba(255, 195, 0, 0.1);
+        }
+        .filter-button {
+            background: none;
+            color: var(--color-text-dim);
+            border: 2px solid var(--color-text-dim);
+            padding: 10px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s ease-in-out;
+            letter-spacing: 0.5px;
+            white-space: nowrap; /* Prevents button text from wrapping */
+        }
+        .filter-button:hover:not(.active) {
+            border-color: var(--color-gold);
+            transform: translateY(-2px);
+        }
+        .filter-button.active {
+            background-color: var(--color-teal);
+            border-color: var(--color-teal);
+            color: var(--color-cosmos);
+            box-shadow: 0 0 15px var(--color-teal);
+        }
+        .summary-grid-container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        .summary-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 30px;
+            min-height: 400px;
+        }
+        .summary-tool-card {
+            background-color: var(--color-surface);
+            color: var(--color-text-light);
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.6);
+            position: relative;
+            overflow: hidden;
+            transition: transform var(--transition-speed) ease-out, box-shadow var(--transition-speed);
+            cursor: pointer;
+            border-top: 5px solid var(--color-primary-end);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: card-fade-in 0.5s ease forwards;
+        }
+        @keyframes card-fade-in {
+            0% { opacity: 0; transform: translateY(30px); }
+            100% { opacity: 1; transform: translateY(0); }
+        }
+        .summary-tool-card:hover {
+            transform: translateY(-10px) rotateX(2deg) rotateY(2deg);
+            box-shadow: 0 20px 40px rgba(255, 195, 0, 0.2);
+            border-color: var(--color-gold);
+            z-index: 5;
+        }
+        .summary-tool-card h1 {
+            color: var(--color-gold);
+            font-size: 1.4rem;
+        }
+        .summary-tool-card h2 {
+            color: var(--color-teal);
+            font-size: 0.9rem;
+        }
+        .summary-tool-card p {
+            color: var(--color-text-dim);
+        }
+        .summary-tool-price {
+            position: absolute;
+            top: 0px;
+            right: 0px;
+            background-color: var(--color-gold);
+            color: var(--color-cosmos);
+            font-weight: 700;
+            padding: 10px 15px;
+            clip-path: polygon(0 0, 100% 0, 100% 100%, 0 75%); /* Unique shape */
+            font-size: 1.1rem;
+        }
+        .is-filtering {
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+
+
+        /* ----------------------------------------------------------------- */
+        /* 6. CLOSING SECTION */
+        /* ----------------------------------------------------------------- */
+        .closing {
+            background: linear-gradient(to top, var(--color-cosmos), var(--color-surface));
+            padding: 80px 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        .closing-summary-download {
+            width: 90%;
+            max-width: 800px;
+            margin: 0 auto;
+            text-align: center;
+        }
+        .closing h2 {
+            font-size: 2.5rem;
+            color: var(--color-gold);
+        }
+        .closing p {
+            color: var(--color-text-dim);
+            margin-bottom: 40px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="nav-section">
+            <div id="navContainer" class="nav-container">
+                <div class="sub-nav">
+                    <a href="#home">Home</a>
+                    <div id="prosCatDrop" class="pros-drop-down">
+                        <div class="shown">
+                            <a href="#prospects">Prospects</a>
+                            <div class="drop-down-btn" onclick="navDropDown()">
+                              ▽</div>                       
+                        </div>                        
+                        <div class="pros-cat-drop">
+                            <a href="#learn-tools">Learning</a>
+                            <a href="#repair-tools">Repairs</a>
+                            <a href="#prod-tools">Productivity</a>
+                        </div> 
+                    </div>                   
+                    <a href="#summary-page">Summary</a>
+                    <a href="#closing">Contact</a>
+                </div>
+            </div>
+    </div>
+            
+    <section class="landing-page">
+        <div class="landing-grid0 animate-in">
+            <div class="landing-header">
+                <h1 class="gradient-text">CURE'S INVENTORY PROSPECTS</h1>
+            </div>
+
+            <div class="landing-message">
+                <p> I’ve been thinking of running a small business called **CURE – Computer Upgrade and Repair Environment**. This is a webpage listing tools to realize my business plan and aid my engineering mindset.
+                </p>
+                <p>— Stefan (Founder of CURE)</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="home" class="home">
+        <div class="home-headline-container animate-in" style="animation-delay: 0.2s;">
+            <div class="home-headline">     
+                <h2 class="gradient-text">Welcome to Stefan's New Prospect (2025 - 2026)</h2>
+                <p>This is an inventory of **50 items** to enhance my learning environment and commence my business idea. The tools are categorized into core groups.</p>
+
+                <div class="tool-bag-link">
+                    <button class="tools-connect"><a href="#learn-tools">Learning</a></button>
+                    <button class="tools-connect"><a href="#repair-tools">Repairs</a></button>
+                    <button class="tools-connect"><a href="#prod-tools">Productivity</a></button>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="prospects" class="tool-bag-container">
+        <div class="tool-bag">
+            
+            <div id="learn-tools" class="learn-tools tools-group animate-in" style="animation-delay: 0.4s;">
+                <div class="tool-bag-brief-container">
+                    <div class="tool-bag-brief">
+                        <div class="tool-bag-brief-brief">
+                            <h1>Learning Tools</h1>
+                            <p>These are the fundamental electronic and programming tools required for my 300L studies and skill development.</p>
+                        </div>
+                        <div class="tool-bag-brief-price">
+                            <p>Section Total: £78</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tool-bag-grid-container">
+                    <div class="tool-bag-grid">
+                        
+                        <div class="tool-card"
+                            data-product-details='{
+                                "description": "The Arduino Starter Kit provides all the necessary components and documentation to begin learning embedded systems and basic electronics programming. This is essential for 300L projects.",
+                                "images": ["https://via.placeholder.com/350x250?text=Arduino+Kit+Front", "https://via.placeholder.com/350x250?text=Arduino+Components"],
+                                "price": "£55.99",
+                                "specs": ["Microcontroller: Uno R3", "Required OS: Windows, Mac, Linux", "Skill Level: Beginner"],
+                                "store": "Amazon", "link": "#"
+                            }'>
+                            <div class="tool-pics-container"></div>
+                            <h1 class="tool-name">Arduino Starter Kit</h1>
+                            <h2 class="tool-store">Amazon</h2>
+                            <p class="tool-brief">Basic electronics and programming kit.</p>
+                            <h1 class="tool-price">£55.99</h1>   
+                            <div class="go-to-page">
+                                <a href="#">Go to Page</a>                            
+                            </div>  
+                        </div>
+
+                        <div class="tool-card"
+                            data-product-details='{
+                                "description": "This is a comprehensive laptop repair toolkit featuring precision screwdrivers, spudgers, and anti-static tools for safe disassembly and repair. A must-have for the new business.",
+                                "images": ["https://via.placeholder.com/350x250?text=Repair+Toolkit+Box", "https://via.placeholder.com/350x250?text=Repair+Toolkit+Tools"],
+                                "price": "£39.99",
+                                "specs": ["Pieces: 64", "Case: Magnetic", "Anti-Static: Yes", "Material: S2 Steel"],
+                                "store": "iFixit", "link": "#"
+                            }'>
+                            <div class="tool-pics-container"></div>
+                            <h1 class="tool-name">64-Bit Repair Toolkit</h1>
+                            <h2 class="tool-store">iFixit</h2>
+                            <p class="tool-brief">Precision toolkit for laptop and PC repair.</p>
+                            <h1 class="tool-price">£39.99</h1>   
+                            <div class="go-to-page">
+                                <a href="#">Go to Page</a>                            
+                            </div>  
+                        </div> 
+                        
+                        <div class="tool-card"><h1 class="tool-name">Tool 3</h1><h2 class="tool-store">Store B</h2><p class="tool-brief">Brief summary.</p><h1 class="tool-price">£12.00</h1><div class="go-to-page"><a href="#">Go to Page</a></div></div>
+                        <div class="tool-card"><h1 class="tool-name">Tool 4</h1><h2 class="tool-store">Store C</h2><p class="tool-brief">Brief summary.</p><h1 class="tool-price">£8.00</h1><div class="go-to-page"><a href="#">Go to Page</a></div></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="repair-tools" class="repair-tools tools-group animate-in" style="animation-delay: 0.5s;">
+                <div class="tool-bag-brief-container">
+                    <div class="tool-bag-brief"><div class="tool-bag-brief-brief"><h1>Repair Tools</h1><p>Tools essential for computer upgrade and repair services.</p></div><div class="tool-bag-brief-price"><p>Section Total: £150</p></div></div>
+                </div>
+                <div class="tool-bag-grid-container"><div class="tool-bag-grid">
+                    <div class="tool-card"><h1 class="tool-name">Soldering Iron</h1><h2 class="tool-store">Store X</h2><p class="tool-brief">High-precision electronic repairs.</p><h1 class="tool-price">£50.00</h1><div class="go-to-page"><a href="#">Go to Page</a></div></div>
+                    <div class="tool-card"><h1 class="tool-name">Multimeter</h1><h2 class="tool-store">Store Y</h2><p class="tool-brief">For diagnosing circuits.</p><h1 class="tool-price">£30.00</h1><div class="go-to-page"><a href="#">Go to Page</a></div></div>
+                </div></div>
+            </div>
+
+            <div id="prod-tools" class="prod-tools tools-group animate-in" style="animation-delay: 0.6s;">
+                <div class="tool-bag-brief-container">
+                    <div class="tool-bag-brief"><div class="tool-bag-brief-brief"><h1>Productivity and Troubleshooting</h1><p>Software and hardware for workflow enhancement.</p></div><div class="tool-bag-brief-price"><p>Section Total: £120</p></div></div>
+                </div>
+                <div class="tool-bag-grid-container"><div class="tool-bag-grid">
+                    <div class="tool-card"><h1 class="tool-name">Diagnostic Software</h1><h2 class="tool-store">Licence Co.</h2><p class="tool-brief">OS and hardware checks.</p><h1 class="tool-price">£80.00</h1><div class="go-to-page"><a href="#">Go to Page</a></div></div>
+                    <div class="tool-card"><h1 class="tool-name">External Drive</h1><h2 class="tool-store">Store Z</h2><p class="tool-brief">Data backup and transfer.</p><h1 class="tool-price">£40.00</h1><div class="go-to-page"><a href="#">Go to Page</a></div></div>
+                </div></div>
+            </div>
+
+            <div class="tool-group-spacerz1"></div>
+        </div>
+    </section>
+
+    <section id="summary-page" class="summary-page">
+        <div class="summary-brief-container animate-in">
+            <div class="summary-brief">
+                <div class="summary-text">
+                    <h1>The Grand Inventory Summary</h1>
+                    <p>A comprehensive catalog of all 50 items across every category.
+                         Use the filter bar below to explore the essential tools,
+                          learning components, and exotic items needed to launch CURE.
+                    </p>
+                </div>
+                <div class="summary-price">
+                    <p>Grand Total</p>
+                    <p>£367</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="filter-bar animate-in" style="animation-delay: 0.2s;">
+            <button class="filter-button active" data-filter="All">All Items (50)</button>
+            <button class="filter-button" data-filter="Essential">Essential (10)</button>
+            <button class="filter-button" data-filter="Learning">Learning (15)</button>
+            <button class="filter-button" data-filter="Repair">Repair (15)</button>
+            <button class="filter-button" data-filter="Productivity">Productivity (5)</button>
+            <button class="filter-button" data-filter="Exotic">Exotic (5)</button>
+            <button class="filter-button" data-filter="FreeShipping">Free Shipping</button>
+            <button class="filter-button" data-filter="MajorRetailers">Major Retailers (Aliexpress, Jumia, Temu)</button>
+        </div>
+
+        <div class="summary-grid-container">
+            <div id="summaryGrid" class="summary-grid">
+                </div>
+        </div>
+    </section>
+
+    <section id="closing" class="closing">
+          <div class="closing-summary-download animate-in">
+                <h2>CURE - Contact & Downloads</h2>
+                <p>Ready to support the vision? The essential items total **£197**. Download an offline copy of the full inventory or reach out to Stefan.</p>
+                <div class="download-btn dld-pdf" style="display: inline-block; margin: 10px;"> 
+                    <a href="#" class="detail-link">Download Full PDF</a>
+                </div>
+                <div class="download-btn dld-img" style="display: inline-block; margin: 10px;">
+                    <a href="#" class="detail-link" style="background-image: linear-gradient(90deg, var(--color-gold), #e0ad00);">Contact Stefan</a>
+                </div>
+            </div>
+    </section>
+
+    <script>
+        /* --- Nav Dropdown Logic --- */
+        function navDropDown() {
+          document.getElementById("prosCatDrop").style.height = "16rem";
+        }
+
+        window.onclick = function(e) {
+          if (!e.target.matches('.drop-down-btn')) {
+          var myDropdown = document.getElementById("prosCatDrop");
+            // Fixed potential assignment issue in conditional check
+            if (myDropdown && myDropdown.style.height === "16rem") { 
+              myDropdown.style.height = "4rem";
+            }
+          }
+        }
+        
+        /* --- Product Detail Card Logic (The requested functionality) --- */
+        document.addEventListener('DOMContentLoaded', () => {
+            const toolCards = document.querySelectorAll('.tool-card');
+            if (toolCards.length > 0) {
+                toolCards.forEach(card => {
+                    card.addEventListener('click', () => {
+                        const gridContainer = card.closest('.tool-bag-grid-container');
+                        if (!gridContainer) return;
+                        const detailsString = card.getAttribute('data-product-details');
+                        
+                        // Only proceed if data is available
+                        if (!detailsString) { 
+                            // This ensures cards without the data attribute are ignored
+                            return; 
+                        }
+
+                        let product;
+                        try {
+                            product = JSON.parse(detailsString);
+                        } catch (e) {
+                            console.error("Error parsing product details JSON:", e);
+                            return;
+                        }
+
+                        // 1. CLEANUP: Remove any existing description div
+                        const existingDescr = gridContainer.querySelector('.tool-bag-tdescr');
+                        if (existingDescr) { existingDescr.remove(); }
+
+                        // 2. GENERATE HTML
+                        const newHTML = buildDescriptionHTML(card, product);
+
+                        // 3. INSERTION: Inject the new details div
+                        gridContainer.insertAdjacentHTML('beforeend', newHTML);
+                    });
+                });
+            }
+            
+            // Initial call to render the summary items when the page loads
+            renderSummaryItems(allSummaryItems);
+            setupFiltering();
+        });
+
+        window.onclick = function(e) {
+          if (!e.target.matches('.tool-card')) {
+          const existingDescr = gridContainer.querySelector('.tool-bag-tdescr');
+                        if (existingDescr) { existingDescr.remove(); }
+          }
+        }
+
+        /**
+         * Builds the rich HTML structure for the expanded product detail view.
+         * This function is responsible for creating the dynamic `.tool-bag-tdescr` div.
+         */
+        function buildDescriptionHTML(cardElement, productDetails) {
+            const toolName = cardElement.querySelector('.tool-name')?.textContent.trim() || 'Product Details';
+            // Placeholder images retained for demonstration purposes
+            const imageHTML = (productDetails.images && productDetails.images.length > 0) 
+                ? productDetails.images.map(src => `<img src="${src}" alt="Product Image" class="product-detail-img">`).join('')
+                : '<p style="color:var(--color-text-dim);">No images available. (Using placeholders in the demo)</p>';
+            const specsHTML = (productDetails.specs && productDetails.specs.length > 0)
+                ? productDetails.specs.map(spec => `<li>${spec}</li>`).join('')
+                : '<li>No detailed specifications listed.</li>';
+            const description = productDetails.description || 'No detailed description available.';
+            const price = productDetails.price || 'Price not listed';
+            const store = productDetails.store || 'Store not specified';
+            const link = productDetails.link || '#';
+
+            // The resulting HTML string for the new div:
+            return `
+                <div class="tool-bag-tdescr">
+                    <h2>${toolName}</h2>
+                    <div class="detail-content-wrapper">
+                        <div class="detail-images">${imageHTML}</div>
+                        <div class="detail-info">
+                            <p class="detail-price">Price: <strong>${price}</strong></p>
+                            <h3>Description</h3><p style="color:var(--color-text-light);">${description}</p>
+                            <h3>Specifications</h3><ul>${specsHTML}</ul>
+                            <h3>Online Store</h3>
+                            <p style="color:var(--color-text-light);">Available at: ${store}</p>
+                            <a href="${link}" target="_blank" class="detail-link">Visit Store Page ✦</a>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        
+        /* ----------------------------------------------------------------- */
+        /* SUMMARY PAGE DATA AND LOGIC (UPDATED) */
+        /* ----------------------------------------------------------------- */
+
+        // 1. DATASET: 50 Creative Inventory Items (Shipping and Retailers Added)
+        const allSummaryItems = [
+            // Essential (10)
+            { id: 1, name: "Precision HexDriver Set", price: 35.99, category: "Essential", store: "iFixit", brief: "Core 64-bit magnetic driver system.", shipping: "Paid" },
+            { id: 2, name: "Digital Multimeter (Fluke)", price: 65.00, category: "Essential", store: "TechSupply", brief: "Reliable voltage and continuity checks.", shipping: "Paid" },
+            { id: 3, name: "Compact Soldering Station", price: 75.00, category: "Essential", store: "ElectronicsCo", brief: "Adjustable temp for board repairs.", shipping: "Paid" },
+            { id: 4, name: "Anti-Static Wrist Strap", price: 5.99, category: "Essential", store: "Temu", brief: "Mandatory ESD protection.", shipping: "Free" },
+            { id: 5, name: "Thermal Paste (Arctic)", price: 7.50, category: "Essential", store: "PC Coolers", brief: "High-performance CPU cooling solution.", shipping: "Paid" },
+            { id: 6, name: "Nylon Spudger Kit", price: 8.99, category: "Essential", store: "iFixit", brief: "Non-marring tool for prying cases.", shipping: "Paid" },
+            { id: 7, name: "Tweezer Set (ESD Safe)", price: 12.00, category: "Essential", store: "Aliexpress", brief: "Fine control for small components.", shipping: "Free" },
+            { id: 8, name: "Compressed Air Duster (Refillable)", price: 29.00, category: "Essential", store: "EcoClean", brief: "Sustainable dust removal.", shipping: "Paid" },
+            { id: 9, name: "Screen Suction Cup", price: 4.50, category: "Essential", store: "RepairCo", brief: "Safely lifting monitor screens.", shipping: "Paid" },
+            { id: 10, name: "HDMI Diagnostic Dongle", price: 15.00, category: "Essential", store: "VideoTools", brief: "Quick video signal testing.", shipping: "Free" },
+            
+            // Learning (15)
+            { id: 11, name: "Arduino Uno R3 Starter Kit", price: 55.99, category: "Learning", store: "Aliexpress", brief: "Introduction to embedded systems.", shipping: "Free" },
+            { id: 12, name: "Breadboard & Jumper Wires", price: 10.50, category: "Learning", store: "MakerSpace", brief: "Prototyping circuits without soldering.", shipping: "Paid" },
+            { id: 13, name: "Raspberry Pi 5 (8GB)", price: 80.00, category: "Learning", store: "PiHut", brief: "Advanced project development platform.", shipping: "Paid" },
+            { id: 14, name: "Electronic Components Box", price: 22.00, category: "Learning", store: "ResistorKing", brief: "Assorted resistors, capacitors, LEDs.", shipping: "Paid" },
+            { id: 15, name: "Oscilloscope Simulator Licence", price: 40.00, category: "Learning", store: "SimuLab", brief: "Virtual waveform analysis software.", shipping: "Paid" },
+            { id: 16, name: "Logic Analyzer (USB)", price: 35.00, category: "Learning", store: "Aliexpress", brief: "Digital signal debugging tool.", shipping: "Free" },
+            { id: 17, name: "Book: Practical Electronics", price: 28.50, category: "Learning", store: "University Press", brief: "Essential theory and projects.", shipping: "Paid" },
+            { id: 18, name: "3D Printer Filament (PLA)", price: 18.00, category: "Learning", store: "FilamentPro", brief: "Material for custom tool holders.", shipping: "Paid" },
+            { id: 19, name: "Python Programming Course", price: 15.00, category: "Learning", store: "CodeAcademy", brief: "Automation and data analysis skill.", shipping: "Free" },
+            { id: 20, name: "Bench Power Supply (Variable)", price: 95.00, category: "Learning", store: "LabEquipment", brief: "Testing circuits under various loads.", shipping: "Paid" },
+            { id: 21, name: "ESP32 Wi-Fi Module", price: 8.00, category: "Learning", store: "Temu", brief: "Microcontroller with integrated Wi-Fi.", shipping: "Free" },
+            { id: 22, name: "IoT Sensor Kit", price: 25.00, category: "Learning", store: "MakerSpace", brief: "Temperature, humidity, motion sensors.", shipping: "Paid" },
+            { id: 23, name: "Li-Po Battery Charger Module", price: 6.00, category: "Learning", store: "Aliexpress", brief: "Safe battery charging practice.", shipping: "Free" },
+            { id: 24, name: "Fritzing Software Licence", price: 12.00, category: "Learning", store: "Fritzing", brief: "Diagramming and PCB layout.", shipping: "Free" },
+            { id: 25, name: "Heat Shrink Tubing Assortment", price: 9.00, category: "Learning", store: "WirePro", brief: "Insulation and protection for joins.", shipping: "Paid" },
+            
+            // Repair (15)
+            { id: 26, name: "Jig for Screen Separation", price: 45.00, category: "Repair", store: "RepairPro", brief: "Non-destructive phone/tablet opening.", shipping: "Paid" },
+            { id: 27, name: "BGA Rework Stencil Kit", price: 32.00, category: "Repair", store: "ChipFix", brief: "Reballing GPU/CPU chips.", shipping: "Paid" },
+            { id: 28, name: "Microscope (Digital USB)", price: 70.00, category: "Repair", store: "Aliexpress", brief: "High-magnification component inspection.", shipping: "Free" },
+            { id: 29, name: "Solder Wick & Flux", price: 11.50, category: "Repair", store: "ElectronicsCo", brief: "Removing excess solder.", shipping: "Paid" },
+            { id: 30, name: "Desoldering Pump (Vacuum)", price: 18.00, category: "Repair", store: "ToolMaster", brief: "Manual solder removal.", shipping: "Paid" },
+            { id: 31, name: "Magnifying Lamp (LED)", price: 49.00, category: "Repair", store: "Workshop Gear", brief: "Illuminated hands-free work.", shipping: "Paid" },
+            { id: 32, name: "DC Power Supply Benchtop", price: 120.00, category: "Repair", store: "LabEquipment", brief: "Powering devices for diagnostics.", shipping: "Paid" },
+            { id: 33, name: "Diagnostic Burn-in Software", price: 60.00, category: "Repair", store: "StressTest", brief: "Testing stability under load.", shipping: "Paid" },
+            { id: 34, name: "Pry Tool (Metal, Thin)", price: 5.00, category: "Repair", store: "Jumia", brief: "For tough, sealed cases.", shipping: "Free" },
+            { id: 35, name: "Fiber Optic Cleaning Kit", price: 25.00, category: "Repair", store: "NetTools", brief: "Cleaning network connections.", shipping: "Paid" },
+            { id: 36, name: "Logic Probe and Pulser", price: 22.00, category: "Repair", store: "DigitalTools", brief: "Tracing digital signals.", shipping: "Paid" },
+            { id: 37, name: "Hot Air Gun (Digital)", price: 85.00, category: "Repair", store: "Jumia", brief: "SMD component removal.", shipping: "Paid" },
+            { id: 38, name: "UV Curing Lamp", price: 15.00, category: "Repair", store: "AdhesivePro", brief: "For curing UV solder mask.", shipping: "Paid" },
+            { id: 39, name: "Laptop Screen Adhesive Strips", price: 10.00, category: "Repair", store: "RepairCo", brief: "Re-sealing modern laptops.", shipping: "Paid" },
+            { id: 40, name: "Oscilloscope Probes (High-Z)", price: 30.00, category: "Repair", store: "Temu", brief: "Accurate signal measurement.", shipping: "Free" },
+
+            // Productivity (5)
+            { id: 41, name: "Cloud Storage Subscription", price: 8.00, category: "Productivity", store: "MegaCorp", brief: "Secure client data backup.", shipping: "Free" },
+            { id: 42, name: "Label Maker (Thermal)", price: 45.00, category: "Productivity", store: "Dymo", brief: "Organizing parts and repairs.", shipping: "Paid" },
+            { id: 43, name: "Client Management Software", price: 19.99, category: "Productivity", store: "RepairFlow", brief: "Tracking job statuses.", shipping: "Paid" },
+            { id: 44, name: "Ergonomic Anti-Fatigue Mat", price: 55.00, category: "Productivity", store: "ComfortZone", brief: "Reducing strain during long repairs.", shipping: "Paid" },
+            { id: 45, name: "Wireless Presentation Remote", price: 15.00, category: "Productivity", store: "OfficeGear", brief: "For training and meetings.", shipping: "Paid" },
+
+            // Exotic (5)
+            { id: 46, name: "Quantum Flux Capacitor", price: 1500.00, category: "Exotic", store: "TemporalTech", brief: "Experimental component. Use with caution.", shipping: "Paid" },
+            { id: 47, name: "Holographic Work Surface", price: 250.00, category: "Exotic", store: "FutureLabs", brief: "Floating component inventory display.", shipping: "Paid" },
+            { id: 48, name: "AI Troubleshooting Assistant", price: 99.00, category: "Exotic", store: "SyntaxCorp", brief: "Predictive failure analysis software.", shipping: "Paid" },
+            { id: 49, name: "Plasma Etcher Mini", price: 300.00, category: "Exotic", store: "MicroFabrication", brief: "Removing thin layers of material precisely.", shipping: "Paid" },
+            { id: 50, name: "DIY Laptop Power Bank Project", price: 110.00, category: "Exotic", store: "BatteryKing", brief: "Components for a high-capacity custom power bank.", shipping: "Paid" }
+        ];
+
+        // 2. RENDERING FUNCTION
+        function renderSummaryItems(items) {
+            const grid = document.getElementById('summaryGrid');
+            if (!grid) return;
+
+            grid.classList.add('is-filtering');
+
+            setTimeout(() => {
+                grid.innerHTML = '';
+                
+                items.forEach((item, index) => {
+                    const card = document.createElement('div');
+                    card.className = 'summary-tool-card';
+                    // Minor adjustment to animation timing for better sequential flow
+                    card.style.animationDelay = `${index * 0.02}s`; 
+
+                    let extraInfo = '';
+                    if (item.shipping === 'Free') {
+                        extraInfo += ' <span style="color:var(--color-teal); font-weight:700;">(Free Ship)</span>';
+                    }
+
+                    card.innerHTML = `
+                        <div class="summary-tool-pics-container"></div>
+                        <h1 class="summary-tool-name">${item.name}</h1>
+                        <h2 class="summary-tool-store">${item.category} | ${item.store}${extraInfo}</h2>
+                        <p class="summary-tool-brief">${item.brief}</p>
+                        <div class="summary-tool-price">£${item.price.toFixed(2)}</div>
+                    `;
+                    grid.appendChild(card);
+                });
+
+                grid.classList.remove('is-filtering');
+            }, 200); 
+        }
+
+        // 3. FILTERING LOGIC (UPDATED)
+        function setupFiltering() {
+            const filterButtons = document.querySelectorAll('.filter-button');
+            
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const filterCategory = this.getAttribute('data-filter');
+
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+
+                    let filteredItems;
+                    
+                    if (filterCategory === 'All') {
+                        filteredItems = allSummaryItems;
+                    } else if (filterCategory === 'FreeShipping') {
+                        // NEW FILTER LOGIC: Filter by shipping status
+                        filteredItems = allSummaryItems.filter(item => item.shipping === 'Free');
+                    } else if (filterCategory === 'MajorRetailers') {
+                        // NEW FILTER LOGIC: Filter by specific stores (Aliexpress, Jumia, Temu)
+                        const retailers = ['Aliexpress', 'Jumia', 'Temu'];
+                        filteredItems = allSummaryItems.filter(item => retailers.includes(item.store));
+                    } else {
+                        // Existing category filters
+                        filteredItems = allSummaryItems.filter(item => item.category === filterCategory);
+                    }
+                    
+                    // Update button count to match filtered results (optional visual flair)
+                    this.textContent = `${this.getAttribute('data-filter')} (${filteredItems.length})`;
+
+
+                    renderSummaryItems(filteredItems);
+                });
+            });
+        }
+        
+    </script>
+    
+</body>
+</html>
+
+<div class="download-btn dld-pdf" style="display: inline-block; margin: 10px;"> 
+    <a 
+        href="assets/downloads/inventory_prospects.pdf" 
+        download="CURE_Inventory_Report.pdf" 
+        class="detail-link"
+    >
+        Download Full PDF
+    </a>
+</div>
+<div class="download-btn dld-img" style="display: inline-block; margin: 10px;">
+    <a 
+        href="assets/downloads/summary_image.png" 
+        download="CURE_Summary_Chart.png" 
+        class="detail-link" 
+        style="background-image: linear-gradient(90deg, var(--color-gold), #e0ad00);"
+    >
+        Download Summary Image
+    </a>
+    </div>

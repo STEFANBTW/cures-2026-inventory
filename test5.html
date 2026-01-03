@@ -1,0 +1,704 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cure's Inventory Prospects 2025 - Minimalist</title>
+    <style>
+        /* ----------------------------------------------------------------- */
+        /* 1. MINIMALIST BASE STYLES */
+        /* ----------------------------------------------------------------- */
+        :root {
+            --primary-color: #007bff; /* Blue accent */
+            --text-color: #333;
+            --light-bg: #f8f8f8;
+            --white-bg: #ffffff;
+            --border-color: #eee;
+            --card-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+        
+        body {
+            margin: 0;
+            font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+            color: var(--text-color);
+            background-color: var(--light-bg);
+            line-height: 1.6;
+        }
+
+        /* Clean up scrolling bars */
+        .tool-bag, .summary-grid {
+            overflow: auto;
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+        .tool-bag::-webkit-scrollbar, .summary-grid::-webkit-scrollbar {
+            display: none;
+        }
+
+        h1, h2, h3 {
+            font-weight: 500;
+            margin-top: 0;
+        }
+
+        a {
+            color: var(--primary-color);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        a:hover {
+            color: #0056b3;
+        }
+
+        /* ----------------------------------------------------------------- */
+        /* 2. MINIMALIST NAVIGATION */
+        /* ----------------------------------------------------------------- */
+        .nav-section {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            background-color: var(--white-bg);
+            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05);
+        }
+        .nav-container {
+            width: clamp(4rem, 90%, 60rem);
+            height: 4rem;
+            background: none;
+            backdrop-filter: none;
+            border-radius: 0;
+            display: flex;
+            justify-content: space-between;
+        }
+        .sub-nav {
+            width: 100%;
+            height: 4rem;
+            display: flex;
+        }
+        .sub-nav a, .drop-down-btn {
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 0 15px;
+            color: var(--text-color);
+            text-decoration: none;
+            font-size: 1rem;
+            transition: background-color 0.2s, color 0.2s;
+        }
+        .sub-nav a:hover, .drop-down-btn:hover {
+            background-color: var(--light-bg);
+            color: var(--primary-color);
+        }
+        .pros-drop-down { 
+            width: auto;
+            min-width: 150px;
+            height: 4rem;
+            transition: height 0.3s ease-in-out;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+        .pros-drop-down:hover {
+            height: 16rem !important; /* Force open on hover for desktop experience */
+        }
+        .shown {
+            height: 4rem;
+            width: 100%;
+            display: flex;
+            flex-shrink: 0;
+        }
+        .pros-cat-drop {
+            background-color: var(--white-bg);
+            border: 1px solid var(--border-color);
+            border-top: none;
+            border-radius: 0 0 4px 4px;
+            box-shadow: var(--card-shadow);
+        }
+        .pros-cat-drop a {
+            width: 100%;
+            justify-content: flex-start;
+            padding: 10px 15px;
+            height: auto;
+        }
+        .pros-cat-drop a:hover {
+            background-color: var(--light-bg);
+        }
+        .drop-down-btn{
+             width: 40px;
+        }
+        .pros-drop-down .shown a {
+            flex-grow: 1;
+        }
+
+        /* ----------------------------------------------------------------- */
+        /* 3. PRODUCT LISTING GRID */
+        /* ----------------------------------------------------------------- */
+        .tool-bag-container{
+            height: auto;
+            min-height: 100vh;
+            background-color: var(--light-bg);
+            padding: 40px 0;
+        }
+        .tools-group {
+            width: clamp(4rem, 90%, 60rem);
+            margin: 0 auto;
+            display: block; /* Removing grid layout in favor of flow for simplicity */
+        }
+        .tool-bag-brief-container {
+            margin-bottom: 30px;
+        }
+        .tool-bag-brief {
+            background-color: var(--white-bg);
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            box-shadow: var(--card-shadow);
+        }
+        .tool-bag-brief-price {
+            background-color: var(--light-bg);
+            padding: 10px 15px;
+            border-radius: 4px;
+            text-align: right;
+        }
+        .tool-bag-brief-price p {
+            margin: 0;
+            font-size: 1.2rem;
+            color: var(--primary-color);
+        }
+        
+        .tool-bag-grid-container {
+            width: 100%;
+            /* Removed height/overflow properties */
+        }
+
+        .tool-bag-grid {
+            display: grid;
+            /* Responsive Grid: At least 280px wide, max 1 fraction unit */
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); 
+            gap: 20px;
+            width: 100%;
+            padding: 0;
+        }
+        
+        .tool-card {
+            background-color: var(--white-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            padding: 20px;
+            height: auto;
+            width: auto;
+            transition: transform 0.3s, box-shadow 0.3s, border-color 0.3s;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary-color);
+        }
+        
+        .tool-card h1.tool-name {
+            font-size: 1.2rem;
+            margin: 10px 0 5px 0;
+            font-weight: 600;
+        }
+        .tool-card p.tool-brief {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        .tool-card h1.tool-price {
+            font-size: 1.1rem;
+            color: var(--primary-color);
+            margin-top: 15px;
+            font-weight: 700;
+        }
+
+        .go-to-page {
+            position: relative; /* Removed absolute positioning */
+            bottom: auto;
+            background-color: transparent;
+            height: auto;
+            width: 100%;
+            border-radius: 0;
+            margin-top: 10px;
+        }
+        .go-to-page a {
+            color: var(--primary-color);
+            font-weight: 600;
+            padding: 0;
+            display: inline-block;
+        }
+        .tool-pics-container {
+            display: none; /* Hide placeholder image container for cleaner look */
+        }
+
+
+        /* ----------------------------------------------------------------- */
+        /* 4. PRODUCT DETAIL VIEW (tool-bag-tdescr) */
+        /* ----------------------------------------------------------------- */
+        .tool-bag-tdescr {
+            grid-column: 1 / -1; 
+            padding: 40px; 
+            margin: 30px 0; 
+            background-color: var(--white-bg); 
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+            animation: fadeIn 0.5s ease-out; /* Add animation */
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .tool-bag-tdescr h2 {
+            font-size: 1.8rem;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+        }
+
+        .detail-content-wrapper {
+            display: flex; 
+            gap: 40px; 
+            margin-top: 20px;
+            flex-wrap: wrap; 
+        }
+
+        .detail-images {
+            flex-shrink: 0; 
+            width: 35%; /* Slightly smaller image area */
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            padding-right: 20px;
+            border-right: 1px solid var(--border-color);
+        }
+        
+        .product-detail-img {
+            width: 100%;
+            height: auto;
+            max-height: 200px;
+            object-fit: contain; 
+            border-radius: 4px;
+            border: 1px solid #ddd;
+        }
+
+        .detail-info {
+            flex-grow: 1; 
+            width: 55%; 
+        }
+
+        .detail-price {
+            font-size: 1.5rem;
+            color: #28a745; /* Green for price */
+            font-weight: 700;
+            padding: 10px 0;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .detail-info h3 {
+            color: var(--text-color);
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-top: 25px;
+            margin-bottom: 10px;
+        }
+
+        .detail-info ul {
+            padding-left: 25px;
+            list-style: disc;
+        }
+        
+        .detail-link {
+            display: inline-block;
+            padding: 10px 25px;
+            background-color: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            margin-top: 20px;
+            font-weight: 600;
+        }
+        .detail-link:hover {
+            background-color: #0056b3;
+            color: white;
+        }
+
+        /* Responsive adjustments for details */
+        @media (max-width: 768px) {
+            .detail-content-wrapper {
+                flex-direction: column;
+            }
+            .detail-images, .detail-info {
+                width: 100%;
+                padding-right: 0;
+                border-right: none;
+            }
+            .detail-images {
+                 border-bottom: 1px solid var(--border-color);
+                 padding-bottom: 20px;
+            }
+        }
+        
+        /* ----------------------------------------------------------------- */
+        /* 5. REMOVED/SIMPLIFIED LEGACY STYLES (for minimalist look) */
+        /* ----------------------------------------------------------------- */
+
+        /* General cleanup of non-minimalist elements */
+        .landing-page, .home, .home-pics, .fire-works, .landing-portrait, .portrait-frame, .portait {
+            height: auto;
+            min-height: 40vh;
+            background: var(--white-bg);
+            position: relative;
+            clip-path: none !important;
+        }
+        .landing-grid0 {
+            display: block;
+            padding: 40px;
+        }
+        .home-headline-container {
+            background-color: var(--white-bg);
+            clip-path: none;
+            padding: 40px;
+            text-align: center;
+        }
+        .tools-connect {
+            border: 1px solid var(--primary-color);
+            background: transparent;
+            padding: 10px 20px;
+            border-radius: 4px;
+            margin: 5px;
+        }
+        .tools-connect a {
+            color: var(--primary-color);
+        }
+
+        /* Simplified utility bar and summary */
+        .tool-bag-nav-container { display: none; } /* Removing the floating left nav for simplicity */
+        .summary-page { background: var(--light-bg); }
+        .summary-brief { background: var(--white-bg); }
+    </style>
+</head>
+<body>
+
+    <div class="nav-section">
+            <div id="navContainer" class="nav-container">
+                <div class="sub-nav">
+                    <a href="#home">Home</a>
+                    <div id="prosCatDrop" class="pros-drop-down">
+                        <div class="shown">
+                            <a href="#prospects">Prospects</a>
+                            <div class="drop-down-btn" onclick="navDropDown()">
+                              ▽</div>                       
+                        </div>                        
+                        <div class="pros-cat-drop">
+                            <a href="#learn-tools">Learning</a>
+                            <a href="#repair-tools">Repairs</a>
+                            <a href="#prod-tools">Productivity</a>
+                        </div> 
+                    </div>                   
+                    <a href="#summary-page">Summary</a>
+                    <a href="#closing">Contact</a>
+                </div>
+            </div>
+    </div>
+            
+    <section class="landing-page">
+        <div class="landing-grid0">
+            <div class="landing-header">
+                <h1>A Message From Stefan</h1>
+            </div>
+
+            <div class="landing-message">
+                <p> I’ve been thinking of running a small business called CURE – Computer Upgrade and Repair Environment... This is a webpage listing tools to realize my business plan and aid my engineering mindset. The total list adds to £367. The essential list adds up to £197. Thanks💪
+                </p>
+                <p>— Stefan (Founder of CURE)</p>
+            </div>
+        </div>
+    </section>
+
+    <section id="home" class="home">
+        <div class="home-headline-container">
+            <div class="home-headline">     
+                <h2>Welcome to Stefan's New Prospect (2025 - 2026)</h2>
+                <p>This is an inventory of tools to enhance my learning environment and commence my business idea. They are categorized into 3 groups.</p>
+
+                <div class="tool-bag-link">
+                    <button class="tools-connect"><a href="#learn-tools">Learning</a></button>
+                    <button class="tools-connect"><a href="#repair-tools">Repairs</a></button>
+                    <button class="tools-connect"><a href="#prod-tools">Productivity</a></button>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <section id="prospects" class="tool-bag-container">
+        <div class="tool-bag">
+            
+            <div id="learn-tools" class="learn-tools tools-group">
+                <div class="tool-bag-brief-container">
+                    <div class="tool-bag-brief">
+                        <div class="tool-bag-brief-brief">
+                            <h1>Learning Tools</h1>
+                            <p>These are some tools I need in 300L. It contains a basic Arduino starter kit and its accessories.</p>
+                        </div>
+                        <div class="tool-bag-brief-price">
+                            <p>Total: £78</p>
+                            <p><span>N120,000</span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tool-bag-grid-container">
+                    <div class="tool-bag-grid">
+                        
+                        <div class="tool-card"
+                            data-product-details='{
+                                "description": "The Arduino Starter Kit provides all the necessary components and documentation to begin learning embedded systems and basic electronics programming. This is essential for 300L projects.",
+                                "images": ["https://via.placeholder.com/350x250?text=Arduino+Kit+Front", "https://via.placeholder.com/350x250?text=Arduino+Components"],
+                                "price": "£55.99",
+                                "specs": ["Microcontroller: Uno R3", "Required OS: Windows, Mac, Linux", "Skill Level: Beginner"],
+                                "store": "Amazon",
+                                "link": "#"
+                            }'>
+                            <div class="tool-pics-container"></div>
+                            <h1 class="tool-name">Arduino Starter Kit</h1>
+                            <h2 class="tool-store">Amazon</h2>
+                            <p class="tool-brief">Basic electronics and programming kit.</p>
+                            <h1 class="tool-price">£55.99</h1>   
+                            <div class="go-to-page">
+                                <a href="#">Go to Page ➔</a>                            
+                            </div>  
+                        </div>
+
+                        <div class="tool-card"
+                            data-product-details='{
+                                "description": "This is a comprehensive laptop repair toolkit featuring precision screwdrivers, spudgers, and anti-static tools for safe disassembly and repair. A must-have for the new business.",
+                                "images": ["https://via.placeholder.com/350x250?text=Repair+Toolkit+Box", "https://via.placeholder.com/350x250?text=Repair+Toolkit+Tools"],
+                                "price": "£39.99",
+                                "specs": ["Pieces: 64", "Case: Magnetic", "Anti-Static: Yes", "Material: S2 Steel"],
+                                "store": "iFixit",
+                                "link": "#"
+                            }'>
+                            <div class="tool-pics-container"></div>
+                            <h1 class="tool-name">64-Bit Repair Toolkit</h1>
+                            <h2 class="tool-store">iFixit</h2>
+                            <p class="tool-brief">Precision toolkit for laptop and PC repair.</p>
+                            <h1 class="tool-price">£39.99</h1>   
+                            <div class="go-to-page">
+                                <a href="#">Go to Page ➔</a>                            
+                            </div>  
+                        </div> 
+                        
+                        <div class="tool-card"><h1 class="tool-name">Tool 3</h1><h2 class="tool-store">Store B</h2><p class="tool-brief">Brief summary.</p><h1 class="tool-price">£12.00</h1><div class="go-to-page"><a href="#">Go to Page ➔</a></div></div>
+                        <div class="tool-card"><h1 class="tool-name">Tool 4</h1><h2 class="tool-store">Store C</h2><p class="tool-brief">Brief summary.</p><h1 class="tool-price">£8.00</h1><div class="go-to-page"><a href="#">Go to Page ➔</a></div></div>
+                        <div class="tool-card"><h1 class="tool-name">Tool 5</h1><h2 class="tool-store">Store D</h2><p class="tool-brief">Brief summary.</p><h1 class="tool-price">£18.00</h1><div class="go-to-page"><a href="#">Go to Page ➔</a></div></div>
+                        <div class="tool-card"><h1 class="tool-name">Tool 6</h1><h2 class="tool-store">Store E</h2><p class="tool-brief">Brief summary.</p><h1 class="tool-price">£22.00</h1><div class="go-to-page"><a href="#">Go to Page ➔</a></div></div>
+                        <div class="tool-card"><h1 class="tool-name">Tool 7</h1><h2 class="tool-store">Store F</h2><p class="tool-brief">Brief summary.</p><h1 class="tool-price">£7.00</h1><div class="go-to-page"><a href="#">Go to Page ➔</a></div></div>
+                        <div class="tool-card"><h1 class="tool-name">Tool 8</h1><h2 class="tool-store">Store G</h2><p class="tool-brief">Brief summary.</p><h1 class="tool-price">£4.00</h1><div class="go-to-page"><a href="#">Go to Page ➔</a></div></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="repair-tools" class="repair-tools tools-group">
+                <div class="tool-bag-brief-container">
+                    <div class="tool-bag-brief">
+                        <div class="tool-bag-brief-brief"><h1>Repair Tools</h1><p>Tools essential for computer upgrade and repair services.</p></div>
+                        <div class="tool-bag-brief-price"><p>Total: £150</p></div>
+                    </div>
+                </div>
+                <div class="tool-bag-grid-container"><div class="tool-bag-grid">
+                    <div class="tool-card"><h1 class="tool-name">Soldering Iron</h1><h2 class="tool-store">Store X</h2><p class="tool-brief">High-precision electronic repairs.</p><h1 class="tool-price">£50.00</h1><div class="go-to-page"><a href="#">Go to Page ➔</a></div></div>
+                    <div class="tool-card"><h1 class="tool-name">Multimeter</h1><h2 class="tool-store">Store Y</h2><p class="tool-brief">For diagnosing circuits.</p><h1 class="tool-price">£30.00</h1><div class="go-to-page"><a href="#">Go to Page ➔</a></div></div>
+                </div></div>
+            </div>
+
+            <div id="prod-tools" class="prod-tools tools-group">
+                <div class="tool-bag-brief-container">
+                    <div class="tool-bag-brief">
+                        <div class="tool-bag-brief-brief"><h1>Productivity and Troubleshooting</h1><p>Software and hardware for workflow enhancement.</p></div>
+                        <div class="tool-bag-brief-price"><p>Total: £120</p></div>
+                    </div>
+                </div>
+                <div class="tool-bag-grid-container"><div class="tool-bag-grid">
+                    <div class="tool-card"><h1 class="tool-name">Diagnostic Software</h1><h2 class="tool-store">Licence Co.</h2><p class="tool-brief">OS and hardware checks.</p><h1 class="tool-price">£80.00</h1><div class="go-to-page"><a href="#">Go to Page ➔</a></div></div>
+                    <div class="tool-card"><h1 class="tool-name">External Drive</h1><h2 class="tool-store">Store Z</h2><p class="tool-brief">Data backup and transfer.</p><h1 class="tool-price">£40.00</h1><div class="go-to-page"><a href="#">Go to Page ➔</a></div></div>
+                </div></div>
+            </div>
+
+            <div class="tool-group-spacerz1"></div>
+        </div>
+    </section>
+    
+    <section id="summary-page" class="summary-page">
+        <div class="summary-brief-container">
+            <div class="summary-brief" style="border: none; box-shadow: none;">
+                <div class="summary-brief-brief" style="width: 70%; padding-left: 10%;">
+                    <h1>Summary</h1>
+                    <p>The essential tools needed to start the business. </p>
+                </div>
+                <div class="summary-price" style="background-color: transparent;">
+                    <p style="color: var(--text-color);">Essential Total</p>
+                    <p style="color: #28a745; font-size: 1.8rem;">£197</p>
+                </div>
+            </div>
+        </div>
+        <div class="utility-bar"></div>
+        <div class="summary-grid-container">
+            <div class="summary-grid" style="width: 80%; max-width: 1200px;">
+                <div class="summary-tool-card" style="border: 1px solid #ddd; background: white; padding: 20px;"><h1>Essential Tool 1</h1></div>
+                <div class="summary-tool-card" style="border: 1px solid #ddd; background: white; padding: 20px;"><h1>Essential Tool 2</h1></div>
+                <div class="summary-tool-card" style="border: 1px solid #ddd; background: white; padding: 20px;"><h1>Essential Tool 3</h1></div>
+            </div>
+        </div>
+    </section>
+
+    <section id="closing" class="closing" style="text-align: center; padding: 50px; background: var(--white-bg);">
+          <div class="closing-summary-download">
+                <h2>Download Inventory</h2>
+                <p>Download an offline copy of the full inventory and summary.</p>
+                <div class="download-btn dld-pdf" style="display: inline-block; margin: 10px;"> 
+                    <a href="#" class="detail-link">Download PDF</a>
+                </div>
+                <div class="download-btn dld-img" style="display: inline-block; margin: 10px;">
+                    <a href="#" class="detail-link" style="background: #6c757d;">Download Image</a>
+                </div>
+            </div>
+    </section>
+
+    <script>
+        /* When the user clicks on the button, 
+        toggle between hiding and showing the dropdown content */
+        function navDropDown() {
+          // Note: Using JS to set height for mobile/touch events
+          document.getElementById("prosCatDrop").style.height = "16rem";
+        }
+
+        // Close the dropdown if the user clicks outside of it
+        window.onclick = function(e) {
+          if (!e.target.matches('.drop-down-btn')) {
+          var myDropdown = document.getElementById("prosCatDrop");
+            // Only collapse if it's currently expanded (16rem)
+            if (myDropdown && myDropdown.style.height === "16rem") { 
+              myDropdown.style.height = "4rem";
+            }
+          }
+        }
+
+        /* --- Logic to create rich description div on card click --- */
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const toolCards = document.querySelectorAll('.tool-card');
+
+            if (toolCards.length > 0) {
+                toolCards.forEach(card => {
+                    card.addEventListener('click', () => {
+                        const gridContainer = card.closest('.tool-bag-grid-container');
+                        if (!gridContainer) return;
+
+                        const detailsString = card.getAttribute('data-product-details');
+
+                        if (!detailsString) {
+                            console.log("Card clicked, but no rich data-product-details found. Only showing description for cards with data.");
+                            return; 
+                        }
+
+                        let product;
+                        try {
+                            // Parse the JSON string into a JavaScript Object
+                            product = JSON.parse(detailsString);
+                        } catch (e) {
+                            console.error("Error parsing product details JSON:", e);
+                            return;
+                        }
+
+                        // Cleanup: Remove any existing description div
+                        const existingDescr = gridContainer.querySelector('.tool-bag-tdescr');
+                        if (existingDescr) {
+                            existingDescr.remove();
+                        }
+
+                        // Build the rich HTML structure 
+                        const newHTML = buildDescriptionHTML(card, product);
+
+                        // Insert the new HTML 
+                        gridContainer.insertAdjacentHTML('beforeend', newHTML);
+                    });
+                });
+            }
+        });
+
+        // --- HELPER FUNCTION TO BUILD RICH DETAIL HTML ---
+        function buildDescriptionHTML(cardElement, productDetails) {
+            const toolName = cardElement.querySelector('.tool-name')?.textContent.trim() || 'Product Details';
+
+            // Build the Image Gallery Section - Uses placeholder images
+            const imageHTML = (productDetails.images && productDetails.images.length > 0) 
+                ? productDetails.images.map(src => `<img src="${src}" alt="Product Image" class="product-detail-img">`).join('')
+                : '<p style="color:#666;">No images available. (Using placeholders in the demo)</p>';
+
+            // Build the Specs List Section
+            const specsHTML = (productDetails.specs && productDetails.specs.length > 0)
+                ? productDetails.specs.map(spec => `<li>${spec}</li>`).join('')
+                : '<li>No detailed specifications listed.</li>';
+
+            // Use safe defaults for missing fields
+            const description = productDetails.description || 'No detailed description available.';
+            const price = productDetails.price || 'Price not listed';
+            const store = productDetails.store || 'Store not specified';
+            const link = productDetails.link || '#';
+
+            // Combine everything into the final HTML structure
+            return `
+                <div class="tool-bag-tdescr">
+                    <h2>${toolName}</h2>
+                    <div class="detail-content-wrapper">
+
+                        <div class="detail-images">
+                            ${imageHTML}
+                        </div>
+
+                        <div class="detail-info">
+                            <p class="detail-price">Price: <strong>${price}</strong></p>
+
+                            <h3>Description</h3>
+                            <p>${description}</p>
+
+                            <h3>Specifications</h3>
+                            <ul>${specsHTML}</ul>
+
+                            <h3>Online Store</h3>
+                            <p>Available at: ${store}</p>
+                            <a href="${link}" target="_blank" class="detail-link">Visit Store Page ➔</a>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Existing dropdown logic for dropdown-btn class (retained for completeness)
+        var dropdown = document.getElementsByClassName("dropdown-btn");
+        var i;
+
+        for (i = 0; i < dropdown.length; i++) {
+          dropdown[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var dropdownContent = this.nextElementSibling;
+            if (dropdownContent.style.display === "block") {
+                dropdownContent.style.display = "none";
+            } else {
+                dropdownContent.style.display = "block";
+            }
+          });
+        }
+    </script>
+    
+</body>
+</html>

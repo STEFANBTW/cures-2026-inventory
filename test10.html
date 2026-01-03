@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tool Bag Grid Demo</title>
+    <style>
+        /* --- General Layout & Aesthetics --- */
+        :root {
+            --color-background-primary: #1e1e1e;
+            --color-background-secondary: #2a2a2a;
+            --color-text-light: #f0f0f0;
+            --color-text-dim: #999;
+            --color-accent: #00bcd4;
+            --grid-gap: 20px;
+        }
+        body {
+            font-family: sans-serif;
+            background-color: var(--color-background-primary);
+            color: var(--color-text-light);
+            margin: 40px;
+        }
+
+        /* --- Grid Container --- */
+        .tool-bag-grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: var(--grid-gap);
+            position: relative; /* Important for containing the description panel if using absolute positioning, though flex/grid works too */
+        }
+
+        /* --- Tool Cards --- */
+        .tool-card {
+            background-color: var(--color-background-secondary);
+            border: 2px solid transparent;
+            border-radius: 6px;
+            padding: 15px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+            transition: border-color 0.2s, transform 0.2s;
+        }
+        .tool-card:hover {
+            border-color: var(--color-accent);
+            transform: translateY(-2px);
+        }
+        .tool-name {
+            font-size: 1.2em;
+            color: var(--color-accent);
+        }
+        .tool-category {
+            font-size: 0.9em;
+            color: var(--color-text-dim);
+            margin-top: 5px;
+        }
+
+        /* --- Detail Panel (The animated element) --- */
+        .tool-bag-tdescr {
+            /* Span the full width of the grid */
+            grid-column: 1 / -1; 
+            
+            /* Animation properties */
+            transition: opacity 0.4s ease-out, transform 0.4s ease-out; 
+            
+            /* Initial Hidden State: Fade out and move off-screen to the right */
+            opacity: 0;
+            transform: translateX(100%); 
+            
+            /* Appearance and Layout */
+            background-color: var(--color-background-secondary);
+            border-radius: 8px;
+            padding: 0; /* Content padding is applied to the inner div */
+            margin-top: 10px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+            /* Hide overflow to prevent visual artifacts during the slide */
+            overflow: hidden; 
+        }
+
+        /* The Active State (Final position) */
+        .tool-bag-tdescr.is-visible {
+            opacity: 1; 
+            transform: translateX(0); /* Slides into view */
+        }
+
+        /* Inner Content Wrapper for Padding and Structure */
+        .tool-bag-tdescr-inner {
+            padding: 20px;
+        }
+        .detail-content-wrapper {
+            display: flex;
+            gap: 20px;
+            margin-top: 15px;
+        }
+        .detail-images {
+            flex: 0 0 150px;
+            max-width: 150px;
+            background-color: #111;
+            padding: 10px;
+            border-radius: 4px;
+        }
+        .product-detail-img {
+            width: 100%;
+            height: auto;
+            display: block;
+            margin-bottom: 5px;
+            border-radius: 4px;
+        }
+        .detail-info {
+            flex-grow: 1;
+        }
+        .detail-price {
+            font-size: 1.1em;
+            color: var(--color-accent);
+            margin-bottom: 10px;
+        }
+        .detail-link {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 8px 15px;
+            background-color: var(--color-accent);
+            color: var(--color-background-primary);
+            text-decoration: none;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: background-color 0.2s;
+        }
+        .detail-link:hover {
+            background-color: #00e5ff;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Product Tool Bag Demo</h1>
+    <div class="tool-bag-grid-container">
+        
+        <div class="tool-card" 
+             data-product-details='{
+                "description": "A high-precision measurement device for complex geometry. Essential for calibration.",
+                "images": ["https://via.placeholder.com/150/00bcd4/ffffff?text=TOOL+A"],
+                "specs": ["Accuracy: ±0.01mm", "Range: 0-150mm", "Material: Titanium Alloy"],
+                "price": "$129.99",
+                "store": "Global Tools Inc.",
+                "link": "#tool-a"
+             }'>
+            <div class="tool-name">Digital Calipers</div>
+            <div class="tool-category">Measurement</div>
+        </div>
+
+        <div class="tool-card"
+             data-product-details='{
+                "description": "Powerful cordless impact driver with long-lasting lithium battery. Perfect for heavy duty tasks.",
+                "images": ["https://via.placeholder.com/150/f50057/ffffff?text=TOOL+B"],
+                "specs": ["Torque: 220 Nm", "Battery: 4.0 Ah Li-ion", "Speed: 0-3000 RPM"],
+                "price": "$249.00",
+                "store": "Power Depot",
+                "link": "#tool-b"
+             }'>
+            <div class="tool-name">Impact Driver 4000</div>
+            <div class="tool-category">Power Tools</div>
+        </div>
+
+        <div class="tool-card"
+             data-product-details='{
+                "description": "Ergonomic soldering iron for fine electronics work. Fast heat-up time and precise temperature control.",
+                "images": ["https://via.placeholder.com/150/ff9800/ffffff?text=TOOL+C"],
+                "specs": ["Power: 60W", "Temp Range: 200°C - 480°C", "Tip Type: Pencil"],
+                "price": "$45.50",
+                "store": "Tech Supply Co.",
+                "link": "#tool-c"
+             }'>
+            <div class="tool-name">Precision Soldering Iron</div>
+            <div class="tool-category">Electronics</div>
+        </div>
+
+    </div>
+
+    <script>
+        /* --- Helper function to build the inner HTML content (Revised) --- */
+        function buildDescriptionHTML(cardElement, productDetails) {
+            const toolName = cardElement.querySelector('.tool-name')?.textContent.trim() || 'Product Details';
+            const imageHTML = (productDetails.images && productDetails.images.length > 0) 
+                ? productDetails.images.map(src => `<img src="${src}" alt="Product Image" class="product-detail-img">`).join('')
+                : '<p style="color:var(--color-text-dim);">No images available.</p>';
+            const specsHTML = (productDetails.specs && productDetails.specs.length > 0)
+                ? productDetails.specs.map(spec => `<li>${spec}</li>`).join('')
+                : '<li>No detailed specifications listed.</li>';
+            const description = productDetails.description || 'No detailed description available.';
+            const price = productDetails.price || 'Price not listed';
+            const store = productDetails.store || 'Store not specified';
+            const link = productDetails.link || '#';
+
+            // IMPORTANT: This function now returns the inner content block, 
+            // wrapped in a new container for easier replacement.
+            return `
+                <div class="tool-bag-tdescr-inner">
+                    <h2>${toolName}</h2>
+                    <div class="detail-content-wrapper">
+                        <div class="detail-images">${imageHTML}</div>
+                        <div class="detail-info">
+                            <p class="detail-price">Price: <strong>${price}</strong></p>
+                            <h3>Description</h3><p style="color:var(--color-text-light);">${description}</p>
+                            <h3>Specifications</h3><ul>${specsHTML}</ul>
+                            <h3>Online Store</h3>
+                            <p style="color:var(--color-text-light);">Available at: ${store}</p>
+                            <a href="${link}" target="_blank" class="detail-link">Visit Store Page ✦</a>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        /* --- Main Logic --- */
+        document.addEventListener('DOMContentLoaded', () => {
+            const toolCards = document.querySelectorAll('.tool-card');
+
+            if (toolCards.length > 0) {
+                toolCards.forEach(card => {
+                    card.addEventListener('click', () => {
+                        const gridContainer = card.closest('.tool-bag-grid-container');
+                        if (!gridContainer) return;
+                        const detailsString = card.getAttribute('data-product-details');
+
+                        if (!detailsString) { return; }
+
+                        let product;
+                        try {
+                            product = JSON.parse(detailsString);
+                        } catch (e) {
+                            console.error("Error parsing product details JSON:", e);
+                            return;
+                        }
+                        
+                        // 1. Generate the inner HTML content
+                        const innerHTMLContent = buildDescriptionHTML(card, product);
+
+                        let existingDescr = gridContainer.querySelector('.tool-bag-tdescr');
+                        
+                        // --- CORE LOGIC CHANGE ---
+                        if (existingDescr) {
+                            // SCENARIO 1: REUSE & UPDATE (No animation)
+                            const innerWrapper = existingDescr.querySelector('.tool-bag-tdescr-inner');
+                            if (innerWrapper) {
+                                // Replace the content of the inner wrapper immediately
+                                innerWrapper.outerHTML = innerHTMLContent;
+                            } else {
+                                // Fallback: If inner wrapper is missing, just replace all content
+                                existingDescr.innerHTML = innerHTMLContent; 
+                            }
+                        } else {
+                            // SCENARIO 2: INITIAL INSERTION (With animation)
+                            // 2a. Wrap the content in the animatable outer div
+                            const newHTML = `<div class="tool-bag-tdescr">${innerHTMLContent}</div>`;
+
+                            // 2b. Insert the new div
+                            gridContainer.insertAdjacentHTML('beforeend', newHTML);
+                            
+                            // 2c. Get the element and trigger the slide-in transition
+                            existingDescr = gridContainer.querySelector('.tool-bag-tdescr');
+                            requestAnimationFrame(() => {
+                                if (existingDescr) {
+                                    existingDescr.classList.add('is-visible');
+                                }
+                            });
+                        }
+                    });
+                });
+            }
+
+            // --- CLOSE ON OUTSIDE CLICK LOGIC (With Slide-Out Transition) ---
+            document.addEventListener('click', (event) => {
+                const detailPanel = document.querySelector('.tool-bag-tdescr');
+                
+                if (detailPanel) {
+                    const isCard = event.target.closest('.tool-card');
+                    const isInsideDetailPanel = event.target.closest('.tool-bag-tdescr');
+                    
+                    if (!isCard && !isInsideDetailPanel) {
+                        
+                        // Trigger the fade-out/slide-out transition
+                        detailPanel.classList.remove('is-visible');
+                        
+                        // Wait for the transition to finish before removing the element
+                        // The duration (0.4s) must match the CSS transition duration
+                        detailPanel.addEventListener('transitionend', function handler() {
+                            // Only remove if it has actually transitioned out
+                            if (!detailPanel.classList.contains('is-visible')) {
+                                detailPanel.remove();
+                            }
+                            // Clean up the event listener
+                            detailPanel.removeEventListener('transitionend', handler);
+                        });
+                    }
+                }
+            });
+
+            // (Note: Removed initial calls to renderSummaryItems and setupFiltering 
+            // as they are not defined in this minimal demo)
+        });
+    </script>
+</body>
+</html>

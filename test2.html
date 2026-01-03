@@ -1,0 +1,240 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Horizontal Folder Stack</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root{
+      --bg: #0f1220;
+      --track: #0b0e19;
+      --folder: #1c2140;
+      --folder2: #22274d;
+      --folder3: #273063;
+      --folder4: #2c387a;
+      --tab: #f7d672;
+      --tab-edge: #c9ad42;
+      --border: #303659;
+      --text: #e9ecff;
+      --muted: #a9b2d9;
+      --shadow: 0 15px 30px rgba(0,0,0,.35);
+    }
+
+    html, body { height: 100%; margin:0; }
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--text);
+      background: linear-gradient(120deg, var(--bg), var(--track) 60%);
+    }
+
+    /* Page frame */
+    .page {
+      display: grid;
+      grid-template-rows: auto 1fr;
+      min-height: 100vh;
+      padding: clamp(16px, 4vw, 32px);
+      gap: 18px;
+    }
+    h1 { margin: 0; font-size: clamp(1.4rem, 3vw, 2rem); }
+
+    /* Horizontally scrolling container */
+    .container {
+      display: grid;
+      grid-auto-flow: column;
+      grid-auto-columns: 90vw;
+      gap: 24px;
+      overflow-x: auto;
+      padding: 24px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: linear-gradient(180deg, #12152a 0%, #151832 100%);
+      box-shadow: var(--shadow);
+
+      /* Smooth snapping per card */
+      scroll-snap-type: x mandatory;
+      scroll-padding: 24px;
+    }
+
+    /* Optional: nicer native scrollbars (WebKit) */
+    .container::-webkit-scrollbar { height: 12px; }
+    .container::-webkit-scrollbar-track { background: #101328; border-radius: 999px; }
+    .container::-webkit-scrollbar-thumb { background: #2a2f58; border-radius: 999px; border: 2px solid #101328; }
+
+    /* Folder cards */
+    .folder {
+      position: relative;
+      scroll-snap-align: start;
+
+      border-radius: 14px 14px 10px 10px;
+      border: 1px solid var(--border);
+      background: var(--folder);
+      box-shadow: var(--shadow);
+
+      padding: 18px 18px 22px;
+      min-height: 240px;
+      display: grid;
+      align-content: start;
+      gap: 8px;
+
+      /* Slight stacking effect */
+      transform: translateY(0);
+      transition: transform .2s ease, box-shadow .2s ease;
+    }
+    .folder:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 20px 40px rgba(0,0,0,.45);
+    }
+
+    /* Give each folder a slightly different tone */
+    .folder:nth-child(1){ background: var(--folder); }
+    .folder:nth-child(2){ background: var(--folder2); }
+    .folder:nth-child(3){ background: var(--folder3); }
+    .folder:nth-child(4){ background: var(--folder4); }
+
+    /* The “fin” or tab at top-left */
+    .folder::before {
+      content: "";
+      position: absolute;
+      top: -12px;
+      left: 16px;
+      width: 88px;
+      height: 26px;
+      background: linear-gradient(180deg, var(--tab), #eacb59);
+      border: 1px solid var(--tab-edge);
+      border-bottom: none;
+      border-radius: 8px 8px 0 0;
+      box-shadow: 0 8px 16px rgba(0,0,0,.25);
+
+      /* Little notch to look like a die-cut tab */
+      clip-path: polygon(0% 100%, 10% 0%, 90% 0%, 100% 100%);
+    }
+
+    /* A subtle “stack” ridge behind each folder */
+    .folder::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 14px 14px 10px 10px;
+      pointer-events: none;
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(0,0,0,.08));
+      mix-blend-mode: soft-light;
+    }
+
+    /* Folder header text aligns with the tab visually */
+    .folder h2 {
+      margin: 8px 0 4px;
+      font-size: 1.1rem;
+      letter-spacing: .2px;
+    }
+    .folder p { margin: 0; color: var(--muted); }
+    .folder .meta {
+      margin-top: auto;
+      display: flex;
+      justify-content: space-between;
+      font-size: .9rem;
+      color: var(--muted);
+      border-top: 1px dashed #3a4069;
+      padding-top: 10px;
+    }
+
+    /* Optional: slight overlap to feel “stacked” */
+    .folder + .folder { margin-left: -6px; }
+    .folder:nth-child(1) { z-index: 4; }
+    .folder:nth-child(2) { z-index: 3; }
+    .folder:nth-child(3) { z-index: 2; }
+    .folder:nth-child(4) { z-index: 1; }
+
+    /* Buttons for convenience */
+    .actions {
+      display: flex; gap: 10px; flex-wrap: wrap;
+    }
+    .btn {
+      background: #12152a;
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 8px 12px;
+      text-decoration: none;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <header>
+      <h1>Horizontally Scrolling Folder Stack</h1>
+      <p style="color:var(--muted)">Scroll horizontally to view each “folder”. Drag with your mouse or swipe on touch screens.</p>
+      <div class="actions">
+        <button class="btn" id="prev">← Prev</button>
+        <button class="btn" id="next">Next →</button>
+      </div>
+    </header>
+
+    <section class="container" id="container" aria-label="Folder list" tabindex="0">
+      <article class="folder" role="group" aria-label="Folder 1">
+        <h2>Folder One</h2>
+        <p>Use this card to hold notes, tasks, or links. The fin makes it look like a real file folder.</p>
+        <div class="meta"><span>ID: #F-001</span><span>Updated: Today</span></div>
+      </article>
+
+      <article class="folder" role="group" aria-label="Folder 2">
+        <h2>Folder Two</h2>
+        <p>Each folder is a snap point. The container scrolls horizontally with smooth snapping.</p>
+        <div class="meta"><span>ID: #F-002</span><span>Updated: Yesterday</span></div>
+      </article>
+
+      <article class="folder" role="group" aria-label="Folder 3">
+        <h2>Folder Three</h2>
+        <p>Tabs are drawn with a ::before pseudo-element and a small notch using clip-path.</p>
+        <div class="meta"><span>ID: #F-003</span><span>Updated: Mon</span></div>
+      </article>
+
+      <article class="folder" role="group" aria-label="Folder 4">
+        <h2>Folder Four</h2>
+        <p>Cards slightly overlap to enhance the “stacked” feeling with z-index ordering.</p>
+        <div class="meta"><span>ID: #F-004</span><span>Updated: Sun</span></div>
+      </article>
+    </section>
+  </main>
+
+  <script>
+    /* Optional: drag-to-scroll for mouse users */
+    (function(){
+      const el = document.getElementById('container');
+      let isDown = false, startX = 0, scrollLeft = 0;
+
+      el.addEventListener('mousedown', (e) => {
+        isDown = true;
+        el.classList.add('dragging');
+        startX = e.pageX - el.offsetLeft;
+        scrollLeft = el.scrollLeft;
+      });
+      window.addEventListener('mouseup', () => {
+        isDown = false;
+        el.classList.remove('dragging');
+      });
+      el.addEventListener('mousemove', (e) => {
+        if(!isDown) return;
+        e.preventDefault();
+        const x = e.pageX - el.offsetLeft;
+        const walk = (x - startX) * 1.2; // scroll speed
+        el.scrollLeft = scrollLeft - walk;
+      });
+
+      // Keyboard helpers
+      el.addEventListener('keydown', (e) => {
+        const step = el.clientWidth * 0.9; // almost one card
+        if (e.key === 'ArrowRight') el.scrollBy({ left: step, behavior: 'smooth' });
+        if (e.key === 'ArrowLeft')  el.scrollBy({ left: -step, behavior: 'smooth' });
+      });
+
+      // Prev/Next buttons
+      const prev = document.getElementById('prev');
+      const next = document.getElementById('next');
+      prev.addEventListener('click', () => el.scrollBy({ left: -el.clientWidth, behavior: 'smooth' }));
+      next.addEventListener('click', () => el.scrollBy({ left:  el.clientWidth, behavior: 'smooth' }));
+    })();
+  </script>
+</body>
+</html>

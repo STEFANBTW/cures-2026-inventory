@@ -1,0 +1,260 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Stacked Folder Pages with Vertical Nav</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <style>
+    :root{
+      --sidebar-w: 240px;
+      --bg: #0f1220;
+      --track: #0b0e19;
+      --border: #303659;
+      --text: #e9ecff;
+      --muted: #a9b2d9;
+      --shadow: 0 20px 40px rgba(0,0,0,.45);
+
+      /* Folder colors */
+      --p1: #1c2140;
+      --p2: #22274d;
+      --p3: #273063;
+      --p4: #2c387a;
+
+      /* Tab colors */
+      --tab: #f7d672;
+      --tab-edge: #c9ad42;
+    }
+
+    html, body { height: 100%; margin: 0; }
+    body {
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      color: var(--text);
+      background: linear-gradient(120deg, var(--bg), var(--track) 60%);
+    }
+
+    /* --- Vertical nav bar --- */
+    .sidebar {
+      position: fixed;
+      inset: 0 auto 0 0;
+      width: var(--sidebar-w);
+      background: #12152a;
+      border-right: 1px solid var(--border);
+      padding: 18px;
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 16px;
+    }
+    .brand { font-weight: 800; letter-spacing: .3px; }
+    .nav {
+      display: grid; gap: 8px;
+      margin-top: 6px;
+    }
+    .nav a {
+      color: var(--text);
+      text-decoration: none;
+      padding: 8px 10px;
+      border-radius: 10px;
+      border: 1px solid transparent;
+    }
+    .nav a:hover { background: #0f1220; border-color: var(--border); }
+    .nav a.active { background: #171a2e; border-color: var(--border); }
+
+    .footer-note {
+      color: var(--muted);
+      font-size: .85rem;
+    }
+
+    /* --- Main scroller area --- */
+    .content {
+      margin-left: calc(var(--sidebar-w));
+    }
+
+    /* Each wrapper provides scroll length for the sticky child */
+    .panel-wrap {
+      height: 160vh;            /* Scroll space for slide-in animation */
+      position: relative;
+      border-bottom: 1px solid #12152a;
+    }
+
+    /* Sticky full-viewport page (covers full width & height) */
+    .panel {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+      width: 100vw;             /* covers the full width of the screen */
+      padding-left: calc(var(--sidebar-w) + 24px); /* avoid sitting under the sidebar */
+      padding-right: 24px;
+      display: grid;
+      align-content: start;
+      gap: 8px;
+      box-sizing: border-box;
+
+      border: 1px solid var(--border);
+      border-radius: 14px 14px 10px 10px;
+      box-shadow: var(--shadow);
+
+      /* Start off-screen to the right; JS will animate to 0 */
+      transform: translateX(100%);
+      will-change: transform;
+      overflow: hidden;
+    }
+
+    /* Folder look + different tones */
+    .panel.p1 { background: var(--p1); z-index: 1; }
+    .panel.p2 { background: var(--p2); z-index: 2; }
+    .panel.p3 { background: var(--p3); z-index: 3; }
+    .panel.p4 { background: var(--p4); z-index: 4; }
+
+    /* Fin (tab) at top-left of the page area */
+    .panel::before {
+      content: "";
+      position: absolute;
+      top: 12px;
+      left: calc(var(--sidebar-w) + 40px);
+      width: 112px;
+      height: 28px;
+      background: linear-gradient(180deg, var(--tab), #eacb59);
+      border: 1px solid var(--tab-edge);
+      border-bottom: none;
+      border-radius: 8px 8px 0 0;
+      box-shadow: 0 8px 16px rgba(0,0,0,.25);
+      clip-path: polygon(0% 100%, 10% 0%, 90% 0%, 100% 100%);
+    }
+
+    /* Gentle surface highlight */
+    .panel::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: 14px 14px 10px 10px;
+      pointer-events: none;
+      background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(0,0,0,.08));
+      mix-blend-mode: soft-light;
+    }
+
+    .panel h2 { margin: 60px 0 6px; font-size: clamp(1.3rem, 3vw, 2rem); }
+    .panel p { margin: 0; color: var(--muted); }
+    .meta {
+      margin-top: auto;
+      display: flex; justify-content: space-between;
+      border-top: 1px dashed #3a4069;
+      padding-top: 12px;
+      color: var(--muted);
+    }
+
+    /* Reduced motion preference */
+    @media (prefers-reduced-motion: reduce) {
+      .panel { transform: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <!-- Vertical navigation -->
+  <aside class="sidebar" aria-label="Section navigation">
+    <div class="brand">📂 Folder Pages</div>
+    <nav class="nav" id="nav">
+      #p1Folder One</a>
+      #p2Folder Two</a>
+      #p3Folder Three</a>
+      #p4Folder Four</a>
+    </nav>
+    <small class="footer-note">Scroll to see each page slide over the previous.</small>
+  </aside>
+
+  <!-- Main content -->
+  <main class="content" id="content">
+    <!-- Wrapper + sticky page 1 -->
+    <section class="panel-wrap" id="p1">
+      <article class="panel p1" role="group" aria-label="Folder 1">
+        <h2>Folder One</h2>
+        <p>Each page is full-width (100vw) and full-height (100vh). As you scroll, this page slides in from the right.</p>
+        <div class="meta"><span>ID: #F-001</span><span>Updated: Today</span></div>
+      </article>
+    </section>
+
+    <!-- Wrapper + sticky page 2 -->
+    <section class="panel-wrap" id="p2">
+      <article class="panel p2" role="group" aria-label="Folder 2">
+        <h2>Folder Two</h2>
+        <p>This page will slide over the previous one, creating a stacked, folder-like effect.</p>
+        <div class="meta"><span>ID: #F-002</span><span>Updated: Yesterday</span></div>
+      </article>
+    </section>
+
+    <!-- Wrapper + sticky page 3 -->
+    <section class="panel-wrap" id="p3">
+      <article class="panel p3" role="group" aria-label="Folder 3">
+        <h2>Folder Three</h2>
+        <p>The fin at the top-left is drawn with a <code>::before</code> pseudo-element for a real folder vibe.</p>
+        <div class="meta"><span>ID: #F-003</span><span>Updated: Mon</span></div>
+      </article>
+    </section>
+
+    <!-- Wrapper + sticky page 4 -->
+    <section class="panel-wrap" id="p4">
+      <article class="panel p4" role="group" aria-label="Folder 4">
+        <h2>Folder Four</h2>
+        <p>Later pages have higher <code>z-index</code>, so they naturally stack on top as you scroll down.</p>
+        <div class="meta"><span>ID: #F-004</span><span>Updated: Sun</span></div>
+      </article>
+    </section>
+  </main>
+
+  <script>
+    /**
+     * Slide-in on scroll:
+     * For each panel wrapper, compute progress = how far we've scrolled through it.
+     * Map progress 0..1 to translateX(100% .. 0%).
+     */
+    (function(){
+      const wraps = Array.from(document.querySelectorAll('.panel-wrap'));
+      const panels = wraps.map(w => w.querySelector('.panel'));
+      const navLinks = Array.from(document.querySelectorAll('.nav a'));
+
+      function clamp(n, min, max){ return Math.max(min, Math.min(max, n)); }
+
+      function update(){
+        const vh = window.innerHeight;
+
+        wraps.forEach((wrap, i) => {
+          const panel = panels[i];
+          const rect = wrap.getBoundingClientRect();
+          const h = wrap.offsetHeight;
+
+          // Progress of scrolling through this wrapper:
+          // 0 when wrapper top is below viewport (not started),
+          // 1 near the end of the wrapper (panel fully slid in).
+          const progress = clamp((vh - rect.top) / (h - vh), 0, 1);
+
+          // Apply translate based on progress:
+          const tx = (1 - progress) * 100; // percent
+          panel.style.transform = `translateX(${tx}%)`;
+        });
+
+        // Active nav (closest wrapper whose top has crossed the viewport top)
+        let activeId = null;
+        let minDelta = Infinity;
+        wraps.forEach(w => {
+          const d = Math.abs(w.getBoundingClientRect().top);
+          if (d < minDelta){ minDelta = d; activeId = w.id; }
+        });
+        navLinks.forEach(a => a.classList.toggle('active', a.dataset.target === activeId));
+      }
+
+      // Smooth scroll for nav clicks
+      navLinks.forEach(a => {
+        a.addEventListener('click', e => {
+          e.preventDefault();
+          const target = document.getElementById(a.dataset.target);
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+      });
+
+      window.addEventListener('scroll', update, { passive: true });
+      window.addEventListener('resize', update);
+      update();
+    })();
+  </script>
+</body>
+</html>

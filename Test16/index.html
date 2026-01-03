@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cure's Inventory Prospects 2025</title>
+    
+    <link rel="stylesheet" href="style.cssí">
+
+    <script src="html2canvas.min.js"></script>
+    <script src="jspdf.umd.min.js"></script>
+</head>
+<body>
+            
+    <section class="landing-page">
+        <div class="landing-grid0 animate-in">
+            <div class="landing-header">
+                <h1 class="gradient-text">Stefan's New Prospect <br>(2025 - 2026)</h1>
+            </div>
+
+            <div class="landing-message">
+                <p> I’ve been thinking of running a small business
+                     called **CURE – Computer Upgrade and Repair
+                      Environment**. <br>This webpage lists
+                       tools to realize my business plan and aid
+                        my engineering mindset.
+                </p>                
+                <p>— Stefan</p>
+                <p>This is an inventory of **50 items** to enhance
+                     my learning environment and commence my business
+                      idea. <br>
+                     The tools are categorized into core groups.</p>
+            </div>
+
+            <div class="tool-bag-link">
+                    <button class="tools-connect"><a href="#learn-tools">Learning</a></button>
+                    <button class="tools-connect"><a href="#repair-tools">Repairs</a></button>
+                    <button class="tools-connect"><a href="#prod-tools">Productivity</a></button>
+            </div>
+        </div>
+    </section>
+
+    <section id="prospects" class="tool-bag-container">
+        <div class="tool-bag-nav" id="navbar">
+            <a href="#home"><span class="link-emoji">🏠</span> <span class="link-descr">Home</span></a>
+            <a href="#learn-tools"><span class="link-emoji">📔</span> <span class="link-descr">Learning</span></a>
+            <a href="#repair-tools"><span class="link-emoji">⛏️</span> <span class="link-descr">Repairs</span></a>
+            <a href="#prod-tools"><span class="link-emoji">👷‍♂️</span> <span class="link-descr">Productivity</span></a>
+        </div>
+
+        <div class="tool-bag">
+            
+            <div id="learn-tools" class="learn-tools tools-group">
+                <div class="tool-bag-brief-container">
+                    <div class="tool-bag-brief">
+                        <img src="" alt="">
+                        <div class="tool-bag-brief-brief">
+                            <h1>Learning Tools</h1>
+                            <p>Essential components for embedded systems, Arduino projects, and basic electronics theory.</p>
+                        </div>
+                        <div class="tool-bag-brief-price">
+                            <p>Total</p>
+                            <p>£400+</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="tool-bag-grid-container">
+                    <div class="tool-bag-grid"></div>
+                </div>
+            </div>
+
+            <div id="repair-tools" class="repair-tools tools-group">
+                <div class="tool-bag-brief-container">
+                    <div class="tool-bag-brief">
+                        <img src="" alt="">
+                        <div class="tool-bag-brief-brief">
+                            <h1>Repair Tools</h1>
+                            <p>Hardware diagnostics, screen separation, and soldering equipment for fixing client devices.</p>
+                        </div>
+                        <div class="tool-bag-brief-price">
+                            <p>Total</p>
+                            <p>£500+</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="tool-bag-grid-container">
+                    <div class="tool-bag-grid"></div>
+                </div>
+            </div>
+
+            <div id="prod-tools" class="prod-tools tools-group">
+                <div class="tool-bag-brief-container">
+                    <div class="tool-bag-brief">
+                        <img src="" alt="">
+                        <div class="tool-bag-brief-brief">
+                            <h1>Productivity & Troubleshooting</h1>
+                            <p>Software, storage, and workspace organization to manage the business flow.</p>
+                        </div>
+                        <div class="tool-bag-brief-price">
+                            <p>Total</p>
+                            <p>£200+</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="tool-bag-grid-container">
+                    <div class="tool-bag-grid"></div>
+                </div>
+            </div>
+
+            <div class="tool-group-spacer"></div>
+        </div>
+    </section>
+
+    <div class="tool-bag-summary-space"></div>
+
+    <section class="summary-page">
+        <div class="summary-brief">
+            <h1>Project Inventory Summary</h1>
+            <p>Review your selected tools and materials.</p>
+            <h2 class="brief-static-price" style="font-size: 2.5rem; color: #2563eb; margin-top: 10px;">
+                Total: <span id="brief-static-price">£0.00</span>
+            </h2>
+        </div>
+
+        <div class="summary-grid-section">
+            
+            <div class="sticky-filter-bar">
+                <div id="stc" class="sticky-total-container">
+                    <span class="sticky-label">Current Total</span>
+                    <span class="sticky-price" id="sticky-dynamic-price">£0.00</span>
+                </div>
+
+                <div class="controls-container">
+                    <button class="filter-btn active" data-filter="all">All</button>
+                    <button class="filter-btn" data-filter="Essential">Essentials</button>
+                    <button class="filter-btn" data-filter="Repair">Repair</button>
+                    <button class="filter-btn" data-filter="Learning">Learning</button>
+                    <button class="filter-btn" data-filter="freeShipping">Free Shipping</button>
+                    
+                    <div style="border-left: 1px solid #cbd5e1; height: 25px; margin: 0 5px;"></div>
+                    
+                    <select class="sort-select" id="sort-select">
+                        <option value="default">Sort By</option>
+                        <option value="price-asc">Price: Low to High</option>
+                        <option value="price-desc">Price: High to Low</option>
+                    </select>
+                </div>
+            </div>
+
+            <div id="summaryGrid" class="product-grid">
+                </div>
+        </div>
+    </section>
+
+    <section id="closing" class="closing">
+        <div class="closing-inner">
+            <div class="closing-message">
+                <h1>A Message From Stefan</h1>
+                <p> I’ve been thinking of running a small business called CURE – Computer Upgrade and Repair Environment; a well organised and equipped computer and electronics repair space (with great customer relations). 
+                I have found four people who can train me. I intend to register under one of the experts who has a shop to master the trade.
+                This webpage is a list of tools to realize my business plan. Thank you for your support.
+                </p>
+            </div>
+
+            <div class="closing-summary-download">
+                <p>You can download an image or document of the summary here to view offline.</p>
+                <div style="display: flex;">
+                    <div class="download-btn dld-pdf"> 
+                        <h1>Download PDF</h1>
+                    </div>
+                    <div class="download-btn dld-img">
+                        <h1>Download Image</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+</body>
+</html>

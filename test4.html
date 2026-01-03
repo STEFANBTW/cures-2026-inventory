@@ -1,0 +1,1370 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cure's Inventory Prospects 2025</title>
+    <style>
+        body{
+            margin: 0;
+        }
+
+        .tool-bag,
+        .summary-grid{
+            overflow: auto; /* Ensures scrolling is enabled if content overflows */
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none;  /* IE and older Edge */
+        }
+
+
+        .tool-bag::-webkit-scrollbar,
+        .summary-grid::-webkit-scrollbar {
+            display: none; /* Chrome, Safari, Opera, new Edge */
+        }
+
+        .nav-section{
+            position: sticky;
+            top: 0;
+            z-index: 1;
+
+            width: clamp(4rem, 50%, 30rem);
+
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-self: center;
+        }
+        .inv-nav-bar{
+            height: 1rem;
+        }
+        .nav-container {
+            width: 90%;
+            height: 4rem;
+
+            background-color: rgba(151, 0, 151, 0.329);
+            backdrop-filter: blur(15px);
+            border-radius: 17px;
+        }
+        .sub-nav{
+            width: 100%;
+            height: auto;
+
+            display: flex;
+        }
+        .sub-nav a{
+            width: 25%;
+            height: 4rem;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            text-decoration: none;
+            color: azure;
+
+            transition: .3s;
+        }
+        .sub-nav a:hover{
+            background-color: rgba(58, 1, 1, 0.582);
+            color: white;
+            /* border-radius: 17px; */
+        }
+        .pros-drop-down{ 
+            width: 25%;
+            height: 4rem;
+
+            display: flex;
+            flex-direction: column;
+
+            transition: 0.4s;
+
+            overflow: hidden;
+        }
+        .shown{
+            position: relative;
+            height: 4rem;
+            width: 100%;
+
+            display: flex;
+        }
+        .pros-drop-down .shown a{
+            width: 71%;
+        }
+        .drop-down-btn{
+            width: 30%;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            color: white;
+            font-size: 17px;
+        }
+        .drop-down-btn:hover{    
+            background-color: rgb(58, 1, 1,0.582);
+
+            cursor: pointer;
+        }
+        .pros-cat-drop{
+            display: flex;
+            flex-direction: column;
+
+            background-color: rgba(151, 0, 151, 0.329);
+            border-radius: 0 0 15px 15px;
+        }
+        .pros-drop-down .pros-cat-drop a{
+            text-decoration: none;
+            color: white;
+            width: 100%;
+        }
+
+        .landing-page {
+            position: relative;
+            height: 100vh;
+        }
+        .landing-grid0{
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(2, 1fr);
+
+            height: 90vh;
+        }
+        .landing-portrait{
+            position: relative;
+            width: 70%;
+
+            grid-column: 1/2;
+            grid-row: 1/3;
+            justify-self: center;
+
+            background-color: rgba(165, 4, 170, 0.5);
+
+            overflow: hidden;
+
+            clip-path: polygon( 0 0, 0 55%, 100% 95%, 100% 0);
+        }
+        .landing-header{
+            grid-column: 2/4;
+            grid-row: 1/2;
+
+            overflow: hidden;
+        }
+        .landing-message{
+            grid-column: 2/4;
+            grid-row: 2/3;
+
+            overflow: hidden;
+        }
+        .fire-works {
+            position: absolute;
+            z-index: -1;
+            bottom: 0;
+
+            height: 110%;
+            width: 100%;
+        }
+
+        .portrait-frame{
+            position: absolute;
+            
+            width: 100%;
+            height: 90%;
+            background-color: rgba(220, 43, 226, 0.76);
+
+            clip-path: polygon( 0 0, 0 62%, 100% 95%, 100% 0);
+        }
+        .portait{
+            position: relative;
+            top: 2.5%;
+            right: 25%;
+
+            width: 165%;
+
+            clip-path: polygon(18% 0, 18% 85%, 55% 100%, 73% 90%, 73% 0);
+        }
+
+        .home{
+            position: relative;
+
+            height: 100vh;
+        }
+        .home-pics{
+            position: absolute;
+            z-index: -1;
+
+            display: grid;
+            grid-template-rows: 50% 50%;
+
+            width: 100%;
+            height: 100%;
+
+            & img{
+                width: 100%;
+                height: 100%;
+            }
+        }
+        .home-headline-container{
+            z-index: 1;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            height: 100%;
+            width: 100%;
+
+            clip-path: polygon(0 0, 0 40%, 30% 100%, 100% 100%, 100% 60%, 70% 0);
+            background-color: floralwhite;
+        }
+        .home-headline{
+            font-size: larger;
+        }
+
+        .tool-bag-container{
+            position: relative;
+            height: 100vh;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .tool-bag-nav-container{
+            position: absolute;
+            top: 50%;
+            left: 1.5%;
+            transform: translateY(-50%);
+
+            height: 18rem;
+            width: 4.3rem;
+
+            display: flex;
+            justify-content: start;
+            align-items: center;
+
+            background-color: antiquewhite;
+            background-color: rgba(148, 71, 16, 0.637);
+            border-radius: 1rem;
+            backdrop-filter: blur(15px);
+
+            transition: .3s linear;
+
+            z-index: 1;    
+
+            overflow: hidden;
+        }
+        .tool-bag-nav-container:hover{
+            width: 15.7rem;
+        }
+        .tool-bag-nav{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: 100%;
+            width: auto;
+            /* border: 1px solid black; */
+        }
+        .tool-bag-nav a{
+            height: 25%;
+            width: 100%;
+            display: grid;
+            grid-template-columns: 15% 70%;
+            justify-content: center;
+            align-items: center;
+            font-size: 1.5em;
+            text-decoration: none;
+            border-radius: 1rem 1rem 0 0;
+            /* filter: brightness(0); */
+            transition: .3s linear;
+        }
+        a:hover{
+            background-color: rgba(0, 0, 0, 0.307);
+            filter: brightness(125%) saturate(110%);
+        }
+        .link-emoji{
+        }
+        .link-descr{
+            padding-left: 1.8rem;
+            padding-right: 4.6rem;
+            text-decoration: none;
+            color: antiquewhite;
+        }
+        a: {
+        }
+        .tool-bag{
+            position: relative;
+            height: 100%;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 20rem;
+            /* border: 1px solid black; */
+            background-color: chocolate;
+            overflow: auto;
+        }
+        .tool-bag-fin-space{
+        }
+        @keyframes card-shrink {
+            to{
+                transform: scale(.5);
+            }
+        }
+        .tools-group{
+            position: sticky;
+            left: calc(var(--index)*5rem);
+            width: 85%;
+            height: 95%;
+            display: grid;
+            grid-template-rows: 3% 17% 80%;
+            align-content: center;
+            justify-items: center;
+            flex-shrink: 0;
+        }
+        .tool-bag-brief-container{
+            width: 90%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .tool-bag-brief{
+            position: relative;
+            height: 100%;
+            width: 95%;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            background-color: antiquewhite;
+            border-radius: 12px;
+            box-shadow: 0 10px 17px rgba(0, 0, 0, 0.24);
+
+            overflow: hidden;
+        }
+        .tool-bag-brief-brief{
+            height: 80%;
+            width: 40%;
+            /* border: 1px solid black; */
+            
+        }
+        .tool-bag-brief-brief h1{
+            margin: 0;
+            padding-bottom: 8px;
+            border-bottom: 1px solid black;
+        }
+        .tool-bag-brief-price{
+            height: 80%;
+            width: 10rem;
+            
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+
+            background-color: rgba(148, 71, 16, 0.479);
+            border-radius: 12px 0 0 12px;
+            
+            /* border: 1px solid black; */
+
+            & p{
+                font-size: large;
+                font-weight: 500;
+                margin: 0;
+                color: white;
+            }
+            & span{
+                font-size: small;
+                font-weight: 300;
+                color: antiquewhite;
+            }
+        }
+        .tool-bag-grid-container{
+            position: relative;
+            width: 95%;
+            height: 95%;
+            
+            /* The grid container must be a grid to position the description box */
+            display: grid;
+            grid-template-columns: 1fr; /* Default single column */
+            grid-auto-rows: min-content; /* Adjust rows based on content */
+            
+            overflow: auto;
+            /* border: 1px solid black; */
+        }
+        .tool-bag-grid{
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            width: 100%;
+            padding: 20px 0; /* Add padding for visual separation */
+        }
+        .tool-card{
+            position: relative;
+            height: clamp(5rem, 95%, 25rem);
+            width: 92%;
+            background-color: rgb(240, 255, 255);
+            border-radius: 12px;
+            box-shadow: 0 10px 17px rgba(0, 0, 0, 0.24);
+            transition: 1s;
+            overflow: hidden;
+            cursor: pointer; /* Indicate it's clickable */
+        }
+        .tool-card:hover{
+            transform: scale(1.03);
+        }
+        .tool-card:hover .go-to-page{
+            width: 100%;
+        }
+        .go-to-page{
+            position: absolute;
+            bottom: 0;
+            background-color: brown;
+            height: 10%;
+            width: 0;
+            border-radius: 0 0 8px 8px;
+            font-size: small;
+            transition: .3s;
+            overflow: hidden;
+            z-index: 1;
+        }
+        .go-to-page a{
+            text-decoration: none;
+            color: white;
+            padding: 8px 8px 8px 32px;
+            display: block;
+            transition: 0.3s;
+        }
+        .tool-bag-summary-space{
+            height: 60vh;
+            background-color: chocolate;
+        }
+        .summary-page{
+            height: 100vh;
+        }
+        .summary-brief-container{
+            height: 15%;
+            display: flex;
+            align-items: end;
+        }
+        .summary-brief{
+            position: relative;
+
+            width: 80%;
+            height: 80%;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .summary-text{
+            position: relative;
+
+            height: 80%;
+            width: 45rem;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            /* background-color: aqua; */
+            /* mask-image: url(images/mask_7.svg);
+            mask-repeat: no-repeat;
+            mask-size: 45rem;
+            mask-position: top center; */
+        }
+        .summary-price{
+            position: absolute;
+
+            top: 10%;
+            right: 0;
+
+            height: 80%;
+            width: 23rem;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            background-color: antiquewhite;
+
+            mask-image: url(images/mask_9.svg);
+            mask-repeat: no-repeat;
+            mask-size: 23rem;
+            mask-position: top left;
+        }
+        .summary-brief-p{
+            position: relative;
+            left: 14%;
+        }
+        .summary-brief-h-space{
+            position: absolute;
+            top: 9%;
+            left: 14%;
+
+            z-index: 2;
+
+            text-decoration: none;
+            color: black;
+
+        }
+        .utility-bar{
+            height: 8%;
+
+            display: flex;
+            flex-shrink: 0;
+
+            /* background-color: chartreuse; */
+        }
+        .summary-grid-container{
+            width: 100%;
+            height: 92%;
+
+            display: flex;
+            justify-content: center;
+            align-items: start;
+            flex-shrink: 0;
+
+            /* background-color: darkgreen; */
+        }
+
+        /* --- New Styles for Rich Product Description --- */
+        .tool-bag-tdescr {
+            /* Spans across all columns in the grid container */
+            grid-column: 1 / -1; 
+            padding: 30px; 
+            margin: 20px 0; /* Adjusted margin to be 0 on sides to fill container */
+            background-color: #f0f8ff; 
+            border: 1px solid #b3e5fc;
+            border-radius: 12px;
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Container to hold images and info side-by-side */
+        .detail-content-wrapper {
+            display: flex; 
+            gap: 30px; 
+            margin-top: 20px;
+            flex-wrap: wrap; /* Allows wrapping on small screens */
+        }
+
+        /* Image section */
+        .detail-images {
+            flex-shrink: 0; 
+            width: 40%; 
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        /* Individual product images */
+        .product-detail-img {
+            width: 100%;
+            height: auto;
+            max-height: 250px;
+            object-fit: contain; 
+            border-radius: 8px;
+            border: 1px solid #eee;
+        }
+
+        /* Text and Specs section */
+        .detail-info {
+            flex-grow: 1; 
+            width: 50%; /* Takes up the remaining space */
+        }
+
+        .detail-price {
+            font-size: 1.4rem;
+            color: #4CAF50; 
+            margin-bottom: 20px;
+        }
+
+        .detail-info h3 {
+            color: #007bff;
+            border-bottom: 1px solid #ddd;
+            padding-bottom: 5px;
+        }
+
+        .detail-info ul {
+            padding-left: 20px;
+        }
+
+        .detail-link {
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            margin-top: 15px;
+            transition: background-color 0.2s;
+        }
+
+        .detail-link:hover {
+            background-color: #0056b3;
+        }
+
+        /* Basic responsiveness for detail view */
+        @media (max-width: 768px) {
+            .detail-content-wrapper {
+                flex-direction: column;
+            }
+            .detail-images, .detail-info {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="nav-section">
+            <div class="inv-nav-bar"></div>
+            <div id="navContainer" class="nav-container">
+                <div class="sub-nav">
+                    <a href="#home">Home</a>
+                    <div id="prosCatDrop" class="pros-drop-down">
+                        <div class="shown">
+                            <a href="#prospects">Prospects</a>
+                            <div class="drop-down-btn" onclick="navDropDown()">
+                              ▽</div>                       
+                                </div>                        
+                        <div class="pros-cat-drop">
+                            <a href="#learn-tools">Learning</a>
+                            <a href="#repair-tools">Repairs</a>
+                            <a href="#prod-tools">Productivity</a>
+                        </div> 
+                    </div>                   
+                    <a href="#summary-page">Summary</a>
+                    <a href="#closing">Contact</a>
+                </div>
+            </div>
+    </div>
+            
+    <section class="landing-page">
+        
+        <img class="fire-works" src="images/fireworks.jpg" alt="">
+
+            <div class="landing-grid0">
+                <div class="landing-portrait">
+                    <div class="portrait-frame"></div>
+                <img class="portait" src="images/portrait.jpg" alt="">
+
+                </div>
+
+                <div class="landing-header">
+                    <h1>A Message From Stefan</h1>
+
+                </div>
+
+                <div class="landing-message">
+                    <p> I’ve been thinking of running a small business called CURE – Computer Upgrade and Repair Environment; a well organised and equipped computer and electronics repair space (with great customer relations). Its primary concern are problems associated with Computers (laptops, PCs) and their accessories (Watches, Headsets, charging adapters), not Appliances (TVs, Fridges, Home Stereo) or Phones; expansion to fixing general electronics will take place as soon as I profoundly learn how to repair them.
+                        I have found four people who can train me, 2 lectures in school and 2 professionals in the business. I intend to register under one of the experts who has a shop to master the trade, this December, every morning at his shop.
+                        Before we continue, I want to express my gratitude to you. For 2 times you’ve intervened in fiscal matters and you showed exceptional interest and support in my sports and academics. Thank you for being there for me. I have you in my prayers. Thank you.
+                        This is webpage is list of tools to realise my business plan and aid my engineering mindset, specifically in the embedded engineering skillset. The total list adds to £367. The essential list adds up to £197. Thanks💪
+                    </p>
+                </div>
+
+            </div>
+        
+    </section>
+
+    <section id="home" class="home">
+        <div class="home-pics">
+            <img src="images/2.png" alt="">
+            <img src="images/1.png" alt="">
+        </div>
+        <div class="home-headline-container">
+            <div class="home-headline">     
+                <h1>Welcome to Stefan's New Prospect (2025 - 2026)</h1>
+                <p>This is an inventory of tools to enhance my learning environment
+                     and commence my business idea. 
+                    They categorised into 3 groups.</p>
+
+                <div class="tool-bag-link">
+                    <button class="tools-connect"><a href="#learn-tools">Learning</a></button>
+                    <button class="tools-connect"><a href="#repair-tools">Repairs</a></button>
+                    <button class="tools-connect"><a href="#prod-tools">Productivity</a></button>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <section id="prospects" class="tool-bag-container">
+        <div class="tool-bag-nav-container">
+            <div class="tool-bag-nav">
+                <a href="#home"><span class="link-emoji">🏠</span> <span class="link-descr">Home</span></a>
+                <a href="#learn-tools"><span class="link-emoji">📔</span> <span class="link-descr">Learning</span></a>
+                <a href="#repair-tools"><span class="link-emoji">⛏️</span> <span class="link-descr">Repairs</span></a>
+                <a href="#prod-tools"><span class="link-emoji">👷‍♂️</span> <span class="link-descr">Productivity</span></a>
+            </div>
+        </div>
+
+        <div class="tool-bag">
+            
+            <div id="learn-tools" class="learn-tools tools-group">
+                <div class="tool-bag-fin-space"></div>
+
+                <div class="tool-bag-brief-container">
+
+                    <div class="tool-bag-brief">
+                        <img src="" alt="learn-tools-image">
+                        <div class="tool-bag-brief-brief">
+                            
+                            <h1>Learning Tools</h1>
+                            <p>These are some tools I need in 300L.
+                                It contains a basic Arduino starter kit and its accessories.
+                                There are also tools for a project
+                                to build a Laptop Power Bank.</p>
+                        </div>
+                        <div class="tool-bag-brief-price">
+
+                            <p>Total</p>
+                            <p>£78 <span>N120,000</span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tool-bag-grid-container">
+
+                    <div class="tool-bag-grid">
+                        
+                        <div class="tool-card"
+                            data-product-details='{
+                                "description": "The Arduino Starter Kit provides all the necessary components and documentation to begin learning embedded systems and basic electronics programming. This is essential for 300L projects.",
+                                "images": ["https://via.placeholder.com/300x200?text=Arduino+Kit+Main", "https://via.placeholder.com/300x200?text=Arduino+Components"],
+                                "price": "£55.99",
+                                "specs": ["Microcontroller: Uno R3", "Required OS: Windows, Mac, Linux", "Skill Level: Beginner"],
+                                "store": "Amazon",
+                                "link": "#"
+                            }'>
+                            <div class="tool-pics-container"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"></div>
+                            <h1 class="tool-name">Arduino Starter Kit</h1>
+                            <h2 class="tool-store">Amazon</h2>
+                            <p class="tool-brief">Basic electronics and programming kit.</p>
+                            <h1 class="tool-price">£55.99</h1>   
+                        
+                            <div class="go-to-page">
+                                <a href="#">Go to Page ➔</a>                            
+                            </div>  
+                        </div>
+
+                        <div class="tool-card"
+                            data-product-details='{
+                                "description": "This is a comprehensive laptop repair toolkit featuring precision screwdrivers, spudgers, and anti-static tools for safe disassembly and repair. A must-have for the new business.",
+                                "images": ["https://via.placeholder.com/300x200?text=Repair+Toolkit+Box", "https://via.placeholder.com/300x200?text=Repair+Toolkit+Tools"],
+                                "price": "£39.99",
+                                "specs": ["Pieces: 64", "Case: Magnetic", "Anti-Static: Yes", "Material: S2 Steel"],
+                                "store": "iFixit",
+                                "link": "#"
+                            }'>
+                            <div class="tool-pics-container"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"></div>
+                            <h1 class="tool-name">64-Bit Repair Toolkit</h1>
+                            <h2 class="tool-store">iFixit</h2>
+                            <p class="tool-brief">Precision toolkit for laptop and PC repair.</p>
+                            <h1 class="tool-price">£39.99</h1>   
+                        
+                            <div class="go-to-page">
+                                <a href="#">Go to Page ➔</a>                            
+                            </div>  
+                        </div> 
+                       <div class="tool-card">
+                            <div class="tool-pics-container"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"></div>
+                            <h1 class="tool-name">Tool 3</h1>
+                            <h2 class="tool-store"></h2>
+                            <p class="tool-brief"></p>
+                            <h1 class="tool-price"></h1>   
+                        
+                            <div class="go-to-page">
+                                <a href="#">Go to Page ➔</a>                            
+                            </div>  
+                        </div> 
+                       <div class="tool-card">
+                            <div class="tool-pics-container"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"></div>
+                            <h1 class="tool-name">Tool 4</h1>
+                            <h2 class="tool-store"></h2>
+                            <p class="tool-brief"></p>
+                            <h1 class="tool-price"></h1>   
+                        
+                            <div class="go-to-page">
+                                <a href="#">Go to Page ➔</a>                            
+                            </div>  
+                        </div> 
+                       <div class="tool-card">
+                            <div class="tool-pics-container"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"></div>
+                            <h1 class="tool-name"></h1>
+                            <h2 class="tool-store"></h2>
+                            <p class="tool-brief"></p>
+                            <h1 class="tool-price"></h1>   
+                        
+                            <div class="go-to-page">
+                                <a href="#">Go to Page ➔</a>                            
+                            </div>  
+                        </div> 
+                       <div class="tool-card">
+                            <div class="tool-pics-container"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"></div>
+                            <h1 class="tool-name"></h1>
+                            <h2 class="tool-store"></h2>
+                            <p class="tool-brief"></p>
+                            <h1 class="tool-price"></h1>   
+                        
+                            <div class="go-to-page">
+                                <a href="#">Go to Page ➔</a>                            
+                            </div>  
+                        </div> 
+                       <div class="tool-card">
+                            <div class="tool-pics-container"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"></div>
+                            <h1 class="tool-name"></h1>
+                            <h2 class="tool-store"></h2>
+                            <p class="tool-brief"></p>
+                            <h1 class="tool-price"></h1>   
+                        
+                            <div class="go-to-page">
+                                <a href="#">Go to Page ➔</a>                            
+                            </div>  
+                        </div> 
+                       <div class="tool-card">
+                            <div class="tool-pics-container"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"></div>
+                            <h1 class="tool-name"></h1>
+                            <h2 class="tool-store"></h2>
+                            <p class="tool-brief"></p>
+                            <h1 class="tool-price"></h1>   
+                        
+                            <div class="go-to-page">
+                                <a href="#">Go to Page ➔</a>                            
+                            </div>  
+                        </div> 
+                       <div class="tool-card">
+                            <div class="tool-pics-container"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"></div>
+                            <h1 class="tool-name"></h1>
+                            <h2 class="tool-store"></h2>
+                            <p class="tool-brief"></p>
+                            <h1 class="tool-price"></h1>   
+                        
+                            <div class="go-to-page">
+                                <a href="#">Go to Page ➔</a>                            
+                            </div>  
+                        </div> 
+                       <div class="tool-card">
+                            <div class="tool-pics-container"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"></div>
+                            <h1 class="tool-name"></h1>
+                            <h2 class="tool-store"></h2>
+                            <p class="tool-brief"></p>
+                            <h1 class="tool-price"></h1>   
+                        
+                            <div class="go-to-page">
+                                <a href="#">Go to Page ➔</a>                            
+                            </div>  
+                        </div> 
+
+                    </div>
+                </div>
+            </div>
+
+            <div id="repair-tools" class="repair-tools tools-group">
+                <div class="tool-bag-fin-space"></div>
+
+                <div class="tool-bag-brief-container">
+
+                    <div class="tool-bag-brief">
+                        <img src="" alt="learn-tools-image">
+                        <div class="tool-bag-brief-brief">
+                            
+                            <h1>Repair Tools</h1>
+                            <p>These are some tools I need in 300L.
+                                It contains a basic Arduino starter kit and its accessories.
+                                There are also tools for a project
+                                to build a Laptop Power Bank.</p>
+                        </div>
+                        <div class="tool-bag-brief-price">
+
+                            <p>Total</p>
+                            <p>£78 <span>N120,000</span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tool-bag-grid-container">
+
+                    <div class="tool-bag-grid">
+                       <div class="tool-card">
+                            <div class="tool-pics-container"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"></div>
+                            <h1 class="tool-name"></h1>
+                            <h2 class="tool-store"></h2>
+                            <p class="tool-brief"></p>
+                            <h1 class="tool-price"></h1>   
+                        
+                            <div class="go-to-page">
+                                <a href="#">Go to Page ➔</a>                            
+                            </div>  
+                        </div> 
+                       <div class="tool-card">
+                            <div class="tool-pics-container"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"></div>
+                            <h1 class="tool-name"></h1>
+                            <h2 class="tool-store"></h2>
+                            <p class="tool-brief"></p>
+                            <h1 class="tool-price"></h1>   
+                        
+                            <div class="go-to-page">
+                                <a href="#">Go to Page ➔</a>                            
+                            </div>  
+                        </div> 
+                       <div class="tool-card">
+                            <div class="tool-pics-container"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"></div>
+                            <h1 class="tool-name"></h1>
+                            <h2 class="tool-store"></h2>
+                            <p class="tool-brief"></p>
+                            <h1 class="tool-price"></h1>   
+                        
+                            <div class="go-to-page">
+                                <a href="#">Go to Page ➔</a>                            
+                            </div>  
+                        </div> 
+                       <div class="tool-card">
+                            <div class="tool-pics-container"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"></div>
+                            <h1 class="tool-name"></h1>
+                            <h2 class="tool-store"></h2>
+                            <p class="tool-brief"></p>
+                            <h1 class="tool-price"></h1>   
+                        
+                            <div class="go-to-page">
+                                <a href="#">Go to Page ➔</a>                            
+                            </div>  
+                        </div> 
+                       <div class="tool-card">
+                            <div class="tool-pics-container"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"></div>
+                            <h1 class="tool-name"></h1>
+                            <h2 class="tool-store"></h2>
+                            <p class="tool-brief"></p>
+                            <h1 class="tool-price"></h1>   
+                        
+                            <div class="go-to-page">
+                                <a href="#">Go to Page ➔</a>                            
+                            </div>  
+                        </div> 
+                       <div class="tool-card">
+                            <div class="tool-pics-container"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"></div>
+                            <h1 class="tool-name"></h1>
+                            <h2 class="tool-store"></h2>
+                            <p class="tool-brief"></p>
+                            <h1 class="tool-price"></h1>   
+                        
+                            <div class="go-to-page">
+                                <a href="#">Go to Page ➔</a>                            
+                            </div>  
+                        </div> 
+                       <div class="tool-card">
+                            <div class="tool-pics-container"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"></div>
+                            <h1 class="tool-name"></h1>
+                            <h2 class="tool-store"></h2>
+                            <p class="tool-brief"></p>
+                            <h1 class="tool-price"></h1>   
+                        
+                            <div class="go-to-page">
+                                <a href="#">Go to Page ➔</a>                            
+                            </div>  
+                        </div> 
+                       <div class="tool-card">
+                            <div class="tool-pics-container"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"></div>
+                            <h1 class="tool-name"></h1>
+                            <h2 class="tool-store"></h2>
+                            <p class="tool-brief"></p>
+                            <h1 class="tool-price"></h1>   
+                        
+                            <div class="go-to-page">
+                                <a href="#">Go to Page ➔</a>                            
+                            </div>  
+                        </div> 
+                       <div class="tool-card">
+                            <div class="tool-pics-container"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"></div>
+                            <h1 class="tool-name"></h1>
+                            <h2 class="tool-store"></h2>
+                            <p class="tool-brief"></p>
+                            <h1 class="tool-price"></h1>   
+                        
+                            <div class="go-to-page">
+                                <a href="#">Go to Page ➔</a>                            
+                            </div>  
+                        </div> 
+                       <div class="tool-card">
+                            <div class="tool-pics-container"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"></div>
+                            <h1 class="tool-name"></h1>
+                            <h2 class="tool-store"></h2>
+                            <p class="tool-brief"></p>
+                            <h1 class="tool-price"></h1>   
+                        
+                            <div class="go-to-page">
+                                <a href="#">Go to Page ➔</a>                            
+                            </div>  
+                        </div> 
+
+                    </div>
+                </div>
+            </div>
+
+            <div id="prod-tools" class="prod-tools tools-group">
+                <div class="tool-bag-fin-space"></div>
+
+                <div class="tool-bag-brief-container">
+
+                    <div class="tool-bag-brief">
+                        <img src="" alt="learn-tools-image">
+                        <div class="tool-bag-brief-brief">
+                            
+                            <h1>Productivity and Troubleshooting</h1>
+                            <p>These are some tools I need in 300L.
+                                It contains a basic Arduino starter kit and its accessories.
+                                There are also tools for a project
+                                to build a Laptop Power Bank.</p>
+                        </div>
+                        <div class="tool-bag-brief-price">
+
+                            <p>Total</p>
+                            <p>£78 <span>N120,000</span></p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tool-bag-grid-container">
+
+                    <div class="tool-bag-grid">
+                       <div class="tool-card">
+                            <div class="tool-pics-container"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"></div>
+                            <h1 class="tool-name"></h1>
+                            <h2 class="tool-store"></h2>
+                            <p class="tool-brief"></p>
+                            <h1 class="tool-price"></h1>   
+                        
+                            <div class="go-to-page">
+                                <a href="#">Go to Page ➔</a>                            
+                            </div>  
+                        </div> 
+                       <div class="tool-card">
+                            <div class="tool-pics-container"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"></div>
+                            <h1 class="tool-name"></h1>
+                            <h2 class="tool-store"></h2>
+                            <p class="tool-brief"></p>
+                            <h1 class="tool-price"></h1>   
+                        
+                            <div class="go-to-page">
+                                <a href="#">Go to Page ➔</a>                            
+                            </div>  
+                        </div> 
+                       <div class="tool-card">
+                            <div class="tool-pics-container"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"></div>
+                            <h1 class="tool-name"></h1>
+                            <h2 class="tool-store"></h2>
+                            <p class="tool-brief"></p>
+                            <h1 class="tool-price"></h1>   
+                        
+                            <div class="go-to-page">
+                                <a href="#">Go to Page ➔</a>                            
+                            </div>  
+                        </div> 
+                       <div class="tool-card">
+                            <div class="tool-pics-container"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"></div>
+                            <h1 class="tool-name"></h1>
+                            <h2 class="tool-store"></h2>
+                            <p class="tool-brief"></p>
+                            <h1 class="tool-price"></h1>   
+                        
+                            <div class="go-to-page">
+                                <a href="#">Go to Page ➔</a>                            
+                            </div>  
+                        </div> 
+                       <div class="tool-card">
+                            <div class="tool-pics-container"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"></div>
+                            <h1 class="tool-name"></h1>
+                            <h2 class="tool-store"></h2>
+                            <p class="tool-brief"></p>
+                            <h1 class="tool-price"></h1>   
+                        
+                            <div class="go-to-page">
+                                <a href="#">Go to Page ➔</a>                            
+                            </div>  
+                        </div> 
+                       <div class="tool-card">
+                            <div class="tool-pics-container"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"></div>
+                            <h1 class="tool-name"></h1>
+                            <h2 class="tool-store"></h2>
+                            <p class="tool-brief"></p>
+                            <h1 class="tool-price"></h1>   
+                        
+                            <div class="go-to-page">
+                                <a href="#">Go to Page ➔</a>                            
+                            </div>  
+                        </div> 
+                       <div class="tool-card">
+                            <div class="tool-pics-container"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"></div>
+                            <h1 class="tool-name"></h1>
+                            <h2 class="tool-store"></h2>
+                            <p class="tool-brief"></p>
+                            <h1 class="tool-price"></h1>   
+                        
+                            <div class="go-to-page">
+                                <a href="#">Go to Page ➔</a>                            
+                            </div>  
+                        </div> 
+                       <div class="tool-card">
+                            <div class="tool-pics-container"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"></div>
+                            <h1 class="tool-name"></h1>
+                            <h2 class="tool-store"></h2>
+                            <p class="tool-brief"></p>
+                            <h1 class="tool-price"></h1>   
+                        
+                            <div class="go-to-page">
+                                <a href="#">Go to Page ➔</a>                            
+                            </div>  
+                        </div> 
+                       <div class="tool-card">
+                            <div class="tool-pics-container"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"></div>
+                            <h1 class="tool-name"></h1>
+                            <h2 class="tool-store"></h2>
+                            <p class="tool-brief"></p>
+                            <h1 class="tool-price"></h1>   
+                        
+                            <div class="go-to-page">
+                                <a href="#">Go to Page ➔</a>                            
+                            </div>  
+                        </div> 
+                       <div class="tool-card">
+                            <div class="tool-pics-container"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"><img src="" alt="" class="tool-pics"></div>
+                            <h1 class="tool-name"></h1>
+                            <h2 class="tool-store"></h2>
+                            <p class="tool-brief"></p>
+                            <h1 class="tool-price"></h1>   
+                        
+                            <div class="go-to-page">
+                                <a href="#">Go to Page ➔</a>                            
+                            </div>  
+                        </div> 
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="tool-group-spacerz1"></div>
+        </div>
+    </section>
+
+    <div class="tool-bag-summary-space"></div>
+
+    <section id="summary-page" class="summary-page">
+        <div class="summary-brief-container">
+            <div class="summary-brief">
+                <a class="summary-brief-h-space" href="#summary-page"><h1>Summary</h1></a>
+                <div class="summary-text">
+                    <p class="summary-brief-p">The essential tools needed to start the business. 
+                        They consist of an electronic toolkit, a laptop and phone repair kit, 
+                        and a soldering iron.</p>
+                </div>
+                <div class="summary-price">
+                    <p>Total</p>
+                    <p>£197 <span>N300,000</span></p>
+                </div>
+            </div>
+        </div>
+
+        <div class="utility-bar">
+
+        </div>
+
+        <div class="summary-grid-container">
+
+            <div class="summary-grid">
+                <div class="summary-tool-card">
+                    <div class="summary-tool-pics-container"><img src="" alt="" class="summary-tool-pics"><img src="" alt="" class="summary-tool-pics"><img src="" alt="" class="summary-tool-pics"><img src="" alt="" class="summary-tool-pics"><img src="" alt="" class="summary-tool-pics"></div>
+                    <h1 class="summary-tool-name"></h1>
+                    <h2 class="summary-tool-store"></h2>
+                    <p class="summary-tool-brief"></p>
+                    <h1 class="summary-tool-price"></h1>
+                </div>
+                <div class="summary-tool-card">
+                    <div class="summary-tool-pics-container"><img src="" alt="" class="summary-tool-pics"><img src="" alt="" class="summary-tool-pics"><img src="" alt="" class="summary-tool-pics"><img src="" alt="" class="summary-tool-pics"><img src="" alt="" class="summary-tool-pics"></div>
+                    <h1 class="summary-tool-name"></h1>
+                    <h2 class="summary-tool-store"></h2>
+                    <p class="summary-tool-brief"></p>
+                    <h1 class="summary-tool-price"></h1>
+                </div>
+                <div class="summary-tool-card">
+                    <div class="summary-tool-pics-container"><img src="" alt="" class="summary-tool-pics"><img src="" alt="" class="summary-tool-pics"><img src="" alt="" class="summary-tool-pics"><img src="" alt="" class="summary-tool-pics"><img src="" alt="" class="summary-tool-pics"></div>
+                    <h1 class="summary-tool-name"></h1>
+                    <h2 class="summary-tool-store"></h2>
+                    <p class="summary-tool-brief"></p>
+                    <h1 class="summary-tool-price"></h1>
+                </div>
+                <div class="summary-tool-card">
+                    <div class="summary-tool-pics-container"><img src="" alt="" class="summary-tool-pics"><img src="" alt="" class="summary-tool-pics"><img src="" alt="" class="summary-tool-pics"><img src="" alt="" class="summary-tool-pics"><img src="" alt="" class="summary-tool-pics"></div>
+                    <h1 class="summary-tool-name"></h1>
+                    <h2 class="summary-tool-store"></h2>
+                    <p class="summary-tool-brief"></p>
+                    <h1 class="summary-tool-price"></h1>
+                </div>
+                <div class="summary-tool-card">
+                    <div class="summary-tool-pics-container"><img src="" alt="" class="summary-tool-pics"><img src="" alt="" class="summary-tool-pics"><img src="" alt="" class="summary-tool-pics"><img src="" alt="" class="summary-tool-pics"><img src="" alt="" class="summary-tool-pics"></div>
+                    <h1 class="summary-tool-name"></h1>
+                    <h2 class="summary-tool-store"></h2>
+                    <p class="summary-tool-brief"></p>
+                    <h1 class="summary-tool-price"></h1>
+                </div>
+                <div class="summary-tool-card">
+                    <div class="summary-tool-pics-container"><img src="" alt="" class="summary-tool-pics"><img src="" alt="" class="summary-tool-pics"><img src="" alt="" class="summary-tool-pics"><img src="" alt="" class="summary-tool-pics"><img src="" alt="" class="summary-tool-pics"></div>
+                    <h1 class="summary-tool-name"></h1>
+                    <h2 class="summary-tool-store"></h2>
+                    <p class="summary-tool-brief"></p>
+                    <h1 class="summary-tool-price"></h1>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="closing" class="closing">
+
+          <div class="closing-summary-download">
+                <p>You can download an image or 
+                    document of the summary here to view offline.</p>
+                <div class="download-btn dld-pdf"> 
+                    <h1>Download PDF</h1>
+                </div>
+                <div class="download-btn dld-img">
+                    <h1>Download Image</h1>
+                </div>
+            </div>
+    </section>
+
+    <script>
+        /* When the user clicks on the button, 
+        toggle between hiding and showing the dropdown content */
+        function navDropDown() {
+          document.getElementById("prosCatDrop").style.height = "16rem";
+          // document.getElementById("navContainer").style.overflow = "visible";
+        }
+
+        // Close the dropdown if the user clicks outside of it
+        window.onclick = function(e) {
+          if (!e.target.matches('.drop-down-btn')) {
+          var myDropdown = document.getElementById("prosCatDrop");
+            if (myDropdown.style.height = "16rem") {
+              myDropdown.style.height = "4rem";
+            }
+          }
+        }
+
+        /* --- New Logic to create rich description div on card click --- */
+
+        document.addEventListener('DOMContentLoaded', () => {
+            // Select all tool cards
+            const toolCards = document.querySelectorAll('.tool-card');
+
+            if (toolCards.length > 0) {
+                toolCards.forEach(card => {
+                    // Attach the click listener to the entire card element
+                    card.addEventListener('click', () => {
+                        const gridContainer = card.closest('.tool-bag-grid-container');
+                        if (!gridContainer) return;
+
+                        // 1. Get the JSON string from the new attribute
+                        const detailsString = card.getAttribute('data-product-details');
+
+                        // Only proceed if the card has rich details
+                        if (!detailsString) {
+                            console.log("Card clicked, but no rich data-product-details found.");
+                            return; 
+                        }
+
+                        // 2. CRITICAL STEP: Convert the JSON string into a JavaScript Object
+                        let product;
+                        try {
+                            product = JSON.parse(detailsString);
+                        } catch (e) {
+                            console.error("Error parsing product details JSON:", e);
+                            return;
+                        }
+
+                        // 3. Cleanup: Remove any existing description div
+                        const existingDescr = gridContainer.querySelector('.tool-bag-tdescr');
+                        if (existingDescr) {
+                            existingDescr.remove();
+                        }
+
+                        // 4. Build the rich HTML structure 
+                        const newHTML = buildDescriptionHTML(card, product);
+
+                        // 5. Insert the new HTML adjacent to the end of the container
+                        gridContainer.insertAdjacentHTML('beforeend', newHTML);
+                    });
+                });
+            }
+        });
+
+        // --- NEW HELPER FUNCTION ---
+        function buildDescriptionHTML(cardElement, productDetails) {
+            // Fallback for tool name
+            const toolName = cardElement.querySelector('.tool-name')?.textContent.trim() || 'Product Details';
+
+            // Build the Image Gallery Section - Uses placeholder images
+            const imageHTML = (productDetails.images && productDetails.images.length > 0) 
+                ? productDetails.images.map(src => `<img src="${src}" alt="Product Image" class="product-detail-img">`).join('')
+                : '<p>No images available. (Using placeholders in the demo)</p>';
+
+            // Build the Specs List Section
+            const specsHTML = (productDetails.specs && productDetails.specs.length > 0)
+                ? productDetails.specs.map(spec => `<li>${spec}</li>`).join('')
+                : '<li>No detailed specifications listed.</li>';
+
+            // Use safe defaults for missing fields
+            const description = productDetails.description || 'No detailed description available.';
+            const price = productDetails.price || 'Price not listed';
+            const store = productDetails.store || 'Store not specified';
+            const link = productDetails.link || '#';
+
+            // Combine everything into the final HTML structure for the new div
+            return `
+                <div class="tool-bag-tdescr">
+                    <h2>${toolName}</h2>
+                    <div class="detail-content-wrapper">
+
+                        <div class="detail-images">
+                            ${imageHTML}
+                        </div>
+
+                        <div class="detail-info">
+                            <p class="detail-price">Price: <strong>${price}</strong></p>
+
+                            <h3>Description</h3>
+                            <p>${description}</p>
+
+                            <h3>Specifications</h3>
+                            <ul>${specsHTML}</ul>
+
+                            <h3>Online Store</h3>
+                            <p>Available at: ${store}</p>
+                            <a href="${link}" target="_blank" class="detail-link">Visit Store Page ➔</a>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+
+        // Original script content (dropdown logic)
+        /* Loop through all dropdown buttons to toggle 
+         between hiding and showing its dropdown content 
+         - This allows the user to have multiple dropdowns without any conflict */
+        var dropdown = document.getElementsByClassName("dropdown-btn");
+        var i;
+
+        for (i = 0; i < dropdown.length; i++) {
+          dropdown[i].addEventListener("click", function() {
+            this.classList.toggle("active");
+            var dropdownContent = this.nextElementSibling;
+            if (dropdownContent.style.display === "block") {
+                dropdownContent.style.display = "none";
+            } else {
+                dropdownContent.style.display = "block";
+            }
+          });
+        }
+    </script>
+    
+</body>
+</html>
