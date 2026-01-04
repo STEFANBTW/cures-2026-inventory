@@ -185,14 +185,14 @@ function renderProspects() {
             }
 
             // Check for Productivity Essential styling requirement
-            const metaRowStyle = (item.category === 'Productivity' && item.isEssential) ? 'style="margin: 0 -5px;"' : '';
+            const metaRowClass = (item.category === 'Productivity' && item.isEssential) ? 'productivity-essential' : '';
 
             // Badge Logic
             let badgeHtml = '';
             if (item.essentialRank === 1) {
-                badgeHtml = `<div class="essential-badge">ESSENTIAL <span style="background-color: white; color: black; border-radius: 50%; padding: 0 6.5px; font-size: 1.2em; margin-left: 4px;">${item.essentialRank}</span></div>`;
+                badgeHtml = `<div class="essential-badge">ESSENTIAL <span class="badge-rank-number">${item.essentialRank}</span></div>`;
             } else if (item.essentialRank > 1) {
-                badgeHtml = `<div class="rank-badge">RANK <span style="background-color: white; color: black; border-radius: 50%; padding: 0 6.5px; font-size: 1.2em; margin-left: 4px;">${item.essentialRank}</span></div>`;
+                badgeHtml = `<div class="rank-badge">RANK <span class="badge-rank-number">${item.essentialRank}</span></div>`;
             }
 
             const cardWrapper = document.createElement('div');
@@ -216,7 +216,7 @@ function renderProspects() {
                 </div>
 
                 <div class="tool-card-body">
-                    <div class="tool-meta-row" ${metaRowStyle}>
+                    <div class="tool-meta-row ${metaRowClass}">
                         <span class="card-category">${item.category}</span>
                         ${badgeHtml}
                     </div>
@@ -283,16 +283,16 @@ function handleCardClick(e) {
     
     let badgeHtml = '';
     if (item.essentialRank === 1) {
-        badgeHtml = `<div class="essential-badge">ESSENTIAL <span style="background-color: white; color: black; border-radius: 50%; padding: 0 5px; font-size: 0.8em; margin-left: 4px;">${item.essentialRank}</span></div>`;
+        badgeHtml = `<div class="essential-badge">ESSENTIAL <span class="panel-badge-rank">${item.essentialRank}</span></div>`;
     } else if (item.essentialRank > 1) {
-        badgeHtml = `<div class="rank-badge">RANK <span style="background-color: white; color: black; border-radius: 50%; padding: 0 5px; font-size: 0.8em; margin-left: 4px;">${item.essentialRank}</span></div>`;
+        badgeHtml = `<div class="rank-badge">RANK <span class="panel-badge-rank">${item.essentialRank}</span></div>`;
     }
 
     const rankInfoHTML = item.essentialCategory ? `
-    <div class="panel-rank-info" style="margin-top: 15px; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; font-size: calc(14px * var(--font-scale, 1));">
-        <span style="background-color: var(--essential-bg); color: var(--essential-red); padding: 4px 8px; border-radius: 4px; font-weight: bold;">Rank Category</span>
-        <span style="color: var(--color-alice-blue); font-weight: 600;">${item.essentialCategory}</span>
-        <span style="background-color: white; color: black; border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-weight: bold; color: black;">${item.essentialRank}</span>
+    <div class="panel-rank-info">
+        <span class="panel-rank-label">Rank</span>
+        <span class="panel-rank-category">${item.essentialCategory}</span>
+        <span class="panel-rank-circle">${item.essentialRank}</span>
     </div>` : '';
 
     const usageHTML = item.usage ? `<h3 class="detail-section-title">Usage</h3> <p>${item.usage}</p>` : '';
@@ -301,24 +301,24 @@ function handleCardClick(e) {
     let dealBadgeHtml = '';
     if (item.dealTag && item.dealTag !== 'None') {
         if (item.dealTag.startsWith('http')) {
-            dealBadgeHtml = `<img src="${item.dealTag}" class="deal-badge-img" alt="Deal Badge" style="height: 20px; vertical-align: middle; margin-left: 10px;">`;
+            dealBadgeHtml = `<img src="${item.dealTag}" class="deal-badge-img" alt="Deal Badge">`;
         } else {
             let badgeClass = 'deal-official';
             if (item.dealTag === 'Choice') badgeClass = 'deal-choice';
             else if (item.dealTag === 'Jumia Express') badgeClass = 'deal-express';
             else if (item.dealTag === 'SuperDeals') badgeClass = 'deal-super';
-            dealBadgeHtml = `<span class="deal-badge ${badgeClass}" style="margin-left: 10px; vertical-align: middle;">${item.dealTag}</span>`;
+            dealBadgeHtml = `<span class="deal-badge ${badgeClass}">${item.dealTag}</span>`;
         }
     }
 
-    const sourceHTML = `<div class="panel-source-row" style="margin-top: 20px; padding-top: 10px; border-top: 1px solid #ffffff30; display: flex; align-items: center;">
-        <span style="color: var(--color-silver); font-weight: bold; margin-right: 5px;">Source:</span> 
-        <span style="color: var(--color-orange-action); font-weight: bold;">${item.source || 'Unknown'}</span>
+    const sourceHTML = `<div class="panel-source-row">
+        <span class="panel-source-label">Source:</span> 
+        <span class="panel-source-name">${item.source || 'Unknown'}</span>
         ${dealBadgeHtml}
     </div>`;
 
     const visitButtonHTML = item.productLink ? `
-        <a href="${item.productLink}" target="_blank" class="panel-visit-btn" style="display: block; width: 100%; text-align: center; background: var(--color-orange-action); color: var(--color-brown-darkest); padding: 12px 0; margin-top: 15px; border-radius: 8px; font-weight: bold; text-decoration: none; text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s;">
+        <a href="${item.productLink}" target="_blank" class="panel-visit-btn">
             Visit Store Page
         </a>` : '';
 
@@ -527,16 +527,16 @@ function renderSummary(items) {
         // Badge Logic for Summary
         let essentialHtml = '';
         if (item.essentialRank === 1) {
-            essentialHtml = `<div class="essential-badge">ESSENTIAL <span style="background-color: white; color: black; border-radius: 50%; padding: 0 6.5px; font-size: 1.2em; margin-left: 4px;">${item.essentialRank}</span></div>`;
+            essentialHtml = `<div class="essential-badge">ESSENTIAL <span class="badge-rank-number">${item.essentialRank}</span></div>`;
         } else if (item.essentialRank > 1) {
-            essentialHtml = `<div class="rank-badge">RANK <span style="background-color: white; color: black; border-radius: 50%; padding: 0 6.5px; font-size: 1.2em; margin-left: 4px;">${item.essentialRank}</span></div>`;
+            essentialHtml = `<div class="rank-badge">RANK <span class="badge-rank-number">${item.essentialRank}</span></div>`;
         }
 
         const shippingHtml = unitShip === 0 
-            ? '<span class="free-ship-tag" style="margin-bottom: 5px; font-size: calc(12px * var(--font-scale, 1));">Free Ship</span>' 
-            : `<div style="text-align: right;">
-                   <div style="font-size: calc(11px * var(--font-scale, 1)); text-transform: uppercase; color: var(--summ-dim);">Shipping</div>
-                   <span class="shipping-info" style="font-size: calc(13px * var(--font-scale, 1));">${getFormattedPrice(unitShip)}</span>
+            ? '<span class="free-ship-tag">Free Ship</span>' 
+            : `<div class="shipping-info-container">
+                   <div class="shipping-label">Shipping</div>
+                   <span class="shipping-info">${getFormattedPrice(unitShip)}</span>
                </div>`;
 
         // Slider Generation
@@ -563,20 +563,20 @@ function renderSummary(items) {
             <div class="card-body">
 
                 <div class="card-inner-body">
-                    <div class="card-title" title="${item.name}">${item.nickname || item.name}</div>                        
-                    <div style="font-size: 0.8rem; color: var(--summ-dim); margin-bottom: 5px;">Quantity: ${quantity}</div>
+                    <div class="card-title" title="${item.name}">${item.nickname || item.name}</div>
+                    <div class="card-quantity">Quantity: ${quantity}</div>
                     <div class="card-footer">
                         ${quantity > 1 
                             ? (unitShip > 0 
                                 ? `<div class="price-breakdown">(${getFormattedPrice(unitBase)} + ${getFormattedPrice(unitShip)}) &times; ${quantity}</div>`
                                 : `<div class="price-breakdown">${getFormattedPrice(unitBase)} &times; ${quantity}</div>`)
                             : (unitShip > 0 
-                                ? `<div class="price-breakdown">${getFormattedPrice(unitBase)} + ${getFormattedPrice(unitShip)}</div>` 
+                                ? `<div class="price-breakdown">${getFormattedPrice(unitBase)} + ${getFormattedPrice(unitShip)}</div>`
                                 : '')
                         } 
-                        <div class="final-price-row" style="align-items: flex-end;">
+                        <div class="final-price-row">
                             <div>
-                                <div style="font-size: calc(11px * var(--font-scale, 1)); text-transform: uppercase; color: var(--summ-dim);">Total Price</div>
+                                <div class="total-price-label">Total Price</div>
                                 <span class="final-price">${getFormattedPrice(totalCost)}</span>
                             </div>
                             ${shippingHtml}
@@ -589,17 +589,15 @@ function renderSummary(items) {
 
         // Mobile: Click to toggle hover state
         card.addEventListener('click', (e) => {
-            if (window.innerWidth <= 1200) {
-                // Allow links to work without toggling
-                if (e.target.closest('a') || e.target.closest('.sum-deets')) return;
+            // Allow links to work without toggling
+            if (e.target.closest('a') || e.target.closest('.sum-deets')) return;
 
-                if (card.classList.contains('mobile-hover-state')) {
-                    card.classList.remove('mobile-hover-state');
-                } else {
-                    // Optional: Close other open cards
-                    document.querySelectorAll('.summary-card.mobile-hover-state').forEach(c => c.classList.remove('mobile-hover-state'));
-                    card.classList.add('mobile-hover-state');
-                }
+            if (card.classList.contains('mobile-hover-state')) {
+                card.classList.remove('mobile-hover-state');
+            } else {
+                // Optional: Close other open cards
+                document.querySelectorAll('.summary-card.mobile-hover-state').forEach(c => c.classList.remove('mobile-hover-state'));
+                card.classList.add('mobile-hover-state');
             }
         });
 
@@ -666,7 +664,20 @@ function filterSummary(criteria, btnElement) {
     const listToRender = getFilteredAndSortedList();
     renderSummary(listToRender);
 
-    // Scrolling is now handled by href="#summaryGrid" on the filter links.
+    // Reset scroll position of the summary grid
+    const utlBar = document.getElementById('stc');
+    const grid = document.getElementById('summaryGrid');
+    
+    if (grid && utlBar) {
+        const headerOffset = utlBar.offsetHeight;
+        const elementPosition = grid.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+        window.scrollTo({
+            top: offsetPosition,
+            behavior: "smooth"
+        });
+    }
 }
 
 function sortSummary() {
