@@ -26,6 +26,9 @@
     --ali-gold: #fdda9d;
     --essential-red: #991b1b;
     --essential-bg: #fee2e2;
+
+    /* --- FONT SCALING --- */
+    --font-scale: 1;
 }
 
 html {
@@ -37,6 +40,10 @@ body {
     background: var(--color-brown-darkest);
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     color: var(--color-alice-blue);
+}
+
+body.large-font {
+    --font-scale: 1.15; /* 15% larger text */
 }
 
 .tool-bag,
@@ -113,7 +120,7 @@ body {
 }
 
 .nav-logo {
-    font-size: 1.8rem;
+    font-size: calc(29px * var(--font-scale, 1));
     font-weight: 800;
     color: var(--color-orange-action);
     text-decoration: none;
@@ -133,7 +140,7 @@ body {
 .dropbtn {
     color: var(--color-alice-blue);
     text-decoration: none;
-    font-size: 1.1rem;
+    font-size: calc(18px * var(--font-scale, 1));
     font-weight: 600;
     cursor: pointer;
     transition: color 0.3s;
@@ -175,7 +182,7 @@ body {
     padding: 12px 16px;
     text-decoration: none;
     display: block;
-    font-size: 0.95rem;
+    font-size: calc(15px * var(--font-scale, 1));
     text-align: center;
 }
 
@@ -206,7 +213,7 @@ body {
     2. LANDING SECTION
     ========================================= */
 .landing-page {
-    min-height: 130vh;
+    min-height: 130dvh;
     display: flex;
     align-items: start;
     justify-content: center;
@@ -216,7 +223,7 @@ body {
 }
 
 .landing-grid0 {
-    height: 88vh;
+    height: 88dvh;
     padding: 20px;
 
     display: flex;
@@ -231,7 +238,7 @@ body {
     padding: 30px 100px;
     border-radius: 20px;
     color: var(--color-copper);
-    font-size: 3.5rem;
+    font-size: clamp(calc(32px * var(--font-scale, 1)), 5vw + 16px, calc(56px * var(--font-scale, 1))); /* Fluid typography */
     text-transform: uppercase;
     letter-spacing: 5px;
     margin: 1rem;
@@ -240,7 +247,7 @@ body {
 .landing-message p {
     max-width: 850px;
     color: var(--color-silver);
-    font-size: 1.2rem;
+    font-size: calc(19px * var(--font-scale, 1));
     line-height: 1.6;
 }
 
@@ -282,7 +289,7 @@ body {
     color: var(--color-alice-blue);
     text-decoration: none;
     font-weight: bold;
-    font-size: 1.1rem;
+    font-size: calc(18px * var(--font-scale, 1));
 }
 
 .tools-connect:hover {
@@ -303,7 +310,7 @@ body {
     ========================================= */
 .tool-bag-container {
     position: relative;
-    height: 220vh;
+    height: 220dvh;
     display: flex;
     align-items: start;
 
@@ -455,7 +462,7 @@ body {
 .tool-bag {
     position: relative;
 
-    height: 100vh;
+    height: 100dvh;
     width: 100%;
 
     display: flex;
@@ -515,7 +522,7 @@ body {
 }
 
 .tool-bag-brief h1 {
-    font-size: 2.5rem;
+    font-size: calc(40px * var(--font-scale, 1));
     color: var(--color-orange-action);
     margin: 0;
     text-transform: uppercase;
@@ -523,12 +530,12 @@ body {
 
 .tool-bag-brief p {
     color: var(--color-silver);
-    font-size: 1.1rem;
+    font-size: calc(18px * var(--font-scale, 1));
     max-width: 1000px;
 }
 
 .tool-bag-inst {
-    font-size: 0.9rem;
+    font-size: calc(14.5px * var(--font-scale, 1));
     color: var(--color-cream);
     font-style: italic;
 }
@@ -547,13 +554,13 @@ body {
 
 .tool-bag-brief-price p {
     margin: 5px 0;
-    font-size: 0.9rem;
+    font-size: calc(14.5px * var(--font-scale, 1));
 }
 
 .tool-bag-brief-price #learning-total-plus,
 .tool-bag-brief-price #repair-total-plus,
 .tool-bag-brief-price #productivity-total-plus {
-    font-size: 2.5rem;
+    font-size: calc(40px * var(--font-scale, 1));
     color: var(--color-orange-action);
 }
 
@@ -563,7 +570,7 @@ body {
 .tool-bag-brief-price #repair-total-shipping,
 .tool-bag-brief-price #productivity-total-price,
 .tool-bag-brief-price #productivity-total-shipping {
-    font-size: 1.1rem;
+    font-size: calc(18px * var(--font-scale, 1));
     color: var(--color-orange-action);
 }
 
@@ -582,7 +589,7 @@ body {
     padding: 50px 20px;
     margin: auto auto;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(125px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     gap: 10px;
     overflow-y: auto;
     transition: width 0.4s ease;
@@ -613,7 +620,7 @@ body {
 
 /* Wrapper to hold grid space */
 .tool-card-wrapper {
-    height: 270px; /* Matches original card height */
+    height: 290px; /* Matches original card height */
     position: relative;
     z-index: 1;
 }
@@ -653,21 +660,26 @@ body {
 } */
 
 .tool-pics-container {
-    height: 250px;
+    height: 80%;
     overflow: hidden;
+}
+.tool-pics-container img {
+    width: 100%;
+    object-fit: cover;
 }
 
 .tool-card-body {
-    height: 50%;
-    padding: 5px 10px;
+    height: 20%;
+    padding: 0 10px 2px;
     display: flex;
     flex-direction: column;
     height: 50%;
+    overflow: hidden;
 }
 
 .tool-name {
-    font-size: 1rem;
-    margin: 5px 0;
+    font-size: calc(16px * var(--font-scale, 1));
+    margin: 6px 0 3px;
     font-weight: 700;
     line-height: 1.2;
     white-space: nowrap;
@@ -676,19 +688,22 @@ body {
 }
 
 .tool-meta-row {
+    width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-left: -10px;
+    padding: 0;
+    overflow: hidden;
+    box-shadow: 0 0 10px 1px rgba(0, 0, 0, 0.282);
 }
 .tool-meta-row .card-category,
 .tool-meta-row .essential-badge {
-    font-size: 0.7rem;
-    padding: 2px 5px;
+    font-size: calc(11px * var(--font-scale, 1)) ;
+    padding: 5px 6px;
 }
 
 .tool-store {
-    font-size: 0.7rem;
+    font-size: calc(12px * var(--font-scale, 1));
     color: var(--color-teal-patina);
     text-transform: uppercase;
     font-weight: bold;
@@ -699,10 +714,9 @@ body {
 }
 
 .tool-price {
-    font-size: 1.1rem;
+    font-size: calc(calc(15.5px * var(--font-scale, 1)) + .2vw);
     color: var(--color-chocolate);
-    margin-top: auto;
-    margin-bottom: 3px; /* Reduced margin as requested */
+    margin: 5px 0;/* Reduced margin as requested */
 }
 
 .go-to-page {
@@ -716,7 +730,7 @@ body {
     text-align: center;
     padding: 6px 0;
     transition: bottom 0.3s;
-    font-size: 0.9rem;
+    font-size: calc(14.5px * var(--font-scale, 1));
     font-weight: bold;
     text-decoration: none;
     
@@ -768,20 +782,20 @@ body {
 }
 .panel-subheader {
     display: flex;
-    justify-content: space-between;
+    justify-content: end;
     align-items: center;
     width: 100%;
     padding: 0;
 }
 
 .panel-name {
-    font-size: 1.2rem;
+    font-size: calc(calc(14.5px * var(--font-scale, 1)) + .5vw);
     color: var(--color-orange-action);
     margin: 0;
 }
 
 .panel-store-prefix {
-    font-size: 0.9rem;
+    font-size: calc(calc(11px * var(--font-scale, 1)) + .1vw);
     color: var(--color-silver);
     text-transform: uppercase;
     font-variant: small-caps;
@@ -792,19 +806,21 @@ body {
 
 .panel-price {
     text-align: right;
-    font-size: 1.8rem;
+    font-size: calc(calc(21px * var(--font-scale, 1)) + .5vw);
     color: var(--color-cream);
     font-weight: bold;
     line-height: 25px;
     margin: 10px;
-    margin-bottom: 5;
+    display: flex;
+    flex-wrap: wrap;
+    align-self: end;
 }
 
 .panel-price small {
-    font-size: 0.8rem;
+    font-size: calc(13px * var(--font-scale, 1));
     color: var(--color-silver);
     font-weight: lighter;
-    margin: 10px;
+    margin: 0 10px;
 }
 
 .panel-slider {
@@ -814,6 +830,7 @@ body {
     overflow: hidden;
     margin-bottom: 10px;
     position: relative; /* For absolute positioning of controls */
+    flex-shrink: 0;
 }
 
 .papnel-meta-row {
@@ -853,14 +870,14 @@ body {
     padding: 12px 24px;
     border-radius: 4px;
     cursor: pointer;
-    font-size: 1rem;
+    font-size: calc(16px * var(--font-scale, 1));
     align-self: flex-start;
 }
 
 .detail-section-title {
     color: var(--color-teal-patina);
     text-transform: uppercase;
-    font-size: 0.9rem;
+    font-size: calc(14.5px * var(--font-scale, 1));
     margin-top: 20px;
     letter-spacing: 1px;
 }
@@ -876,7 +893,7 @@ body {
 
 .close-panel-hint {
     margin-top: auto;
-    font-size: 0.8rem;
+    font-size: calc(13px * var(--font-scale, 1));
     color: var(--color-text-dim);
     text-align: center;
     padding-top: 20px;
@@ -896,6 +913,17 @@ body {
     box-sizing: border-box;
     pointer-events: none;
     z-index: 6;
+}
+
+.panel-meta-row .card-category,
+.panel-meta-row .rank-badge {
+    font-size: calc(16px * var(--font-scale, 1)); /* Increased font size */
+    padding: 6px 12px;
+    background-color: rgba(255, 255, 255, 0.9); /* Matching background */
+    color: black; /* Black text for both */
+    border-radius: 4px;
+    pointer-events: auto;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
 }
 
 .panel-meta-row .card-category {
@@ -936,7 +964,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.2rem;
+    font-size: calc(19px * var(--font-scale, 1));
     padding-bottom: 3px; /* Visual alignment for arrows */
 }
 
@@ -944,6 +972,13 @@ body {
     background: var(--color-orange-action);
     color: var(--color-brown-darkest);
     transform: scale(1.1);
+}
+
+.panel-visit-btn:hover {
+    background-color: var(--color-cream) !important;
+    color: var(--color-brown-darkest) !important;
+    box-shadow: 0 0 15px rgba(255, 140, 0, 0.5);
+    transform: translateY(-2px);
 }
 
 /* =========================================
@@ -954,7 +989,7 @@ body {
     color: var(--summ-text);
     position: relative;
     padding-top: 33rem;
-    min-height: 100vh;
+    min-height: 100dvh;
 
     /* Masking for drip effect using the image */
     -webkit-mask-image: url(images/SVG/SVG/7x/retry-mask@7x.png), linear-gradient(black, black);
@@ -984,13 +1019,13 @@ body {
 
 .summary-header h1 {
     color: var(--color-brown-darkest);
-    font-size: 2.5rem;
+    font-size: calc(40px * var(--font-scale, 1));
     margin: 0;
 }
 
 .summary-header p {
     color: var(--color-brown-darkest);
-    font-size: 1.2rem;
+    font-size: calc(19px * var(--font-scale, 1));
     border-bottom: 1px solid var(--color-brown-surface);
     padding-bottom: 2rem;
     max-width: 1000px;
@@ -1004,7 +1039,7 @@ body {
     padding: 10px 30px;
     border-radius: 10px;
     margin-top: 10px;
-    font-size: 1.5rem;
+    font-size: calc(24px * var(--font-scale, 1));
     font-weight: bold;
 }
 
@@ -1023,6 +1058,7 @@ body {
     /* border-bottom: 1px solid #cbd5e1; */
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
     transition: all 0.4s ease-in-out;
+    scroll-margin-top: 80px;
 }
 
 .utility-bar {
@@ -1087,13 +1123,13 @@ body {
 }
 
 .sticky-label {
-    font-size: 0.75rem;
+    font-size: calc(12px * var(--font-scale, 1));
     color: var(--secondary);
     text-transform: uppercase;
 }
 
 .sticky-price {
-    font-size: 1.2rem;
+    font-size: calc(19px * var(--font-scale, 1));
     font-weight: 800;
     color: var(--primary);
 }
@@ -1107,6 +1143,8 @@ body {
     color: var(--color-brown-surface);
     font-weight: 600;
     transition: 0.3s;
+    text-decoration: none;
+    display: inline-block;
 }
 
 .filter-button:hover,
@@ -1156,6 +1194,9 @@ body {
     gap: 40px;
     padding-bottom: 50px;
     position: relative;
+
+    scroll-margin-top: 0;
+    scroll-snap-type: mandatory;
 }
 
 .summary-card-wrapper {
@@ -1192,6 +1233,58 @@ body {
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
 }
 
+/* Mobile Click Hover State */
+.summary-card.mobile-hover-state {
+    padding-bottom: 35px;
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+.summary-card.mobile-hover-state .sum-deets {
+    display: block;
+    bottom: 0;
+}
+
+/* Swipe Hint Animation */
+.swipe-hint-container {
+    position: absolute;
+    top: 0px;
+    right: 50%;
+    z-index: 10;
+    z-index: 2000;
+    text-align: right;
+    pointer-events: none;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
+    transform: translateX(-50%);
+}
+.swipe-hint-container h3 {
+    font-size: calc(16px * var(--font-scale, 1));
+    color: var(--color-orange-action);
+    margin: 0;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+.swipe-instruction {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 5px;
+    font-size: calc(13px * var(--font-scale, 1));
+    color: var(--color-silver);
+}
+.arrow {
+    font-weight: bold;
+    font-size: calc(19px * var(--font-scale, 1));
+    animation: waveColor 1.5s infinite;
+}
+.arrow.a1 { animation-delay: 0s; }
+.arrow.a2 { animation-delay: 0.2s; }
+.arrow.a3 { animation-delay: 0.4s; }
+
+@keyframes waveColor {
+    0%, 100% { color: var(--color-silver); }
+    50% { color: var(--color-orange-action); }
+}
+
 .summary-card.essential:hover {
     box-shadow: 0 0 50px 30px var(--essential-bg);
     border: 2px solid var(--essential-red);
@@ -1203,7 +1296,7 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 3rem;
+    font-size: calc(48px * var(--font-scale, 1));
     position: relative;
     border-radius: 12px;
 
@@ -1241,23 +1334,48 @@ body {
 }
 
 .card-category {
-    font-size: 0.8rem;
-    color: var(--color-burgundy);
+    font-size: calc(13px * var(--font-scale, 1));
+    color: var(--color-brown-darkest);
     text-transform: uppercase;
-    padding: 5px 10px;
+    height: 100%;
+    margin: auto 0;
+    padding: 0 10px;
 }
 
 .essential-badge {
-    background: var(--essential-bg);
-    color: var(--essential-red);
-    font-size: 0.8rem;
-    padding: 8px 12px;
+    background: var(--color-burgundy);
+    color: white;
+    font-size: calc(13px * var(--font-scale, 1));
+    padding: 0 10px;
     margin: 0;
     white-space: nowrap;
 }
 
+.rank-badge {
+    background-color: var(--essential-bg);
+    color: var(--essential-red);
+    font-size: calc(11px * var(--font-scale, 1));
+    height: 100%;
+    padding: 0 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.summary-card .rank-badge {
+    background: var(--essential-bg);
+    color: var(--essential-red);
+    font-size: calc(13px * var(--font-scale, 1));
+    padding: 3px 8px;
+    margin: 0;
+    white-space: nowrap;
+    display: inline-block;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
 .card-title {
-    font-size: 1rem;
+    font-size: calc(16px * var(--font-scale, 1));
     font-weight: 700;
     margin: 0 0 0.5rem 0;
     color: var(--summ-text);
@@ -1277,7 +1395,7 @@ body {
 
     width: inherit;
 
-    font-size: 0.85rem;
+    font-size: calc(13.5px * var(--font-scale, 1));
     color: var(--color-burgundy);
     font-weight: bold;
 }
@@ -1287,7 +1405,7 @@ body {
     display: inline-block;
     padding: .2rem .3rem;
     border-radius: 4px;
-    font-size: 0.72rem;
+    font-size: calc(11.5px * var(--font-scale, 1));
     font-weight: 400;
     color: white;
     text-transform: uppercase;
@@ -1329,7 +1447,7 @@ body {
 }
 
 .price-breakdown {
-    font-size: 0.8rem;
+    font-size: calc(13px * var(--font-scale, 1));
     color: var(--summ-dim);
     margin-bottom: 4px;
     font-family: monospace;
@@ -1342,7 +1460,7 @@ body {
 }
 
 .final-price {
-    font-size: 1.4rem;
+    font-size: calc(22.5px * var(--font-scale, 1));
     font-weight: 800;
     color: var(--summ-text);
 }
@@ -1350,11 +1468,11 @@ body {
 .shipping-info {
     color: var(--color-brown-darkest);
     font-weight: 500;
-    font-size: .8rem;
+    font-size: calc(13px * var(--font-scale, 1));
 }
 
 .free-ship-tag {
-    font-size: 0.75rem;
+    font-size: calc(12px * var(--font-scale, 1));
     color: #16a34a;
     font-weight: 700;
     background: #dcfce7;
@@ -1376,7 +1494,7 @@ body {
     text-decoration: none;
     padding: 10px 0;
     transition: bottom 0.3s ease-out, display 0.3s ease-out;
-    font-size: 0.9rem;
+    font-size: calc(14.5px * var(--font-scale, 1));
     font-weight: bold;
 }
 
@@ -1390,7 +1508,7 @@ body {
     5. CLOSING
     ========================================= */
 .closing {
-    height: 135vh;
+    height: 135dvh;
     display: flex;
     align-items: end;
     text-align: center;
@@ -1415,13 +1533,13 @@ body {
 
 .closing-message h1 {
     width: 70%;
-    font-size: 4rem;
+    font-size: calc(64px * var(--font-scale, 1));
     color: var(--color-brown-darkest);
 }
 
 .closing-message p {
     width: 60%;
-    font-size: 1.3rem;
+    font-size: calc(21px * var(--font-scale, 1));
     color: var(--color-brown-darkest);
 }
 
@@ -1447,7 +1565,7 @@ body {
 
 .download-btn h1 {
     margin: 0;
-    font-size: 1rem;
+    font-size: calc(16px * var(--font-scale, 1));
     color: var(--color-brown-darkest);
 }
 
@@ -1467,7 +1585,7 @@ body {
     border: 2px solid var(--color-brown-surface);
     background: none;
     color: var(--color-brown-darkest);
-    font-size: 0.9rem;
+    font-size: calc(14.5px * var(--font-scale, 1));
     width: 250px;
     transition: all 0.3s;
 }
@@ -1494,7 +1612,7 @@ body {
     border-bottom-left-radius: 0;
     border-top-left-radius: 0;
 
-    font-size: 1rem;
+    font-size: calc(16px * var(--font-scale, 1));
 
     z-index: 1;
 }
@@ -1526,14 +1644,14 @@ body {
 
     /* --- Tool Bag (Horizontal Scroll) --- */
     .tool-bag-container {
-        height: 200vh;
+        height: 200dvh;
     }
     .tool-bag-nav {
     }
 
     .tool-bag-grid {
-        width: min(100%, 800px);
-        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); /* Smaller cards for mobile */
+        width: 55%;
+        grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); /* Smaller cards for mobile */
         padding: 0 10px;
     }
     
@@ -1545,29 +1663,29 @@ body {
     }
 
     .tool-bag-brief h1 {
-        font-size: 1.5rem;
+        font-size: calc(24px * var(--font-scale, 1));
         padding: 1vh 0;
         
     }
     .tool-bag-brief p {
-        font-size: .95rem;
+        font-size: calc(15px * var(--font-scale, 1));
         margin: 0px 0;
         text-align: justify;
     }
     .tool-bag-inst {
-        font-size: .8rem;
+        font-size: calc(13px * var(--font-scale, 1));
     }
     .tool-bag-brief-price {
         display: flex;
         flex-direction: row-reverse;
         justify-content: space-between;
-        align-items: center;
+        align-items: last baseline;
         min-width: 200px;
         width: 100%;
     }
     .tool-bag .brief-totel-price p{
         margin: 0;
-        font-size: .7rem !important;
+        font-size: calc(11px * var(--font-scale, 1)) !important;
     }
     .brief-price-calc {
         display: flex;
@@ -1577,13 +1695,13 @@ body {
         display: block;
     }
     .tool-bag .brief-price-calc p{
-        font-size: .7rem !important;
+        font-size: calc(11px * var(--font-scale, 1)) !important;
         margin: 0;
     }
     .tool-bag-brief-price #learning-total-plus,
     .tool-bag-brief-price #repair-total-plus,
     .tool-bag-brief-price #productivity-total-plus {
-        font-size: 1.5rem;
+        font-size: calc(24px * var(--font-scale, 1));
     }
 
     .tool-bag-brief-price #learning-total-price,
@@ -1592,61 +1710,33 @@ body {
     .tool-bag-brief-price #repair-total-shipping,
     .tool-bag-brief-price #productivity-total-price,
     .tool-bag-brief-price #productivity-total-shipping {
-        font-size: .8rem;
+        font-size: calc(13px * var(--font-scale, 1));
     }
     .tool-card-wrapper {
-        height: 210px; /* Matches original card height */
+        height: 225px; /* Matches original card height */
     }
     .tool-card-wrapper:hover .tool-card {
-        padding: 2px;
+        padding: 2px 2px 25px;
     }
-
-        /* --- Card Adjustments for Mobile --- */
-      .tool-card {
-        height: 210px;
-    }
-    .tool-name {
-       font-size: 0.7rem;
-        margin: 5px 0 0;
-    }
-    .tool-store {
-        font-size: 0.6rem;
-        margin-bottom: 5px;
-    }
-    .tool-price {
-        font-size: 1rem;
-        margin-bottom: 25px; /* Space for the always-visible button */
-    }
-    .go-to-page {
-        bottom: 0;
-        padding: 3px 0;
-    }
-    .card-title {
-        font-size: 0.85rem;
-    }
-    .final-price {
-        font-size: 1.1rem;
-    }
-     .tool-meta-row {
-        margin: -5px -7px;
-    }
-    .tool-meta-row .card-category,
-    .tool-meta-row .essential-badge {
-        font-size: .6rem;
-        padding: 4px 6px;
+    .tool-pics-container {
+        height: 55%;
+        overflow: hidden;
     }
 
     /* --- Side Panel (Detail View) --- */
     .tool-bag-tdescr {
         width: 50%; /* Full width on mobile */
     }
+    .panel-price {
+        margin: 0 0 10px;
+    }
 
     /* --- Summary Section --- */
     .summary-header h1 {
-        font-size: 2.5rem !important;
+        font-size: calc(40px * var(--font-scale, 1)) !important;
     }
     .summary-header p {
-        font-size: 1rem !important;
+        font-size: calc(16px * var(--font-scale, 1)) !important;
     }
     
     .summary-grid-utility-container {
@@ -1679,7 +1769,7 @@ body {
         display: block;
         background: none;
         border: none;
-        font-size: 1.2rem;
+        font-size: calc(19px * var(--font-scale, 1));
         cursor: pointer;
         padding: 1px;
         transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
@@ -1700,7 +1790,7 @@ body {
         border: none;
         opacity: 0;
         transition: all 0.3s ease;
-        font-size: .8rem;
+        font-size: calc(13px * var(--font-scale, 1));
     }
     #search-bar.expanded {
         position: absolute; /* Overlay behavior */
@@ -1725,7 +1815,7 @@ body {
         background: transparent;
         color: var(--color-brown-surface);
         font-weight: 600;
-        font-size: .7rem;
+        font-size: calc(11px * var(--font-scale, 1));
         cursor: pointer;
         white-space: nowrap;
     }
@@ -1783,14 +1873,14 @@ body {
         cursor: pointer;
         color: var(--color-brown-surface);
         font-weight: 600;
-        font-size: .7rem;
+        font-size: calc(11px * var(--font-scale, 1));
         transition: 0.3s;
     }
     
     .sort-select {
         padding: 6px 12px;
         font-weight: 600;
-        font-size: .7rem;
+        font-size: calc(11px * var(--font-scale, 1));
     border: 1px solid var(--color-brown-surface);
     }
 
@@ -1811,12 +1901,12 @@ body {
         padding: 2px;
     }
     .mobile-total-display {
-        font-size: 0.9rem;
+        font-size: calc(14.5px * var(--font-scale, 1));
         font-weight: 200;
         color: var(--color-brown-darkest);
     }
     .mobile-dynamic-display {
-        font-size: 1.1rem;
+        font-size: calc(18px * var(--font-scale, 1));
         font-weight: 700;
         color: var(--color-chocolate);
     }
@@ -1853,7 +1943,7 @@ body {
         border: 1px solid var(--color-orange-action);
         color: var(--color-orange-action);
         border-radius: 50%;
-        font-size: 1.5rem;
+        font-size: calc(24px * var(--font-scale, 1));
         cursor: pointer;
         z-index: 100;
         padding-bottom: 4px; /* Visual alignment for &times; */
@@ -1864,42 +1954,54 @@ body {
         margin: 2px;
     }
     .card-title {
-        font-size: 0.75rem;
+        font-size: calc(12px * var(--font-scale, 1));
         line-height: 1.2;
         margin-bottom: 0.2rem;
     }
     .card-category {
-        font-size: 0.6rem;
-        padding: 3px 6px;
+        font-size: calc(10px * var(--font-scale, 1));
+        padding: auto 10px !important;
     }
     .essential-badge {
-        font-size: 0.65rem;
-        padding: 4px 8px;
+        font-size: calc(10.5px * var(--font-scale, 1));
+        padding: 0 8px;
+    }
+    .rank-badge {
+        padding: 5px;
     }
     .source-tag {
-        font-size: 0.6rem;
+        font-size: calc(10px * var(--font-scale, 1));
         margin: 2px;
     }
     .price-breakdown {
-        font-size: 0.65rem;
+        font-size: calc(10.5px * var(--font-scale, 1));
+    }
+    .final-price-row {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between
     }
     .final-price {
-        font-size: 0.95rem;
+        font-size: calc(16px * var(--font-scale, 1)) !important;
     }
     .sum-deets {
-        font-size: 0.75rem;
+        font-size: calc(12px * var(--font-scale, 1));
         padding: 5px 0;
     }
+    .shipping-info {
+        font-size: calc(11px * var(--font-scale, 1));
+    }
     .free-ship-tag {
-        font-size: 0.7rem;
-        padding: 3px 6px;
+        font-size: calc(11px * var(--font-scale, 1));
+        padding: 3px 4px;
+        margin: 0;
     }
     /* Override inline styles for labels */
     .final-price-row > div > div {
-        font-size: 0.55rem !important;
+        font-size: calc(9px * var(--font-scale, 1)) !important;
     }
     .card-inner-body > div:nth-child(2) { /* Quantity label */
-        font-size: 0.65rem !important;
+        font-size: calc(10.5px * var(--font-scale, 1)) !important;
     }
 
     /* --- Summary Section --- */
@@ -1907,7 +2009,7 @@ body {
         padding-top: calc(10rem + 10vw + 5vh); 
     }
     .summary-header h1 {
-        font-size: 1.8rem;
+        font-size: calc(29px * var(--font-scale, 1));
     }
     
     /* Hide hamburger on desktop explicitly if needed, but media query handles it */
@@ -1916,11 +2018,11 @@ body {
 
     /* --- Closing Section Mobile --- */
     .closing-message h1 {
-        font-size: 2rem;
+        font-size: calc(32px * var(--font-scale, 1));
         width: 90%;
     }
     .closing-message p {
-        font-size: 1rem;
+        font-size: calc(16px * var(--font-scale, 1));
         width: 90%;
     }
 }
@@ -1953,7 +2055,7 @@ body {
         width: 100%;
     }
     .nav-links a{
-        font-size: .9rem;
+        font-size: calc(14.5px * var(--font-scale, 1));
     }
     
     .dropdown-content {
@@ -1982,12 +2084,12 @@ body {
         padding-top: 5rem;
     }
     .landing-header h1 {
-        font-size: 2rem;
+        font-size: calc(32px * var(--font-scale, 1));
         padding: 20px;
         letter-spacing: 2px;
     }
     .landing-message p {
-        font-size: 1.05rem;
+        font-size: calc(17px * var(--font-scale, 1));
     }
     .tool-bag-link {
         align-items: center;
@@ -1997,17 +2099,17 @@ body {
         padding: 10px 20px;
         
         & a{
-            font-size: 1rem;
+            font-size: calc(16px * var(--font-scale, 1));
             font-weight: 400;
         }
     }
     
-    /* --- Tool Bag (Horizontal Scroll) --- */
-    
+    /* --- Tool Bag (Horizontal Scroll) --- */    
     .tool-bag-nav {
         height: 20rem;
         width: 40px;
         gap: 10px;
+        left: 15px;
     }
     .tool-bag-nav:hover {
         width: 195px;
@@ -2017,11 +2119,11 @@ body {
     }
 
     .tool-bag-nav a{
-        font-size: 1rem;
+        font-size: calc(16px * var(--font-scale, 1));
         padding: 0 0.7rem;
     }
     .tool-bag-nav-button {
-        font-size: 1rem;
+        font-size: calc(16px * var(--font-scale, 1));
     }
     .tool-bag-nav-main:hover a {
         padding: 0 1.5rem;
@@ -2031,6 +2133,10 @@ body {
         padding-right: 1rem;
     }
     
+    .tool-bag {
+        align-items: start;
+        height: 150dvh;
+    }
     .tools-group {
         width: 96vw; /* Groups take up almost full width */
         left: 1.5vw !important; /* Reset sticky offset */
@@ -2039,7 +2145,7 @@ body {
         scroll-margin-top: 5vh;
         /* Centers the section in viewport */
         scroll-margin-left: 0;
-        height: 95%;
+        height: 140dvh;
     }
     
     /* Reset the specific first-child margin that pushes it to the middle */
@@ -2047,43 +2153,26 @@ body {
         margin-left: 10px !important;
     }
     .tool-bag-brief-container {
-        padding: 10px;
+        padding: 0 10px;
         background: linear-gradient(to top, rgba(0, 0, 0, 0.6), transparent);
         border-bottom: 2px solid var(--color-copper);
     } 
-    .product-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-        gap: 7px;
-        padding-bottom: 50px;
-        position: relative;
-    }
-
     .tool-bag-brief {
         display:flex;
         flex-direction: column;
         gap: 10px;
     }
-
     .tool-bag-brief h1 {
-        font-size: 1.3rem;
+        font-size: calc(calc(16px * var(--font-scale, 1)) + 3vw);
         padding-top: 2vh;
     }
     .tool-bag-brief p {
-        font-size: .9rem;
-        margin: 10px 0;
+        font-size: calc(14.5px * var(--font-scale, 1));
+        margin: 0 0 10px;
         text-align: justify;
     }
     .tool-bag-inst {
-        font-size: .7rem;
-    }
-    .tool-bag-brief-price {
-        display: flex;
-        flex-direction: row-reverse;
-        justify-content: space-between;
-        align-items: center;
-        min-width: 200px;
-        width: 100%;
+        font-size: calc(11px * var(--font-scale, 1));
     }
     .tool-bag .brief-totel-price p{
         margin: 0;
@@ -2096,13 +2185,13 @@ body {
         display: block;
     }
     .tool-bag .brief-price-calc p{
-        font-size: .7rem !important;
+        font-size: calc(calc(6.5px * var(--font-scale, 1)) + 1vw) !important;
         margin: 0;
     }
     .tool-bag-brief-price #learning-total-plus,
     .tool-bag-brief-price #repair-total-plus,
     .tool-bag-brief-price #productivity-total-plus {
-        font-size: 1.5rem;
+        font-size: calc(calc(16px * var(--font-scale, 1)) + 3vw);
     }
 
     .tool-bag-brief-price #learning-total-price,
@@ -2111,44 +2200,110 @@ body {
     .tool-bag-brief-price #repair-total-shipping,
     .tool-bag-brief-price #productivity-total-price,
     .tool-bag-brief-price #productivity-total-shipping {
-        font-size: .8rem;
+        font-size: calc(calc(6.5px * var(--font-scale, 1)) + 1.8vw);
     }
     .tool-bag-grid {
         height: 95%;
+        width: min(100%, 800px);
+        gap: 6px;
     }
-    .tool-card {
-        height: 200px;
+    .tool-card-wrapper:hover .tool-card {
+        padding: 0;
     }
     .tool-card-body {
         height: 45%;
+        padding: 0 5px;
+    }
+        /* --- Card Adjustments for Mobile --- */
+    .tool-name {
+       font-size: calc(calc(13px * var(--font-scale, 1)) + .5vw);
+        margin: 4px 0 2px;
+    }
+    .tool-store {
+        font-size: calc(10px * var(--font-scale, 1));
+    }
+    .tool-price {
+        font-size: calc(16px * var(--font-scale, 1));
+        margin: 2px 0 25px !important; /* Space for the always-visible button */
+    }
+    .go-to-page {
+        bottom: 0;
+        padding: 3px 0;
+    }
+    .tool-meta-row .card-category {
+        font-size: calc(9px * var(--font-scale, 1));
+        padding: auto 10px !important;
+    }
+    .tool-meta-row .essential-badge {
+        font-size: calc(9px * var(--font-scale, 1));
+        padding: 5px;
+    }
+    .tool-meta-row .rank-badge {
+        font-size: calc(9px * var(--font-scale, 1));
+        padding: 5px 15px;
+    }
+    .card-title {
+        font-size: calc(13.5px * var(--font-scale, 1));
+    }
+    .final-price {
+        font-size: calc(18px * var(--font-scale, 1));
+    }
+     .tool-meta-row {
+        margin: 0;
+        overflow: hidden;
+    }
+    #prod-tools .tool-meta-row {
+        margin: 0 -5px;
+    }
+    .tool-bag-brief h1 {
+        cursor: pointer;
+        text-decoration: none;
+        text-decoration-color: var(--color-orange-action);
+        transition: 0.3s linear;
+    }
+    .tool-bag-brief h1:hover {
+        color: lightgoldenrodyellow;
     }
 
     /* --- Side Panel (Detail View) --- */
     .tool-bag-tdescr {
-        width: 88%; /* Full width on mobile */
+        width: 90%; /* Full width on mobile */
         position: fixed; /* Fixed over the viewport */
         top: 0;
+        height: 100dvh;
         right: 0;
         height: 100vh;
         z-index: 2000;
-        padding: 10px;
+        padding: 10px 7.5px ;
     }
 
     /* --- Mobile Panel Header Text Reduction --- */
     .panel-name {
-        font-size: 1rem;
+        font-size: calc(calc(16px * var(--font-scale, 1)) + 1.3vw);
+        text-align: justify;
+        width: 90%;
+        align-self: start;
     }
     .panel-store-prefix {
-        font-size: 0.75rem;
+        font-size: calc(12px * var(--font-scale, 1));
     }
     .panel-price {
-        font-size: 1.4rem;
-        margin: 5px;
+        font-size: calc(calc(23px * var(--font-scale, 1)) + 1vw);
+        margin: 10px 5px;
     }
     .panel-price small {
-        font-size: 0.7rem;
+        font-size: calc(11px * var(--font-scale, 1));
     }
-
+    .panel-meta-row .card-category,
+    .panel-meta-row .rank-badge {
+        font-size: calc(12px * var(--font-scale, 1)); /* Increased font size */
+        padding: 6px 10px;
+        background-color: rgba(255, 255, 255, 0.9); /* Matching background */
+        color: black; /* Black text for both */
+        border-radius: 4px;
+        pointer-events: auto;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+    }
     /* --- Mobile Specific Filter Logic (<= 740px) --- */
     .filter-hamburger-btn::after {
         content: 'Filters'; /* Change label for mobile */
@@ -2171,7 +2326,7 @@ body {
     
     .summary-filter-container.show {
         display: flex; /* Show all when expanded */
-        animation: filterFadeInDown 0.3s ease-out forwards;
+        animation: filterFadeInDown 0.9s ease-out forwards;
     }
     
     #search-bar.expanded {
@@ -2191,5 +2346,13 @@ body {
     }
     .summary-card-wrapper:hover .summary-card {
         padding-bottom: 25px; /* Expand height on hover */
+    }
+
+    .product-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(135px, 1fr)); /* Fits 320px screens better */
+        gap: 7px;
+        padding-bottom: 50px;
+        position: relative;
     }
 }  

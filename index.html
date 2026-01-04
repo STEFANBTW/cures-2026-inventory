@@ -16,7 +16,7 @@
                 <a href="#home">Home</a>
                 
                 <div class="nav-dropdown">
-                    <a href="#prospects" class="dropbtn">Prospects ▾</a>
+                    <a href="#prospects" class="dropbtn">Tools ▾</a>
                     <div class="dropdown-content">
                         <a href="#learn-tools">Learning</a>
                         <a href="#repair-tools">Repairs</a>
@@ -26,6 +26,7 @@
 
                 <a href="#summary-page">Summary</a>
                 <a href="#closing">Closing</a>
+                <a id="font-toggle-btn" style="cursor: pointer;">A+</a>
             </div>
         </div>
     </nav>
@@ -52,6 +53,15 @@
     </section>
 
     <section id="prospects" class="tool-bag-container">
+        <div class="swipe-hint-container">
+            <h3>Tools</h3>
+            <div class="swipe-instruction">
+                <span class="arrow a3">&larr;</span>
+                <span class="arrow a2">&larr;</span>
+                <span class="arrow a1">&larr;</span>
+                <span>Swipe Left</span>
+            </div>
+        </div>
         <div class="tool-bag-nav">
             
             <div class="tool-bag-nav-main">
@@ -178,16 +188,16 @@
                     </button>
 
                     <div class="summary-filter-container">
-                        <button class="filter-button active" onclick="filterSummary('all', this)">All Items</button>
-                        <button class="filter-button" onclick="filterSummary('essential', this)">Essentials</button>
-                        <button class="filter-button" onclick="filterSummary('freeShipping', this)">Free Shipping</button>
-                        <button class="filter-button" onclick="filterSummary('AliExpress', this)">AliExpress</button>
-                        <button class="filter-button" onclick="filterSummary('Jumia', this)">Jumia</button>
-                        <button class="filter-button" onclick="filterSummary('Temu', this)">Temu</button>
-                        <button class="filter-button" onclick="filterSummary('Local Retail', this)">Local Retail</button>
-                        <button class="filter-button" onclick="filterSummary('Learning', this)">Learning</button>
-                        <button class="filter-button" onclick="filterSummary('Repair', this)">Repair</button>
-                        <button class="filter-button" onclick="filterSummary('Productivity', this)">Productivity</button>
+                        <a href="#summaryGrid" class="filter-button active" onclick="filterSummary('all', this)">All Items</a>
+                        <a href="#summaryGrid" class="filter-button" onclick="filterSummary('essential', this)">Essentials</a>
+                        <a href="#summaryGrid" class="filter-button" onclick="filterSummary('freeShipping', this)">Free Shipping</a>
+                        <a href="#summaryGrid" class="filter-button" onclick="filterSummary('AliExpress', this)">AliExpress</a>
+                        <a href="#summaryGrid" class="filter-button" onclick="filterSummary('Jumia', this)">Jumia</a>
+                        <a href="#summaryGrid" class="filter-button" onclick="filterSummary('Temu', this)">Temu</a>
+                        <a href="#summaryGrid" class="filter-button" onclick="filterSummary('Local Retail', this)">Local Retail</a>
+                        <a href="#summaryGrid" class="filter-button" onclick="filterSummary('Learning', this)">Learning</a>
+                        <a href="#summaryGrid" class="filter-button" onclick="filterSummary('Repair', this)">Repair</a>
+                        <a href="#summaryGrid" class="filter-button" onclick="filterSummary('Productivity', this)">Productivity</a>
                     </div>
 
                     <div class="sort-div">

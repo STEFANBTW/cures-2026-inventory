@@ -18,7 +18,7 @@ window.addEventListener("scroll", function() {
         navbar.classList.remove("nav-hidden");
         if(stc) {
             if (window.innerWidth <= 740) {
-                stc.style.top = navbar.offsetHeight + "px";
+                stc.style.top = (navbar.getBoundingClientRect().height) + "px";
             } else {
                 stc.style.top = "70px";
             }
@@ -89,6 +89,19 @@ document.addEventListener('click', (e) => {
 //         });
 //     }
 // }
+
+// --- Orientation/Resize Handler ---
+// Ensures the sticky utility bar stays correctly positioned if the device is rotated
+window.addEventListener('resize', () => {
+    const stc = document.getElementById("stc");
+    if (stc && !navbar.classList.contains("nav-hidden")) {
+         if (window.innerWidth <= 740) {
+            stc.style.top = (navbar.getBoundingClientRect().height) + "px";
+        } else {
+            stc.style.top = "70px";
+        }
+    }
+});
 
 /* =========================================
     GLOBAL STATE & HELPERS
@@ -171,6 +184,17 @@ function renderProspects() {
                 totals[item.category].shipping += (item.shipping || 0) * (item.quantity || 1);
             }
 
+            // Check for Productivity Essential styling requirement
+            const metaRowStyle = (item.category === 'Productivity' && item.isEssential) ? 'style="margin: 0 -5px;"' : '';
+
+            // Badge Logic
+            let badgeHtml = '';
+            if (item.essentialRank === 1) {
+                badgeHtml = `<div class="essential-badge">ESSENTIAL <span style="background-color: white; color: black; border-radius: 50%; padding: 0 6.5px; font-size: 1.2em; margin-left: 4px;">${item.essentialRank}</span></div>`;
+            } else if (item.essentialRank > 1) {
+                badgeHtml = `<div class="rank-badge">RANK <span style="background-color: white; color: black; border-radius: 50%; padding: 0 6.5px; font-size: 1.2em; margin-left: 4px;">${item.essentialRank}</span></div>`;
+            }
+
             const cardWrapper = document.createElement('div');
             cardWrapper.className = 'tool-card-wrapper';
 
@@ -192,11 +216,11 @@ function renderProspects() {
                 </div>
 
                 <div class="tool-card-body">
-                    <div class="tool-meta-row">
+                    <div class="tool-meta-row" ${metaRowStyle}>
                         <span class="card-category">${item.category}</span>
-                        ${item.isEssential ? `<div class="essential-badge">ESSENTIAL <span style="background-color: white; color: black; border-radius: 50%; padding: 0 5px; font-size: 0.8em; margin-left: 4px;">${item.essentialRank}</span></div>` : ''}
+                        ${badgeHtml}
                     </div>
-                    <h1 class="tool-name" title="${item.name}">${item.name}</h1>
+                    <h1 class="tool-name" title="${item.name}">${item.nickname || item.name}</h1>
                     <h5 class="tool-store">${item.productStore || ''}</h5>
                     <h1 class="tool-price" data-base-price-ngn="${item.basePrice}">${getFormattedPrice(item.basePrice)}</h1>  
                     <a href="${item.productLink || '#'}" target="_blank" class="go-to-page">
@@ -252,19 +276,59 @@ function handleCardClick(e) {
         existingPanel.remove();
     }
 
-    const specsList = item.brief ? item.brief.split('\n') : [];
+    const specsList = Array.isArray(item.brief) ? item.brief : (item.brief ? item.brief.split('\n') : []);
     const specsHTML = specsList.length > 0 ? specsList.map(s => `<li>${s}</li>`).join('') : '<li>N/A</li>';
     const panelSliderHTML = (item.images || []).map(src => `<img src="${src}" alt="${item.name}">`).join('');
     const shippingText = item.shipping > 0 ? `+${getFormattedPrice(item.shipping)} shipping` : 'Free shipping';
-    const essentialHtml = item.isEssential ? `<div class="essential-badge">ESSENTIAL <span style="background-color: white; color: black; border-radius: 50%; padding: 0 5px; font-size: 0.8em; margin-left: 4px;">${item.essentialRank}</span></div>` : '';
+    
+    let badgeHtml = '';
+    if (item.essentialRank === 1) {
+        badgeHtml = `<div class="essential-badge">ESSENTIAL <span style="background-color: white; color: black; border-radius: 50%; padding: 0 5px; font-size: 0.8em; margin-left: 4px;">${item.essentialRank}</span></div>`;
+    } else if (item.essentialRank > 1) {
+        badgeHtml = `<div class="rank-badge">RANK <span style="background-color: white; color: black; border-radius: 50%; padding: 0 5px; font-size: 0.8em; margin-left: 4px;">${item.essentialRank}</span></div>`;
+    }
+
+    const rankInfoHTML = item.essentialCategory ? `
+    <div class="panel-rank-info" style="margin-top: 15px; margin-bottom: 10px; display: flex; align-items: center; gap: 10px; font-size: calc(14px * var(--font-scale, 1));">
+        <span style="background-color: var(--essential-bg); color: var(--essential-red); padding: 4px 8px; border-radius: 4px; font-weight: bold;">Rank Category</span>
+        <span style="color: var(--color-alice-blue); font-weight: 600;">${item.essentialCategory}</span>
+        <span style="background-color: white; color: black; border-radius: 50%; width: 24px; height: 24px; display: flex; align-items: center; justify-content: center; font-weight: bold; color: black;">${item.essentialRank}</span>
+    </div>` : '';
+
+    const usageHTML = item.usage ? `<h3 class="detail-section-title">Usage</h3> <p>${item.usage}</p>` : '';
+
+    // Construct Deal Tag HTML
+    let dealBadgeHtml = '';
+    if (item.dealTag && item.dealTag !== 'None') {
+        if (item.dealTag.startsWith('http')) {
+            dealBadgeHtml = `<img src="${item.dealTag}" class="deal-badge-img" alt="Deal Badge" style="height: 20px; vertical-align: middle; margin-left: 10px;">`;
+        } else {
+            let badgeClass = 'deal-official';
+            if (item.dealTag === 'Choice') badgeClass = 'deal-choice';
+            else if (item.dealTag === 'Jumia Express') badgeClass = 'deal-express';
+            else if (item.dealTag === 'SuperDeals') badgeClass = 'deal-super';
+            dealBadgeHtml = `<span class="deal-badge ${badgeClass}" style="margin-left: 10px; vertical-align: middle;">${item.dealTag}</span>`;
+        }
+    }
+
+    const sourceHTML = `<div class="panel-source-row" style="margin-top: 20px; padding-top: 10px; border-top: 1px solid #ffffff30; display: flex; align-items: center;">
+        <span style="color: var(--color-silver); font-weight: bold; margin-right: 5px;">Source:</span> 
+        <span style="color: var(--color-orange-action); font-weight: bold;">${item.source || 'Unknown'}</span>
+        ${dealBadgeHtml}
+    </div>`;
+
+    const visitButtonHTML = item.productLink ? `
+        <a href="${item.productLink}" target="_blank" class="panel-visit-btn" style="display: block; width: 100%; text-align: center; background: var(--color-orange-action); color: var(--color-brown-darkest); padding: 12px 0; margin-top: 15px; border-radius: 8px; font-weight: bold; text-decoration: none; text-transform: uppercase; letter-spacing: 1px; transition: all 0.3s;">
+            Visit Store Page
+        </a>` : '';
 
     const panelHTML = `
     <div class="tool-bag-tdescr">
         <button class="panel-close-btn">&times;</button>
         <div class="panel-header">
             <h2 class="panel-name">${item.name}</h2>
-            <div class="panel-subheader">
             <p class="panel-store-prefix">From ${item.productStore || ''}</p>
+            <div class="panel-subheader">
             <div class="panel-price">${getFormattedPrice(item.basePrice)}<small>${shippingText}</small></div>
             </div>
         </div>
@@ -275,7 +339,7 @@ function handleCardClick(e) {
                 </div>
                 <div class="panel-meta-row">
                     <span class="card-category">${item.category}</span>
-                    ${essentialHtml}
+                    ${badgeHtml}
                 </div>
                 <div class="slider-controls">
                     <button class="slider-btn prev-btn">&#10094;</button>
@@ -284,8 +348,12 @@ function handleCardClick(e) {
             </div>
         </div>
         <div class="panel-details">
-            <h3 class="detail-section-title">Description</h3> <p>${item.description}</p>
+            ${rankInfoHTML}
+            ${usageHTML}
             <h3 class="detail-section-title">Specifications</h3> <ul class="detail-specs-list">${specsHTML}</ul>
+            <h3 class="detail-section-title">Description</h3> <p>${item.description}</p>
+            ${sourceHTML}
+            ${visitButtonHTML}
         </div>
         <p class="close-panel-hint">Click anywhere outside to close</p>
     </div>
@@ -376,7 +444,7 @@ function initPanelSlider(panelElement) {
         intervalId = setInterval(() => {
             currentIndex = (currentIndex + 1) % totalSlides;
             updateSlide();
-        }, 6000); // Increased to 6 seconds
+        }, 4000); // Reduced to 4 seconds
     };
 
     // Manual Controls
@@ -456,12 +524,19 @@ function renderSummary(items) {
             }
         }
 
-        const essentialHtml = item.isEssential ? `<div class="essential-badge">ESSENTIAL <span style="background-color: white; color: black; border-radius: 50%; padding: 0 5px; font-size: 0.8em; margin-left: 4px;">${item.essentialRank}</span></div>` : '';
+        // Badge Logic for Summary
+        let essentialHtml = '';
+        if (item.essentialRank === 1) {
+            essentialHtml = `<div class="essential-badge">ESSENTIAL <span style="background-color: white; color: black; border-radius: 50%; padding: 0 6.5px; font-size: 1.2em; margin-left: 4px;">${item.essentialRank}</span></div>`;
+        } else if (item.essentialRank > 1) {
+            essentialHtml = `<div class="rank-badge">RANK <span style="background-color: white; color: black; border-radius: 50%; padding: 0 6.5px; font-size: 1.2em; margin-left: 4px;">${item.essentialRank}</span></div>`;
+        }
+
         const shippingHtml = unitShip === 0 
-            ? '<span class="free-ship-tag" style="margin-bottom: 5px;">Free Ship</span>' 
+            ? '<span class="free-ship-tag" style="margin-bottom: 5px; font-size: calc(12px * var(--font-scale, 1));">Free Ship</span>' 
             : `<div style="text-align: right;">
-                   <div style="font-size: 0.7rem; text-transform: uppercase; color: var(--summ-dim);">Shipping</div>
-                   <span class="shipping-info">${getFormattedPrice(unitShip)}</span>
+                   <div style="font-size: calc(11px * var(--font-scale, 1)); text-transform: uppercase; color: var(--summ-dim);">Shipping</div>
+                   <span class="shipping-info" style="font-size: calc(13px * var(--font-scale, 1));">${getFormattedPrice(unitShip)}</span>
                </div>`;
 
         // Slider Generation
@@ -472,7 +547,7 @@ function renderSummary(items) {
         cardWrapper.className = 'summary-card-wrapper';
 
         const card = document.createElement('div');
-        card.className = 'summary-card' + (item.isEssential ? ' essential' : '');
+        card.className = 'summary-card' + (item.essentialRank === 1 ? ' essential' : '');
         card.innerHTML = `
             <div class="card-image">
                 <div class="slider-frame">
@@ -488,7 +563,7 @@ function renderSummary(items) {
             <div class="card-body">
 
                 <div class="card-inner-body">
-                    <div class="card-title">${item.name}</div>                        
+                    <div class="card-title" title="${item.name}">${item.nickname || item.name}</div>                        
                     <div style="font-size: 0.8rem; color: var(--summ-dim); margin-bottom: 5px;">Quantity: ${quantity}</div>
                     <div class="card-footer">
                         ${quantity > 1 
@@ -501,7 +576,7 @@ function renderSummary(items) {
                         } 
                         <div class="final-price-row" style="align-items: flex-end;">
                             <div>
-                                <div style="font-size: 0.7rem; text-transform: uppercase; color: var(--summ-dim);">Total Price</div>
+                                <div style="font-size: calc(11px * var(--font-scale, 1)); text-transform: uppercase; color: var(--summ-dim);">Total Price</div>
                                 <span class="final-price">${getFormattedPrice(totalCost)}</span>
                             </div>
                             ${shippingHtml}
@@ -511,6 +586,23 @@ function renderSummary(items) {
                 </div>
             </div>
         `;
+
+        // Mobile: Click to toggle hover state
+        card.addEventListener('click', (e) => {
+            if (window.innerWidth <= 1200) {
+                // Allow links to work without toggling
+                if (e.target.closest('a') || e.target.closest('.sum-deets')) return;
+
+                if (card.classList.contains('mobile-hover-state')) {
+                    card.classList.remove('mobile-hover-state');
+                } else {
+                    // Optional: Close other open cards
+                    document.querySelectorAll('.summary-card.mobile-hover-state').forEach(c => c.classList.remove('mobile-hover-state'));
+                    card.classList.add('mobile-hover-state');
+                }
+            }
+        });
+
         cardWrapper.appendChild(card);
         grid.appendChild(cardWrapper);
     });            
@@ -574,11 +666,7 @@ function filterSummary(criteria, btnElement) {
     const listToRender = getFilteredAndSortedList();
     renderSummary(listToRender);
 
-    // Scroll back to the top of the summary utility bar
-    const utilityBar = document.getElementById('stc');
-    if (utilityBar) {
-        utilityBar.scrollIntoView({ behavior: 'smooth', block: 'start' });
-    }
+    // Scrolling is now handled by href="#summaryGrid" on the filter links.
 }
 
 function sortSummary() {
@@ -734,20 +822,38 @@ function initSliders() {
                         doc.setTextColor(150, 150, 150);
                         doc.text("IMG", margin + 4, yPos + 9);
 
-                        // --- B. LEFT SIDE: Name & Details ---
+                        // --- B. LEFT SIDE: Name (Wrapped) & Details ---
                         const textStartX = margin + 20;
+                        const maxNameWidth = pageWidth - margin - textStartX - 45; // Reserve ~45 units for price column
                         
                         // Tool Name
                         doc.setFont("helvetica", "bold");
                         doc.setFontSize(12);
                         doc.setTextColor(0, 0, 0);
-                        doc.text(item.name, textStartX, yPos + 5);
+                        
+                        // Wrap text logic
+                        let nameLines = doc.splitTextToSize(item.nickname || item.name, maxNameWidth);
+                        
+                        // Limit to 2 lines, add "..." if longer
+                        if (nameLines.length > 2) {
+                            let secondLine = nameLines[1];
+                            // Simple truncation for the second line to ensure it fits visually
+                            if (secondLine.length > 3) {
+                                secondLine = secondLine.substring(0, secondLine.length - 3) + "...";
+                            }
+                            nameLines = [nameLines[0], secondLine];
+                        }
+                        
+                        doc.text(nameLines, textStartX, yPos + 5);
 
                         // Store & Shipping Info (Next line)
+                        // Adjust Y position based on how many lines the name took
+                        const detailYOffset = nameLines.length > 1 ? 11 + 5 : 11; // Add 5 units if 2 lines
+                        
                         doc.setFont("helvetica", "normal");
                         doc.setFontSize(10);
                         doc.setTextColor(80, 80, 80);
-                        doc.text(`${item.productStore} | ${item.source} | ${shippingText}`, textStartX, yPos + 11);
+                        doc.text(`${item.productStore} | ${item.source} | ${shippingText}`, textStartX, yPos + detailYOffset);
 
                         // --- C. RIGHT SIDE: Prices ---
                         // Item Total Price
@@ -815,6 +921,40 @@ document.addEventListener('DOMContentLoaded', () => {
             if (!toolBagNav.contains(e.target)) {
                 toolBagNav.classList.remove('active');
             }
+        });
+    }
+
+    // --- Mobile: Click Brief Header to Scroll to Grid ---
+    const briefHeaders = document.querySelectorAll('.tool-bag-brief-brief h1');
+    briefHeaders.forEach(header => {
+        header.addEventListener('click', () => {
+            if (window.innerWidth <= 1200) {
+                const group = header.closest('.tools-group');
+                if (group) {
+                    const gridContainer = group.querySelector('.tool-bag-grid-container');
+                    if (gridContainer) {
+                        gridContainer.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                }
+            }
+        });
+    });
+
+    // --- Font Size Toggle Logic ---
+    const fontToggleBtn = document.getElementById('font-toggle-btn');
+    
+    // Check for saved preference
+    const savedFontPref = localStorage.getItem('fontPreference');
+    if (savedFontPref === 'large') {
+        document.body.classList.add('large-font');
+    }
+
+    if (fontToggleBtn) {
+        fontToggleBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            document.body.classList.toggle('large-font');
+            const isLarge = document.body.classList.contains('large-font');
+            localStorage.setItem('fontPreference', isLarge ? 'large' : 'normal');
         });
     }
 
