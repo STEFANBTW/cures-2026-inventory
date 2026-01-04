@@ -1502,8 +1502,8 @@ body.large-font {
 }
 
 .essential-badge {
-    background: var(--color-burgundy);
-    color: white;
+    background: var(--essential-bg);
+    color: var(--essential-red);
     font-size: calc(13px * var(--font-scale, 1));
     padding: 0 10px;
     margin: 0;
@@ -1522,8 +1522,8 @@ body.large-font {
 }
 
 .summary-card .rank-badge {
-    background: var(--essential-bg);
-    color: var(--essential-red);
+    background-color: var(--color-alice-blue);
+    color: var(--color-brown-darkest);
     font-size: calc(13px * var(--font-scale, 1));
     padding: 3px 8px;
     margin: 0;
