@@ -157,6 +157,9 @@ function renderSummary(items) {
     
     // Start sliders for newly rendered summary cards
     initSliders();
+
+    // Trigger animations for the newly rendered cards
+    initSummaryAnimations();
 }
 
 /**
@@ -289,22 +292,31 @@ function initSliders() {
 // Export for use in script16.js (if using modules in future)
 // Currently these are global functions for lazy-loaded initialization
 
-document.addEventListener("DOMContentLoaded", function() {
-    // 1. Select all card wrappers
-    const cards = document.querySelectorAll('.summary-card-wrapper');
+let summaryCardObserver = null;
 
-    // 2. Setup the Observer (The "Eye" that watches scrolling)
+/**
+ * Initializes the scroll-into-view animations for summary cards.
+ * Called automatically at the end of renderSummary().
+ */
+function initSummaryAnimations() {
+    const cards = document.querySelectorAll('.summary-card-wrapper');
+    if (cards.length === 0) return;
+
+    // Disconnect previous observer to prevent memory leaks or duplicate observations
+    if (summaryCardObserver) {
+        summaryCardObserver.disconnect();
+    }
+
     const observerOptions = {
         root: null, // viewport
         rootMargin: '0px',
         threshold: 0.15 // Trigger when 15% of the card is visible
     };
 
-    const observer = new IntersectionObserver((entries, observer) => {
-        entries.forEach((entry, index) => {
+    summaryCardObserver = new IntersectionObserver((entries, obs) => {
+        entries.forEach(entry => {
             if (entry.isIntersecting) {
                 // Calculate a staggered delay based on the entry order
-                // This creates the "wave" effect even if you scroll fast
                 const delay = entry.target.dataset.delay || 0;
                 
                 setTimeout(() => {
@@ -312,21 +324,19 @@ document.addEventListener("DOMContentLoaded", function() {
                 }, delay);
 
                 // Stop watching this card once it has animated
-                observer.unobserve(entry.target);
+                obs.unobserve(entry.target);
             }
         });
     }, observerOptions);
 
-    // 3. Assign delays and start watching
-    // We process them in batches to create a natural flow
     cards.forEach((card, index) => {
-        // Create a visual stagger: modulo operator recycles delay every 4 items
-        // so the wave restarts on new rows (roughly)
         let staggerTime = (index % 5) * 100; 
-        
-        // Store delay in dataset for the observer to use
         card.dataset.delay = staggerTime;
+        summaryCardObserver.observe(card);
         
-        observer.observe(card);
+        // Fallback: Ensure visibility if observer fails or takes too long
+        setTimeout(() => {
+            if (!card.classList.contains('in-view')) card.classList.add('in-view');
+        }, 1000 + staggerTime);
     });
-});
+}

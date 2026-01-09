@@ -277,9 +277,16 @@ function renderProspects() {
             card.style.animationDelay = `${index * 0.05}s`; // Staggered fade-in effect
             card.setAttribute('data-item-id', item.id); // Use ID for reliable lookup
 
-            // Use original images for tool cards
+            // Use thumbnail images for tool cards
             const imagesList = item.images && item.images.length > 0 ? item.images : ["https://placehold.co/300x200?text=No+Img"];
-            const sliderHTML = imagesList.map(src => `<img loading="lazy" decoding="async" src="${src}" alt="${item.name}" onerror="this.src='https://placehold.co/300x200?text=No+Image'">`).join('');
+            const thumbnailImagesList = imagesList.map(src => {
+                const lastDot = src.lastIndexOf('.');
+                if (lastDot !== -1) {
+                    return src.substring(0, lastDot) + '_thumb' + src.substring(lastDot);
+                }
+                return src;
+            });
+            const sliderHTML = thumbnailImagesList.map(src => `<img loading="lazy" decoding="async" src="${src}" alt="${item.name}" onerror="this.src='https://placehold.co/300x200?text=No+Image'">`).join('');
 
             card.innerHTML = `
                 <div class="tool-pics-container">
@@ -598,17 +605,33 @@ function initPanelSlider(panelElement) {
             pdfBtn.querySelector('h1').innerText = "Generating PDF...";
 
             try {
-                const doc = new jsPDF();
+                const doc = new jsPDF({ format: 'a4' });
                 const pageWidth = doc.internal.pageSize.width;
                 const pageHeight = doc.internal.pageSize.height;
-                const margin = 15;
-                let yPos = 20;
+                const margin = 10; // Reduced margin for "thin" look
+                let yPos = 10;
+                
+                // Define layout variables
+                const imageSize = 15;
+                const textStartX = margin + imageSize + 5; 
+                const maxNameWidth = pageWidth - textStartX - margin - 45; // Reserve space for price column
+
+                // Helper to format price for PDF (avoiding unicode symbols)
+                const getPdfPrice = (rawPrice) => {
+                    const { current, rates } = currencyState;
+                    const displayPrice = rawPrice * rates[current];
+                    const formatted = displayPrice.toLocaleString('en-US', {
+                        minimumFractionDigits: 2,
+                        maximumFractionDigits: 2
+                    });
+                    return `${current} ${formatted}`;
+                };
 
                 // --- 1. DATA PREPARATION ---
                 // Calculate specific totals
-                const grandTotal = inventory.reduce((sum, i) => sum + ((i.basePrice + (i.shipping || 0)) * (i.quantity || 1)), 0);
-                const totalBasePrice = inventory.reduce((sum, i) => sum + (i.basePrice * (i.quantity || 1)), 0);
-                const totalShipping = inventory.reduce((sum, i) => sum + ((i.shipping || 0) * (i.quantity || 1)), 0);
+                const grandTotal = inventory.reduce((sum, i) => sum + ((parsePrice(i.basePrice) + parsePrice(i.shipping)) * (i.quantity || 1)), 0);
+                const totalBasePrice = inventory.reduce((sum, i) => sum + (parsePrice(i.basePrice) * (i.quantity || 1)), 0);
+                const totalShipping = inventory.reduce((sum, i) => sum + (parsePrice(i.shipping) * (i.quantity || 1)), 0);
 
                 // Group Data
                 const categories = {};
@@ -622,19 +645,19 @@ function initPanelSlider(panelElement) {
                 doc.setFont("helvetica", "bold");
                 doc.setFontSize(16);
                 doc.setTextColor(40, 40, 40);
-                doc.text("CURE PROSPECTS 2025-2026", margin, yPos);
+                doc.text("CURE PROSPECTS 2025-2026", margin, yPos + 6);
 
                 // Right: Grand Total (Large)
                 doc.setFontSize(18);
                 doc.setTextColor(0, 0, 0);
-                doc.text(getFormattedPrice(grandTotal), pageWidth - margin, yPos, { align: "right" });
+                doc.text(getPdfPrice(grandTotal), pageWidth - margin, yPos + 6, { align: "right" });
 
                 // Right: Small Breakdown (Underneath)
-                yPos += 6;
+                yPos += 12;
                 doc.setFont("helvetica", "normal");
                 doc.setFontSize(9);
                 doc.setTextColor(100, 100, 100); // Grey text
-                const totalBreakdownText = `Products: ${getFormattedPrice(totalBasePrice)} + Shipping: ${getFormattedPrice(totalShipping)}`;
+                const totalBreakdownText = `Products: ${getPdfPrice(totalBasePrice)} + Shipping: ${getPdfPrice(totalShipping)}`;
                 doc.text(totalBreakdownText, pageWidth - margin, yPos, { align: "right" });
 
                 // Header Divider Line
@@ -642,7 +665,7 @@ function initPanelSlider(panelElement) {
                 doc.setDrawColor(200, 200, 200);
                 doc.setLineWidth(0.5);
                 doc.line(margin, yPos, pageWidth - margin, yPos);
-                yPos += 15; // Space before first category
+                yPos += 10; // Space before first category
 
                 // --- 3. CATEGORY & ITEM LOOP ---
                 const categoryOrder = ['Learning', 'Repair', 'Productivity']; // Define order
@@ -652,7 +675,7 @@ function initPanelSlider(panelElement) {
                     const items = categories[catName];
 
                     // Check space for Category Header
-                    if (yPos > pageHeight - 30) { doc.addPage(); yPos = 20; }
+                    if (yPos > pageHeight - margin - 20) { doc.addPage(); yPos = margin + 10; }
 
                     // Draw Category Title
                     doc.setFont("helvetica", "bold");
@@ -664,35 +687,34 @@ function initPanelSlider(panelElement) {
                     // Loop Items
                     items.forEach(item => {
                         const quantity = item.quantity || 1;
-                        const unitTotal = parsePrice(item.basePrice) + parsePrice(item.shipping || 0);
-                        const itemTotal = unitTotal * quantity;
-                        const shippingText = parsePrice(item.shipping) === 0 ? "Free Shipping" : `Shipping: ${getFormattedPrice(parsePrice(item.shipping || 0))}`;
-                        let breakdownText = `(Base: ${getFormattedPrice(parsePrice(item.basePrice))})`;
-                        if (quantity > 1) {
-                            breakdownText = `(${quantity} @ ${getFormattedPrice(unitTotal)} = ${getFormattedPrice(itemTotal)})`;
+                        const unitBase = parsePrice(item.basePrice);
+                        const unitShip = parsePrice(item.shipping || 0);
+                        const totalCost = (unitBase + unitShip) * quantity;
+                        
+                        let breakdownText = `Qty: ${quantity} | Base: ${getPdfPrice(unitBase)}`;
+                        if (unitShip > 0) {
+                            breakdownText += ` | Ship: ${getPdfPrice(unitShip)}`;
+                        } else {
+                            breakdownText += ` | Free Ship`;
                         }
                         
                         // Item Row Height (Generous height for layout)
                         const rowHeight = 25; 
 
                         // Check Page Break
-                        if (yPos + rowHeight > pageHeight - 15) {
+                        if (yPos + rowHeight > pageHeight - margin) {
                             doc.addPage();
-                            yPos = 20;
+                            yPos = margin + 10;
                         }
 
                         // --- A. IMAGE (Thumbnail Box) ---
                         // Note: Loading external URLs fails in PDF often due to CORS. 
                         // We draw a clean gray placeholder box to keep layout professional.
                         doc.setFillColor(240, 240, 240);
-                        doc.rect(margin, yPos, 15, 15, 'F'); // X, Y, W, H
+                        doc.rect(margin, yPos, imageSize, imageSize, 'F'); // X, Y, W, H
                         doc.setFontSize(6);
                         doc.setTextColor(150, 150, 150);
                         doc.text("IMG", margin + 4, yPos + 9);
-
-                                const unitBase = parsePrice(item.basePrice);
-                                const unitShip = parsePrice(item.shipping || 0);
-                                const totalCost = (unitBase + unitShip) * quantity;
                         
                         // Tool Name
                         doc.setFont("helvetica", "bold");
@@ -721,14 +743,14 @@ function initPanelSlider(panelElement) {
                         doc.setFont("helvetica", "normal");
                         doc.setFontSize(10);
                         doc.setTextColor(80, 80, 80);
-                        doc.text(`${item.productStore} | ${item.source} | ${shippingText}`, textStartX, yPos + detailYOffset);
+                        doc.text(`${item.productStore} | ${item.source}`, textStartX, yPos + detailYOffset);
 
                         // --- C. RIGHT SIDE: Prices ---
                         // Item Total Price
                         doc.setFont("helvetica", "bold");
                         doc.setFontSize(12);
                         doc.setTextColor(0, 0, 0);
-                        doc.text(getFormattedPrice(itemTotal), pageWidth - margin, yPos + 5, { align: "right" });
+                        doc.text(getPdfPrice(totalCost), pageWidth - margin, yPos + 5, { align: "right" });
 
                         // Small Breakdown text underneath
                         doc.setFont("helvetica", "italic");

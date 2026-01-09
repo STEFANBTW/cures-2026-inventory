@@ -1135,7 +1135,7 @@ body.large-font {
 }
 
 .summary-card .shipping-info {
-    font-size: calc(13px * var(--font-scale, 1));
+    font-size: calc(15px * var(--font-scale, 1));
 }
 
 .card-quantity {
@@ -1177,11 +1177,11 @@ body.large-font {
     min-height: 100dvh;
 
     /* Masking for drip effect using the image */
-    -webkit-mask-image: url(images/SVG/SVG/7x/retry-mask@7x.png), linear-gradient(black, black);
+    -webkit-mask-image: url(images/SVG/SVG/7x/retry-mask@7x.png), linear-gradient(black, black); 
     mask-image: url(images/SVG/SVG/7x/retry-mask@7x.png), linear-gradient(black, black);
-    /* -webkit-mask-size: 120%, 100%; */
+    -webkit-mask-size: 120%, 100%; 
     mask-size: 90%;
-    /* -webkit-mask-position: top, top; */
+    -webkit-mask-position: top, top;
     mask-position: 90% 0;
     -webkit-mask-repeat: repeat-x;  
     mask-repeat: repeat-x;
@@ -1389,22 +1389,16 @@ body.large-font {
     height: 350px;
     position: relative;
     z-index: 1;
-    animation: summaryCardSlideUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
-    opacity: 0;
+    opacity: 0; /* Hidden by default */
+    transform: translateY(40px) scale(0.95); /* Starting position: down and slightly small */
+    transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); /* The "Elastic" easing */
 }
 
-/* Stagger animation delay for each card */
-.summary-card-wrapper:nth-child(1) { animation-delay: 0.05s; }
-.summary-card-wrapper:nth-child(2) { animation-delay: 0.1s; }
-.summary-card-wrapper:nth-child(3) { animation-delay: 0.15s; }
-.summary-card-wrapper:nth-child(4) { animation-delay: 0.2s; }
-.summary-card-wrapper:nth-child(5) { animation-delay: 0.25s; }
-.summary-card-wrapper:nth-child(6) { animation-delay: 0.3s; }
-.summary-card-wrapper:nth-child(7) { animation-delay: 0.35s; }
-.summary-card-wrapper:nth-child(8) { animation-delay: 0.4s; }
-.summary-card-wrapper:nth-child(9) { animation-delay: 0.45s; }
-.summary-card-wrapper:nth-child(10) { animation-delay: 0.5s; }
-.summary-card-wrapper:nth-child(n+11) { animation-delay: 0.55s; }
+/* The class JS will add to trigger the view */
+.summary-card-wrapper.in-view {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
 
 .summary-card-wrapper:hover {
     z-index: 100;
@@ -1446,49 +1440,72 @@ body.large-font {
     bottom: 0;
 }
 
-/* Swipe Hint Animation */
+/* --- Modern Swipe Hint --- */
 .swipe-hint-container {
     position: absolute;
-    top: -250px;
-    right: 50%;
+    top: -45px; /* Adjusted to sit cleanly above cards */
+    right: 20px; /* Aligned with right edge */
     z-index: 10;
-    z-index: 2000;
-    text-align: right;
     pointer-events: none;
-    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.8);
-    transform: translateX(-50%);
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
 }
+
 .swipe-hint-container h3 {
-    font-size: calc(16px * var(--font-scale, 1));
+    font-size: calc(13px * var(--font-scale, 1));
     color: var(--color-orange-action);
-    margin: 0;
+    margin: 0 0 2px 0;
     text-transform: uppercase;
-    letter-spacing: 2px;
+    letter-spacing: 1px;
+    font-weight: 700;
+    opacity: 0.9;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.3);
 }
+
 .swipe-instruction {
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    gap: 5px;
-    font-size: calc(13px * var(--font-scale, 1));
-    color: var(--color-silver);
+    gap: 2px; /* Tighter gap for a cleaner arrow shape */
 }
+
 .arrow {
+    display: inline-block; /* CRITICAL: Allows transform to work on text */
     font-weight: bold;
-    font-size: calc(19px * var(--font-scale, 1));
-    animation: waveColor 1.5s infinite;
+    font-size: calc(20px * var(--font-scale, 1));
+    color: var(--color-silver);
+    opacity: 0; /* Start hidden */
+    animation: swipeNudge 2s infinite ease-out;
 }
 .arrow.a1 { animation-delay: 0s; }
 .arrow.a2 { animation-delay: 0.2s; }
 .arrow.a3 { animation-delay: 0.4s; }
 
-@keyframes waveColor {
-    0%, 100% { color: var(--color-silver); }
-    50% { color: var(--color-orange-action); }
+/* The "Ghosting" Nudge Animation */
+@keyframes swipeNudge {
+    0% {
+        opacity: 0;
+        transform: translateX(0) scale(0.8);
+    }
+    15% {
+        opacity: 1; /* Fade in quick */
+        color: var(--color-orange-action); /* Light up */
+        transform: translateX(2px) scale(1);
+    }
+    50% {
+        /* Hold visibility briefly while moving */
+        opacity: 1;
+        color: var(--color-silver);
+    }
+    100% {
+        opacity: 0; /* Fade out */
+        transform: translateX(12px) scale(0.9); /* Move right to indicate direction */
+    }
 }
 
 .summary-card.essential:hover {
-    box-shadow: 0 0 50px 30px var(--essential-bg);
+    box-shadow: 0 0 50px 30px var(--essential-red);
     border: 2px solid var(--essential-red);
 }
 
@@ -1679,15 +1696,15 @@ body.large-font {
 }
 
 .final-price {
-    font-size: calc(22.5px * var(--font-scale, 1));
+    font-size: calc(20px * var(--font-scale, 1));
     font-weight: 800;
     color: var(--summ-text);
 }
 
 .shipping-info {
     color: var(--color-brown-darkest);
-    font-weight: 500;
-    font-size: calc(13px * var(--font-scale, 1));
+    font-weight: 600;
+    font-size: calc(15px * var(--font-scale, 1));
 }
 
 .free-ship-tag {
@@ -1731,7 +1748,7 @@ body.large-font {
     display: flex;
     align-items: end;
     text-align: center;
-    background: #fffeeb;
+    background-color: var(--summ-card-bg);
 }
 
 .closing-inner {
@@ -1857,6 +1874,102 @@ body.large-font {
 }
 
 /* =========================================
+    MOVED STYLES (Fix for Minification Cascade)
+   ========================================= */
+
+/* 1. Reset the wrapper to be invisible initially */
+.summary-card-wrapper {
+    height: 350px;
+    position: relative;
+    z-index: 1;
+    opacity: 0; /* Hidden by default */
+    transform: translateY(40px) scale(0.95); /* Starting position: down and slightly small */
+    transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); /* The "Elastic" easing */
+}
+
+/* 2. The class JS will add to trigger the view */
+.summary-card-wrapper.in-view {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+/* 3. Keep hover effects separate */
+.summary-card-wrapper:hover {
+    z-index: 100;
+}
+.summary-card-wrapper:hover .summary-card {
+    padding-bottom: 35px;
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* --- Modern Swipe Hint --- */
+.swipe-hint-container {
+    position: absolute;
+    top: -45px; /* Adjusted to sit cleanly above cards */
+    right: 20px; /* Aligned with right edge */
+    z-index: 10;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.swipe-hint-container h3 {
+    font-size: calc(13px * var(--font-scale, 1));
+    color: var(--color-orange-action);
+    margin: 0 0 2px 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    opacity: 0.9;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+.swipe-instruction {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 2px; /* Tighter gap for a cleaner arrow shape */
+}
+
+.arrow {
+    display: inline-block; /* CRITICAL: Allows transform to work on text */
+    font-weight: 800;
+    font-size: calc(20px * var(--font-scale, 1));
+    color: var(--color-silver);
+    opacity: 0; /* Start hidden */
+    animation: swipeNudge 2s infinite ease-out;
+}
+
+/* The "Ghosting" Nudge Animation */
+@keyframes swipeNudge {
+    0% {
+        opacity: 0;
+        transform: translateX(0) scale(0.8);
+    }
+    15% {
+        opacity: 1; /* Fade in quick */
+        color: var(--color-orange-action); /* Light up */
+        transform: translateX(2px) scale(1);
+    }
+    50% {
+        /* Hold visibility briefly while moving */
+        opacity: 1;
+        color: var(--color-silver);
+    }
+    100% {
+        opacity: 0; /* Fade out */
+        transform: translateX(12px) scale(0.9); /* Move right to indicate direction */
+    }
+}
+
+/* Staggered delays create the "wave" motion */
+.arrow.a1 { animation-delay: 0s; }
+.arrow.a2 { animation-delay: 0.2s; }
+.arrow.a3 { animation-delay: 0.4s; }
+
+/* =========================================
     6. RESPONSIVE MEDIA QUERIES
    ========================================= */
 @media screen and (max-width: 1200px) {
@@ -1865,8 +1978,7 @@ body.large-font {
     .tool-bag-container {
         height: 200dvh;
     }
-    .tool-bag-nav {
-    }
+    
 
     .tool-bag-grid {
         width: 55%;
@@ -2137,9 +2249,6 @@ body.large-font {
         display: none;
     }
     /* Hide desktop hamburger if screen is wide enough (override for safety) */
-    .filter-hamburger-btn {
-        /* display: none; - Kept visible for tablet logic */
-    }
     #mobile-currency-btn {
         padding: 8px 14px;
     }
@@ -2199,7 +2308,7 @@ body.large-font {
     .final-price-row {
         display: flex;
         align-items: baseline;
-        justify-content: space-between
+        justify-content: space-between;
     }
     .final-price {
         font-size: calc(15px * var(--font-scale, 1)) !important;
@@ -2576,98 +2685,3 @@ body.large-font {
         position: relative;
     }
 }  
-
-/* 1. Reset the wrapper to be invisible initially */
-.summary-card-wrapper {
-    height: 350px;
-    position: relative;
-    z-index: 1;
-    opacity: 0; /* Hidden by default */
-    transform: translateY(40px) scale(0.95); /* Starting position: down and slightly small */
-    transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); /* The "Elastic" easing */
-}
-
-/* 2. The class JS will add to trigger the view */
-.summary-card-wrapper.in-view {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-}
-
-/* 3. Keep hover effects separate (No changes needed here, just ensuring they don't conflict) */
-.summary-card-wrapper:hover {
-    z-index: 100;
-}
-.summary-card-wrapper:hover .summary-card {
-    padding-bottom: 35px;
-    transform: translateY(-5px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-}
-
-/* 4. OPTIONAL: Remove the old hardcoded delays if they exist in your file */
-/* Delete lines looking like: .summary-card-wrapper:nth-child(1) { animation-delay: 0.05s; } */
-
-/* --- Modern Swipe Hint --- */
-.swipe-hint-container {
-    position: absolute;
-    top: -45px; /* Adjusted to sit cleanly above cards */
-    right: 20px; /* Aligned with right edge */
-    z-index: 10;
-    pointer-events: none;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-}
-
-.swipe-hint-container h3 {
-    font-size: calc(13px * var(--font-scale, 1));
-    color: var(--color-orange-action);
-    margin: 0 0 2px 0;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    font-weight: 700;
-    opacity: 0.9;
-    text-shadow: 0 2px 10px rgba(0,0,0,0.3);
-}
-
-.swipe-instruction {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 2px; /* Tighter gap for a cleaner arrow shape */
-}
-
-.arrow {
-    display: inline-block; /* CRITICAL: Allows transform to work on text */
-    font-weight: 800;
-    font-size: calc(20px * var(--font-scale, 1));
-    color: var(--color-silver);
-    opacity: 0; /* Start hidden */
-    animation: swipeNudge 2s infinite ease-out;
-}
-
-/* The "Ghosting" Nudge Animation */
-@keyframes swipeNudge {
-    0% {
-        opacity: 0;
-        transform: translateX(0) scale(0.8);
-    }
-    15% {
-        opacity: 1; /* Fade in quick */
-        color: var(--color-orange-action); /* Light up */
-        transform: translateX(2px) scale(1);
-    }
-    50% {
-        /* Hold visibility briefly while moving */
-        opacity: 1;
-        color: var(--color-silver);
-    }
-    100% {
-        opacity: 0; /* Fade out */
-        transform: translateX(12px) scale(0.9); /* Move right to indicate direction */
-    }
-}
-
-/* Staggered delays create the "wave" motion */
-.arrow.a1 { animation-delay: 0s; }
-.arrow.a2 { animation-delay: 0.2s; }
-.arrow.a3 { animation-delay: 0.4s; }
