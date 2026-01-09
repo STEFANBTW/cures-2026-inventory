@@ -1,0 +1,52 @@
+/* Backup of style16.css as of January 9, 2026 */
+
+:root {
+	/* --- CORE THEME COLORS --- */
+	--color-brown-darkest: #2D1C16;
+	--color-brown-surface: #4B362A;
+	--color-chocolate: #7B3F00;
+	--color-orange-action: #FF8C00;
+	--color-silver: #C0C0C0;
+	--color-alice-blue: #F0F8FF;
+
+	/* --- SUPPORTING COLORS --- */
+	--color-cream: #FFFDD0;
+	--color-teal-patina: #008080;
+	--color-burgundy: #800020;
+	--color-copper: #B87333;
+
+	/* --- FUNCTIONAL VARIABLES --- */
+	--nav-height: 70px;
+	--transition-speed: 0.35s;
+
+	/* --- SUMMARY GRID COLORS (Test 12 Adaptation) --- */
+	--summ-bg: var(--color-cream);
+	--summ-card-bg: #ffffff;
+	--summ-text: #1e293b;
+	--summ-dim: #414750;
+	--jumia-orange: #f97316;
+	--ali-gold: #fdda9d;
+	--essential-red: #991b1b;
+	--essential-bg: #fee2e2;
+
+	/* --- FONT SCALING --- */
+	--font-scale: 1;
+}
+
+html {
+	scroll-behavior: smooth;
+}
+
+body {
+	margin: 0;
+	background: var(--color-brown-darkest);
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	color: var(--color-alice-blue);
+}
+
+body.large-font {
+	--font-scale: 1.15; /* 15% larger text */
+}
+
+...existing code...
+

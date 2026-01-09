@@ -1,49 +1,52 @@
+
+/* Backup of style16.css as of January 9, 2026 */
+
 :root {
-    /* --- CORE THEME COLORS --- */
-    --color-brown-darkest: #2D1C16;
-    --color-brown-surface: #4B362A;
-    --color-chocolate: #7B3F00;
-    --color-orange-action: #FF8C00;
-    --color-silver: #C0C0C0;
-    --color-alice-blue: #F0F8FF;
+	/* --- CORE THEME COLORS --- */
+	--color-brown-darkest: #2D1C16;
+	--color-brown-surface: #4B362A;
+	--color-chocolate: #7B3F00;
+	--color-orange-action: #FF8C00;
+	--color-silver: #C0C0C0;
+	--color-alice-blue: #F0F8FF;
 
-    /* --- SUPPORTING COLORS --- */
-    --color-cream: #FFFDD0;
-    --color-teal-patina: #008080;
-    --color-burgundy: #800020;
-    --color-copper: #B87333;
+	/* --- SUPPORTING COLORS --- */
+	--color-cream: #FFFDD0;
+	--color-teal-patina: #008080;
+	--color-burgundy: #800020;
+	--color-copper: #B87333;
 
-    /* --- FUNCTIONAL VARIABLES --- */
-    --nav-height: 70px;
-    --transition-speed: 0.35s;
+	/* --- FUNCTIONAL VARIABLES --- */
+	--nav-height: 70px;
+	--transition-speed: 0.35s;
 
-    /* --- SUMMARY GRID COLORS (Test 12 Adaptation) --- */
-    --summ-bg: var(--color-cream);
-    --summ-card-bg: #ffffff;
-    --summ-text: #1e293b;
-    --summ-dim: #414750;
-    --jumia-orange: #f97316;
-    --ali-gold: #fdda9d;
-    --essential-red: #991b1b;
-    --essential-bg: #fee2e2;
+	/* --- SUMMARY GRID COLORS (Test 12 Adaptation) --- */
+	--summ-bg: var(--color-cream);
+	--summ-card-bg: #ffffff;
+	--summ-text: #1e293b;
+	--summ-dim: #414750;
+	--jumia-orange: #f97316;
+	--ali-gold: #fdda9d;
+	--essential-red: #991b1b;
+	--essential-bg: #fee2e2;
 
-    /* --- FONT SCALING --- */
-    --font-scale: 1;
+	/* --- FONT SCALING --- */
+	--font-scale: 1;
 }
 
 html {
-    scroll-behavior: smooth;
+	scroll-behavior: smooth;
 }
 
 body {
-    margin: 0;
-    background: var(--color-brown-darkest);
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: var(--color-alice-blue);
+	margin: 0;
+	background: var(--color-brown-darkest);
+	font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+	color: var(--color-alice-blue);
 }
 
 body.large-font {
-    --font-scale: 1.15; /* 15% larger text */
+	--font-scale: 1.15; /* 15% larger text */
 }
 
 .tool-bag,
@@ -86,6 +89,8 @@ body.large-font {
     height: 100%;
     object-fit: contain;
     flex-shrink: 0;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
 }
 
 /* =========================================
@@ -102,7 +107,7 @@ body.large-font {
     transition: transform 0.4s ease-in-out;
     display: flex;
     justify-content: center;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.25);
     backdrop-filter: blur(10px);
 }
 
@@ -514,6 +519,18 @@ body.large-font {
     to { opacity: 1; transform: translateY(0); }
 }
 
+/* Summary Card Entrance Animations */
+@keyframes summaryCardSlideUp {
+    0% {
+        opacity: 0;
+        transform: translateY(30px) scale(0.95);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
 /* Header Brief inside Group */
 .tool-bag-brief-container {
     padding: 15px 30px 0;
@@ -665,7 +682,10 @@ body.large-font {
 }
 .tool-pics-container img {
     width: 100%;
-    object-fit: cover;
+    height: 100%;
+    object-fit: contain;
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
 }
 
 .tool-card-body {
@@ -754,11 +774,11 @@ body.large-font {
     width: 40%;
     height: 100%;
     background: rgba(45, 28, 22, 0.87);
-    backdrop-filter: blur(15px);
+    backdrop-filter: blur(10px);
     border-left: 3px solid var(--color-orange-action);
-    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.5);
+    box-shadow: -10px 0 20px rgba(0, 0, 0, 0.25);
     transform: translateX(100%);
-    /* Start hidden off-screen */
+    will-change: transform;
     transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
     z-index: 10;
     padding: 10px 20px;
@@ -916,7 +936,8 @@ body.large-font {
 }
 
 .panel-meta-row .card-category,
-.panel-meta-row .rank-badge {
+.panel-meta-row .rank-badge,
+.panel-meta-row .essential-badge{
     font-size: calc(16px * var(--font-scale, 1)); /* Increased font size */
     padding: 6px 12px;
     background-color: rgba(255, 255, 255, 0.9); /* Matching background */
@@ -924,6 +945,11 @@ body.large-font {
     border-radius: 4px;
     pointer-events: auto;
     box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+
+
+.panel-meta-row .essential-badge {
+    background-color: var(--essential-bg);
 }
 
 .panel-meta-row .card-category {
@@ -1093,10 +1119,10 @@ body.large-font {
 }
 
 /* --- Summary Cards --- */
-.summary-card .free-ship-tag {
+/* .summary-card .free-ship-tag {
     margin-bottom: 5px;
-    font-size: calc(12px * var(--font-scale, 1));
-}
+    font-size: calc(20px * var(--font-scale, 1));
+} */
 
 .shipping-info-container {
     text-align: right;
@@ -1213,7 +1239,7 @@ body.large-font {
     top: 70px; /* Default when nav is visible */
     /* Or var(--header-height) if you have a main navbar */
         z-index: 150;
-    backdrop-filter: blur(10px);
+        backdrop-filter: blur(10px);
     /* border-bottom: 1px solid #cbd5e1; */
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.05);
     transition: all 0.4s ease-in-out;
@@ -1345,6 +1371,7 @@ body.large-font {
     max-width: 1300px;
     margin: 0 auto;
     padding: 0 20px 80px 20px;
+    scroll-margin-top: 170px;
 }
 
 .product-grid {
@@ -1362,7 +1389,22 @@ body.large-font {
     height: 350px;
     position: relative;
     z-index: 1;
+    animation: summaryCardSlideUp 0.6s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+    opacity: 0;
 }
+
+/* Stagger animation delay for each card */
+.summary-card-wrapper:nth-child(1) { animation-delay: 0.05s; }
+.summary-card-wrapper:nth-child(2) { animation-delay: 0.1s; }
+.summary-card-wrapper:nth-child(3) { animation-delay: 0.15s; }
+.summary-card-wrapper:nth-child(4) { animation-delay: 0.2s; }
+.summary-card-wrapper:nth-child(5) { animation-delay: 0.25s; }
+.summary-card-wrapper:nth-child(6) { animation-delay: 0.3s; }
+.summary-card-wrapper:nth-child(7) { animation-delay: 0.35s; }
+.summary-card-wrapper:nth-child(8) { animation-delay: 0.4s; }
+.summary-card-wrapper:nth-child(9) { animation-delay: 0.45s; }
+.summary-card-wrapper:nth-child(10) { animation-delay: 0.5s; }
+.summary-card-wrapper:nth-child(n+11) { animation-delay: 0.55s; }
 
 .summary-card-wrapper:hover {
     z-index: 100;
@@ -1395,10 +1437,11 @@ body.large-font {
 /* Mobile Click Hover State */
 .summary-card.mobile-hover-state {
     padding-bottom: 35px;
-    transform: translateY(-5px);
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
-}
-.summary-card.mobile-hover-state .sum-deets {
+        background-color: var(--color-cream) !important;
+        color: var(--color-brown-darkest) !important;
+        box-shadow: 0 0 8px rgba(255, 140, 0, 0.25);
+        transform: translateY(-1px);
+        contain: layout;
     display: block;
     bottom: 0;
 }
@@ -1460,7 +1503,8 @@ body.large-font {
     border-radius: 12px;
 
     overflow: hidden;
-    
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
 }
 
 .card-body {
@@ -1505,14 +1549,14 @@ body.large-font {
     background: var(--essential-bg);
     color: var(--essential-red);
     font-size: calc(13px * var(--font-scale, 1));
-    padding: 0 10px;
+    padding: 2px 10px;
     margin: 0;
     white-space: nowrap;
 }
 
 .rank-badge {
-    background-color: var(--essential-bg);
-    color: var(--essential-red);
+    background-color: var(--color-alice-blue);
+    color: var(--color-brown-darkest);
     font-size: calc(11px * var(--font-scale, 1));
     height: 100%;
     padding: 0 10px;
@@ -1520,6 +1564,22 @@ body.large-font {
     align-items: center;
     justify-content: center;
 }
+
+#prod-tools .tool-meta-row {
+    margin: 0 -10px;
+    width: auto;
+}
+
+/* #prod-tools .essential-badge {
+    background-color: var(--color-alice-blue);
+    color: var(--color-brown-darkest);
+    font-size: calc(11px * var(--font-scale, 1));
+    height: 100%;
+    padding: 0 10px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+} */
 
 .summary-card .rank-badge {
     background-color: var(--color-alice-blue);
@@ -1631,7 +1691,7 @@ body.large-font {
 }
 
 .free-ship-tag {
-    font-size: calc(12px * var(--font-scale, 1));
+    font-size: calc(15px * var(--font-scale, 1));
     color: #16a34a;
     font-weight: 700;
     background: #dcfce7;
@@ -2142,7 +2202,7 @@ body.large-font {
         justify-content: space-between
     }
     .final-price {
-        font-size: calc(16px * var(--font-scale, 1)) !important;
+        font-size: calc(15px * var(--font-scale, 1)) !important;
     }
     .sum-deets {
         font-size: calc(12px * var(--font-scale, 1));
@@ -2151,7 +2211,7 @@ body.large-font {
     .shipping-info {
         font-size: calc(11px * var(--font-scale, 1));
     }
-    .free-ship-tag {
+    .summary-card .free-ship-tag {
         font-size: calc(11px * var(--font-scale, 1));
         padding: 3px 4px;
         margin: 0;
@@ -2516,3 +2576,98 @@ body.large-font {
         position: relative;
     }
 }  
+
+/* 1. Reset the wrapper to be invisible initially */
+.summary-card-wrapper {
+    height: 350px;
+    position: relative;
+    z-index: 1;
+    opacity: 0; /* Hidden by default */
+    transform: translateY(40px) scale(0.95); /* Starting position: down and slightly small */
+    transition: opacity 0.6s ease, transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1); /* The "Elastic" easing */
+}
+
+/* 2. The class JS will add to trigger the view */
+.summary-card-wrapper.in-view {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+}
+
+/* 3. Keep hover effects separate (No changes needed here, just ensuring they don't conflict) */
+.summary-card-wrapper:hover {
+    z-index: 100;
+}
+.summary-card-wrapper:hover .summary-card {
+    padding-bottom: 35px;
+    transform: translateY(-5px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+}
+
+/* 4. OPTIONAL: Remove the old hardcoded delays if they exist in your file */
+/* Delete lines looking like: .summary-card-wrapper:nth-child(1) { animation-delay: 0.05s; } */
+
+/* --- Modern Swipe Hint --- */
+.swipe-hint-container {
+    position: absolute;
+    top: -45px; /* Adjusted to sit cleanly above cards */
+    right: 20px; /* Aligned with right edge */
+    z-index: 10;
+    pointer-events: none;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.swipe-hint-container h3 {
+    font-size: calc(13px * var(--font-scale, 1));
+    color: var(--color-orange-action);
+    margin: 0 0 2px 0;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-weight: 700;
+    opacity: 0.9;
+    text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+.swipe-instruction {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 2px; /* Tighter gap for a cleaner arrow shape */
+}
+
+.arrow {
+    display: inline-block; /* CRITICAL: Allows transform to work on text */
+    font-weight: 800;
+    font-size: calc(20px * var(--font-scale, 1));
+    color: var(--color-silver);
+    opacity: 0; /* Start hidden */
+    animation: swipeNudge 2s infinite ease-out;
+}
+
+/* The "Ghosting" Nudge Animation */
+@keyframes swipeNudge {
+    0% {
+        opacity: 0;
+        transform: translateX(0) scale(0.8);
+    }
+    15% {
+        opacity: 1; /* Fade in quick */
+        color: var(--color-orange-action); /* Light up */
+        transform: translateX(2px) scale(1);
+    }
+    50% {
+        /* Hold visibility briefly while moving */
+        opacity: 1;
+        color: var(--color-silver);
+    }
+    100% {
+        opacity: 0; /* Fade out */
+        transform: translateX(12px) scale(0.9); /* Move right to indicate direction */
+    }
+}
+
+/* Staggered delays create the "wave" motion */
+.arrow.a1 { animation-delay: 0s; }
+.arrow.a2 { animation-delay: 0.2s; }
+.arrow.a3 { animation-delay: 0.4s; }

@@ -3,9 +3,13 @@
     ========================================= */
 const navbar = document.getElementById("navbar");
 let lastScrollTop = 0;
+let isFilterScroll = false;  // Flag to track filter-initiated scrolls
 
 // Combined Scroll Logic for Navbar and Utility Bar
 window.addEventListener("scroll", function() {
+    // Skip navbar logic if scroll was triggered by filter button
+    if (isFilterScroll) return;
+    
     let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
     const stc = document.getElementById("stc");
 
@@ -107,18 +111,56 @@ window.addEventListener('resize', () => {
     GLOBAL STATE & HELPERS
     ========================================= */
 const currencyState = {
-    current: 'NGN', // Default currency
-    // Rates are based on NGN as the base unit from inventory
+    current: 'NGN',
     rates: {
         NGN: 1,
-        EUR: 0.00062, // As per original script
+        EUR: 0.00061
     },
     symbols: {
         NGN: '₦',
-        EUR: '€',
+        EUR: '€'
     }
 };
 let searchTerm = '';
+let fullGrandTotal = 0; // Global state for total inventory cost
+
+/**
+ * Scans the inventory and assigns 'essentialCategory' based on 'essentialRank'.
+ * Rank 0: Optional
+ * Rank 1: Critical
+ * Rank 2: Professional/Important
+ * Rank 3: Expansion/Student
+ * Rank 4: Infrastructure
+ * Rank 5: Accessories
+ */
+function assignEssentialCategories() {
+    if (typeof inventory === 'undefined') return;
+    
+    inventory.forEach(item => {
+        if (item.essentialRank !== undefined && item.essentialRank !== null) {
+            switch (item.essentialRank) {
+                case 0:
+                    item.essentialCategory = 'Optional';
+                    break;
+                case 1:
+                    item.essentialCategory = 'Critical';
+                    break;
+                case 2:
+                    item.essentialCategory = 'Professional/Important';
+                    break;
+                case 3:
+                    item.essentialCategory = 'Expansion/Student';
+                    break;
+                case 4:
+                    item.essentialCategory = 'Infrastructure';
+                    break;
+                case 5:
+                    item.essentialCategory = 'Accessories';
+                    break;
+            }
+        }
+    });
+}
 
 /**
  * Formats a raw number into a currency string with symbol and thousand separators.
@@ -135,6 +177,31 @@ function getFormattedPrice(rawPrice) {
         maximumFractionDigits: 2
     });
     return `${symbol}${formatted}`;
+}
+
+/**
+ * Coerce various price representations into a numeric value (NGN base).
+ * Accepts numbers, numeric strings with commas/currency, or descriptive strings.
+ * Returns 0 when a numeric value cannot be determined.
+ */
+function parsePrice(v) {
+    if (v === undefined || v === null) return 0;
+    if (typeof v === 'number') return v;
+    if (typeof v === 'string') {
+        // If it contains the word 'free' treat as 0
+        if (/free/i.test(v)) return 0;
+        // Extract first numeric-looking token (allow commas and decimals)
+        const m = v.match(/[-+]?[0-9]{1,3}(?:[0-9,]*)(?:\.[0-9]+)?|[-+]?[0-9]+(?:\.[0-9]+)?/);
+        if (m) {
+            const num = m[0].replace(/,/g, '');
+            const n = Number(num);
+            return Number.isFinite(n) ? n : 0;
+        }
+        return 0;
+    }
+    // Fallback for other types
+    const n = Number(v);
+    return Number.isFinite(n) ? n : 0;
 }
 
 /**
@@ -170,7 +237,14 @@ function renderProspects() {
         'Productivity': { base: 0, shipping: 0 }
     };
 
-    for (let key in categories) { if(categories[key]) categories[key].innerHTML = ''; }
+    // Prepare fragments to batch-insert DOM nodes per category
+    const fragments = {};
+    for (let key in categories) {
+        if (categories[key]) {
+            categories[key].innerHTML = '';
+            fragments[key] = document.createDocumentFragment();
+        }
+    }
 
     inventory.forEach((item, index) => {
         const container = categories[item.category];
@@ -180,8 +254,8 @@ function renderProspects() {
                 counts[item.category]++;
             }
             if (totals.hasOwnProperty(item.category)) {
-                totals[item.category].base += item.basePrice * (item.quantity || 1);
-                totals[item.category].shipping += (item.shipping || 0) * (item.quantity || 1);
+                totals[item.category].base += parsePrice(item.basePrice) * (item.quantity || 1);
+                totals[item.category].shipping += parsePrice(item.shipping) * (item.quantity || 1);
             }
 
             // Check for Productivity Essential styling requirement
@@ -203,8 +277,9 @@ function renderProspects() {
             card.style.animationDelay = `${index * 0.05}s`; // Staggered fade-in effect
             card.setAttribute('data-item-id', item.id); // Use ID for reliable lookup
 
+            // Use original images for tool cards
             const imagesList = item.images && item.images.length > 0 ? item.images : ["https://placehold.co/300x200?text=No+Img"];
-            const sliderHTML = imagesList.map(src => `<img src="${src}" alt="${item.name}">`).join('');
+            const sliderHTML = imagesList.map(src => `<img loading="lazy" decoding="async" src="${src}" alt="${item.name}" onerror="this.src='https://placehold.co/300x200?text=No+Image'">`).join('');
 
             card.innerHTML = `
                 <div class="tool-pics-container">
@@ -222,7 +297,7 @@ function renderProspects() {
                     </div>
                     <h1 class="tool-name" title="${item.name}">${item.nickname || item.name}</h1>
                     <h5 class="tool-store">${item.productStore || ''}</h5>
-                    <h1 class="tool-price" data-base-price-ngn="${item.basePrice}">${getFormattedPrice(item.basePrice)}</h1>  
+                    <h1 class="tool-price" data-base-price-ngn="${parsePrice(item.basePrice)}">${getFormattedPrice(parsePrice(item.basePrice))}</h1>  
                     <a href="${item.productLink || '#'}" target="_blank" class="go-to-page">
                         <span>Go to page</span> 
                     </a>
@@ -230,9 +305,15 @@ function renderProspects() {
             `;
             card.addEventListener('click', handleCardClick);
             cardWrapper.appendChild(card);
-            container.appendChild(cardWrapper);
+            // Append to fragment for this category — we'll insert once after loop
+            fragments[item.category].appendChild(cardWrapper);
         }
     });
+
+    // Append all fragments to their containers in one DOM update each
+    for (let key in categories) {
+        if (categories[key] && fragments[key]) categories[key].appendChild(fragments[key]);
+    }
 
     // Update category counts
     document.getElementById('learning-count').textContent = counts['Learning'];
@@ -278,8 +359,9 @@ function handleCardClick(e) {
 
     const specsList = Array.isArray(item.brief) ? item.brief : (item.brief ? item.brief.split('\n') : []);
     const specsHTML = specsList.length > 0 ? specsList.map(s => `<li>${s}</li>`).join('') : '<li>N/A</li>';
-    const panelSliderHTML = (item.images || []).map(src => `<img src="${src}" alt="${item.name}">`).join('');
-    const shippingText = item.shipping > 0 ? `+${getFormattedPrice(item.shipping)} shipping` : 'Free shipping';
+    // Always use full-size images in the detail panel
+    const panelSliderHTML = (item.images || []).map(src => `<img loading="lazy" decoding="async" src="${src}" alt="${item.name}">`).join('');
+    const shippingText = parsePrice(item.shipping) > 0 ? `+${getFormattedPrice(parsePrice(item.shipping))} shipping` : 'Free shipping';
     
     let badgeHtml = '';
     if (item.essentialRank === 1) {
@@ -294,6 +376,8 @@ function handleCardClick(e) {
         <span class="panel-rank-category">${item.essentialCategory}</span>
         <span class="panel-rank-circle">${item.essentialRank}</span>
     </div>` : '';
+
+    const variationHTML = item.variation ? `<div class="panel-variation" style="margin-bottom: 10px; font-size: 0.95em; color: aliceblue;"><strong>Variation:</strong> ${item.variation}</div>` : '';
 
     const usageHTML = item.usage ? `<h3 class="detail-section-title">Usage</h3> <p>${item.usage}</p>` : '';
 
@@ -329,7 +413,7 @@ function handleCardClick(e) {
             <h2 class="panel-name">${item.name}</h2>
             <p class="panel-store-prefix">From ${item.productStore || ''}</p>
             <div class="panel-subheader">
-            <div class="panel-price">${getFormattedPrice(item.basePrice)}<small>${shippingText}</small></div>
+            <div class="panel-price">${getFormattedPrice(parsePrice(item.basePrice))}<small>${shippingText}</small></div>
             </div>
         </div>
         <div class="panel-slider">
@@ -349,6 +433,7 @@ function handleCardClick(e) {
         </div>
         <div class="panel-details">
             ${rankInfoHTML}
+            ${variationHTML}
             ${usageHTML}
             <h3 class="detail-section-title">Specifications</h3> <ul class="detail-specs-list">${specsHTML}</ul>
             <h3 class="detail-section-title">Description</h3> <p>${item.description}</p>
@@ -485,244 +570,16 @@ function initPanelSlider(panelElement) {
 }
 
 /* =========================================
-    4. SUMMARY RENDERING (Grid + Sliders)
+    4. SUMMARY RENDERING (Lazy-loaded via summary.js)
+    =========================================
+    The summary rendering functions are now in summary.js
+    and are loaded lazily when the summary section header
+    enters the viewport (via IntersectionObserver).
+    
+    Global state variables required:
+    - currentFilter, currentSort, fullGrandTotal (defined in summary.js)
+    - Functions: renderSummary(), filterSummary(), sortSummary() (in summary.js)
     ========================================= */
-let currentFilter = 'all';
-let currentSort = 'default';
-let fullGrandTotal = 0;
-
-function renderSummary(items) {
-    const grid = document.getElementById('summaryGrid');
-    const countEl = document.getElementById('count');
-    const totalEl = document.getElementById('grand-total-display');
-        // Elements for the Dynamic Total Logic
-    const stickyTotalEl = document.getElementById('sticky-dynamic-price');
-    const mobileDynamicEl = document.getElementById('mobile-dynamic-total');
-
-    if(!grid) return;
-
-    grid.innerHTML = '';
-    let grandTotal = 0;
-
-    items.forEach(item => {
-        const quantity = item.quantity || 1;
-        const unitBase = item.basePrice;
-        const unitShip = item.shipping || 0;
-        const totalCost = (unitBase + unitShip) * quantity;
-        grandTotal += totalCost;
-
-        let badgeHtml = '';
-        if (item.dealTag && item.dealTag !== 'None') {
-            if (item.dealTag.startsWith('http')) {
-                badgeHtml = `<img src="${item.dealTag}" class="deal-badge-img" alt="Deal Badge">`;
-            } else {
-                let badgeClass = 'deal-official';
-                if (item.dealTag === 'Choice') badgeClass = 'deal-choice';
-                else if (item.dealTag === 'Jumia Express') badgeClass = 'deal-express';
-                else if (item.dealTag === 'SuperDeals') badgeClass = 'deal-super';
-                badgeHtml = `<div class="deal-badge ${badgeClass}">${item.dealTag}</div>`;
-            }
-        }
-
-        // Badge Logic for Summary
-        let essentialHtml = '';
-        if (item.essentialRank === 1) {
-            essentialHtml = `<div class="essential-badge">ESSENTIAL <span class="badge-rank-number">${item.essentialRank}</span></div>`;
-        } else if (item.essentialRank > 1) {
-            essentialHtml = `<div class="rank-badge">RANK <span class="badge-rank-number">${item.essentialRank}</span></div>`;
-        }
-
-        const shippingHtml = unitShip === 0 
-            ? '<span class="free-ship-tag">Free Ship</span>' 
-            : `<div class="shipping-info-container">
-                   <div class="shipping-label">Shipping</div>
-                   <span class="shipping-info">${getFormattedPrice(unitShip)}</span>
-               </div>`;
-
-        // Slider Generation
-        const imagesList = item.images && item.images.length > 0 ? item.images : ["https://placehold.co/300x200?text=No+Img"];
-        const sliderHTML = imagesList.map(src => `<img src="${src}">`).join('');
-
-        const cardWrapper = document.createElement('div');
-        cardWrapper.className = 'summary-card-wrapper';
-
-        const card = document.createElement('div');
-        card.className = 'summary-card' + (item.essentialRank === 1 ? ' essential' : '');
-        card.innerHTML = `
-            <div class="card-image">
-                <div class="slider-frame">
-                    <div class="slider-track">
-                        ${sliderHTML}
-                    </div>
-                </div><div class="source-tag">${item.source}${badgeHtml}</div>
-                <div class="meta-row">
-                    <span class="card-category">${item.category}</span>
-                ${essentialHtml}
-                </div>
-            </div>
-            <div class="card-body">
-
-                <div class="card-inner-body">
-                    <div class="card-title" title="${item.name}">${item.nickname || item.name}</div>
-                    <div class="card-quantity">Quantity: ${quantity}</div>
-                    <div class="card-footer">
-                        ${quantity > 1 
-                            ? (unitShip > 0 
-                                ? `<div class="price-breakdown">(${getFormattedPrice(unitBase)} + ${getFormattedPrice(unitShip)}) &times; ${quantity}</div>`
-                                : `<div class="price-breakdown">${getFormattedPrice(unitBase)} &times; ${quantity}</div>`)
-                            : (unitShip > 0 
-                                ? `<div class="price-breakdown">${getFormattedPrice(unitBase)} + ${getFormattedPrice(unitShip)}</div>`
-                                : '')
-                        } 
-                        <div class="final-price-row">
-                            <div>
-                                <div class="total-price-label">Total Price</div>
-                                <span class="final-price">${getFormattedPrice(totalCost)}</span>
-                            </div>
-                            ${shippingHtml}
-                        </div>
-                    </div>
-                    <a href="${item.productLink || '#'}" target="_blank" class="sum-deets">Visit Store</a>
-                </div>
-            </div>
-        `;
-
-        // Mobile: Click to toggle hover state
-        card.addEventListener('click', (e) => {
-            // Allow links to work without toggling
-            if (e.target.closest('a') || e.target.closest('.sum-deets')) return;
-
-            if (card.classList.contains('mobile-hover-state')) {
-                card.classList.remove('mobile-hover-state');
-            } else {
-                // Optional: Close other open cards
-                document.querySelectorAll('.summary-card.mobile-hover-state').forEach(c => c.classList.remove('mobile-hover-state'));
-                card.classList.add('mobile-hover-state');
-            }
-        });
-
-        cardWrapper.appendChild(card);
-        grid.appendChild(cardWrapper);
-    });            
-
-    countEl.textContent = items.length;
-    // totalEl.textContent = `£${grandTotal.toFixed(2)}`;  // Removed: static total
-    // UPDATE TOTALS
-    const formattedTotal = getFormattedPrice(grandTotal);
-    // Update the Sticky (Dynamic) Total
-    if(stickyTotalEl) stickyTotalEl.textContent = formattedTotal;
-    if(mobileDynamicEl) mobileDynamicEl.textContent = formattedTotal;
-    
-    // Start sliders for newly rendered summary cards
-    initSliders();
-}
-
-function getFilteredAndSortedList() {
-    let list = [...inventory];
-
-    // 1. Apply search
-    if (searchTerm) {
-        list = list.filter(item => item.name.toLowerCase().includes(searchTerm));
-    }
-
-    // 2. Apply button filters
-    if (currentFilter !== 'all') {
-        if (currentFilter === 'essential') {
-            list = list.filter(i => i.isEssential);
-        } else if (currentFilter === 'freeShipping') {
-            list = list.filter(i => i.shipping === 0);
-        } else if (['AliExpress', 'Jumia', 'Temu', 'Local Retail'].includes(currentFilter)) {
-            list = list.filter(i => i.source === currentFilter);
-        } else {
-            list = list.filter(i => i.category === currentFilter);
-        }
-    }
-
-    // 3. Apply sort
-    const getTotalCost = item => (item.basePrice + (item.shipping || 0)) * (item.quantity || 1);
-    if (currentSort === 'price-asc') {
-        list.sort((a, b) => getTotalCost(a) - getTotalCost(b));
-    } else if (currentSort === 'price-desc') {
-        list.sort((a, b) => getTotalCost(b) - getTotalCost(a));
-    } else if (currentSort === 'essential') {
-        list.sort((a, b) => {
-        if (a.isEssential && !b.isEssential) return -1;
-        if (!a.isEssential && b.isEssential) return 1;
-        return (a.essentialRank || 99) - (b.essentialRank || 99);
-    });
-    }
-    
-    return list;
-}
-
-function filterSummary(criteria, btnElement) {
-    currentFilter = criteria;
-    if (btnElement) {
-        document.querySelectorAll('.filter-button').forEach(b => b.classList.remove('active'));
-        btnElement.classList.add('active');
-    }
-    const listToRender = getFilteredAndSortedList();
-    renderSummary(listToRender);
-
-    // Reset scroll position of the summary grid
-    const utlBar = document.getElementById('stc');
-    const grid = document.getElementById('summaryGrid');
-    
-    if (grid && utlBar) {
-        const headerOffset = utlBar.offsetHeight;
-        const elementPosition = grid.getBoundingClientRect().top;
-        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
-
-        window.scrollTo({
-            top: offsetPosition,
-            behavior: "smooth"
-        });
-    }
-}
-
-function sortSummary() {
-    const sortSelect = document.getElementById('sort-select');
-    if (sortSelect) {
-        currentSort = sortSelect.value;
-    }
-    const listToRender = getFilteredAndSortedList();
-    renderSummary(listToRender);
-}
-
-/* =========================================
-    6. SLIDER LOGIC
-    ========================================= */
-function initSliders() {
-    // Clear existing intervals to prevent speed-ups
-    if (window.sliderIntervals) {
-        window.sliderIntervals.forEach(clearInterval);
-    }
-    window.sliderIntervals = [];
-
-    const tracks = document.querySelectorAll('.slider-track');
-
-    tracks.forEach(track => {
-        const images = track.querySelectorAll('img');
-        if (images.length <= 1) return;
-
-        let currentIndex = 0;
-        
-        // Random offset so they don't all slide at exactly the same millisecond
-        const randomOffset = Math.floor(Math.random() * 1000);
-
-        setTimeout(() => {
-            const intervalId = setInterval(() => {
-                currentIndex++;
-                if (currentIndex >= images.length) {
-                    currentIndex = 0;
-                }
-                track.style.transform = `translateX(-${currentIndex * 100}%)`;
-            }, 3000); 
-            window.sliderIntervals.push(intervalId);
-        }, randomOffset);
-    });
-
-}
 
     // =========================================
     // REVISED PDF DOWNLOAD LOGIC
@@ -807,10 +664,10 @@ function initSliders() {
                     // Loop Items
                     items.forEach(item => {
                         const quantity = item.quantity || 1;
-                        const unitTotal = item.basePrice + (item.shipping || 0);
+                        const unitTotal = parsePrice(item.basePrice) + parsePrice(item.shipping || 0);
                         const itemTotal = unitTotal * quantity;
-                        const shippingText = item.shipping === 0 ? "Free Shipping" : `Shipping: ${getFormattedPrice(item.shipping || 0)}`;
-                        let breakdownText = `(Base: ${getFormattedPrice(item.basePrice)})`;
+                        const shippingText = parsePrice(item.shipping) === 0 ? "Free Shipping" : `Shipping: ${getFormattedPrice(parsePrice(item.shipping || 0))}`;
+                        let breakdownText = `(Base: ${getFormattedPrice(parsePrice(item.basePrice))})`;
                         if (quantity > 1) {
                             breakdownText = `(${quantity} @ ${getFormattedPrice(unitTotal)} = ${getFormattedPrice(itemTotal)})`;
                         }
@@ -833,9 +690,9 @@ function initSliders() {
                         doc.setTextColor(150, 150, 150);
                         doc.text("IMG", margin + 4, yPos + 9);
 
-                        // --- B. LEFT SIDE: Name (Wrapped) & Details ---
-                        const textStartX = margin + 20;
-                        const maxNameWidth = pageWidth - margin - textStartX - 45; // Reserve ~45 units for price column
+                                const unitBase = parsePrice(item.basePrice);
+                                const unitShip = parsePrice(item.shipping || 0);
+                                const totalCost = (unitBase + unitShip) * quantity;
                         
                         // Tool Name
                         doc.setFont("helvetica", "bold");
@@ -905,15 +762,21 @@ function initSliders() {
     7. INIT
     ========================================= */
 document.addEventListener('DOMContentLoaded', () => {
-    // Calculate full grand total
-    fullGrandTotal = inventory.reduce((sum, item) => sum + ((item.basePrice + (item.shipping || 0)) * (item.quantity || 1)), 0);
-    document.getElementById('grand-total-display').textContent = getFormattedPrice(fullGrandTotal);
-    document.getElementById('sticky-grand-total').textContent = getFormattedPrice(fullGrandTotal);
-    document.getElementById('mobile-grand-total').textContent = getFormattedPrice(fullGrandTotal);
+    // Assign essential categories dynamically before processing totals
+    assignEssentialCategories();
+
+    // Calculate full grand total (will be updated when summary.js loads)
+    const totalGrandTotal = inventory.reduce((sum, item) => sum + ((parsePrice(item.basePrice) + parsePrice(item.shipping || 0)) * (item.quantity || 1)), 0);
+    document.getElementById('grand-total-display').textContent = getFormattedPrice(totalGrandTotal);
+    document.getElementById('sticky-grand-total').textContent = getFormattedPrice(totalGrandTotal);
+    document.getElementById('mobile-grand-total').textContent = getFormattedPrice(totalGrandTotal);
 
     renderProspects();
-    renderSummary(inventory);
-    initSliders();
+    
+    // Summary rendering is now lazy-loaded (see IntersectionObserver setup below)
+    // The summary.js script will be loaded and renderSummary() called when
+    // the #summary-header comes into viewport
+    
     // setupScrollSnapping(); // This function is not defined in the provided files.
     // setupDownloads(); // This function is not defined in the provided files.
 
@@ -1103,5 +966,53 @@ document.addEventListener('DOMContentLoaded', () => {
                 lastScrollTop = 0;
             }
         });
+    }
+
+    /* =========================================
+        LAZY LOAD: Summary Section via IntersectionObserver
+        ========================================= */
+    // Load summary.js and render summary when #summary-header enters viewport
+    let summaryLoaded = false;
+    const summaryHeader = document.getElementById('summary-header');
+    
+    console.log('Summary header element:', summaryHeader);
+    
+    if (summaryHeader) {
+        const summaryObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                console.log('Summary header visibility:', entry.isIntersecting);
+                if (entry.isIntersecting && !summaryLoaded) {
+                    summaryLoaded = true;
+                    console.log('Loading summary.min.js...');
+                    
+                    // Load summary.js dynamically
+                    const summaryScript = document.createElement('script');
+                    summaryScript.src = 'summary.min.js';
+                    summaryScript.onload = () => {
+                        console.log('Summary.js loaded successfully');
+                        // Once summary.js is loaded, renderSummary is available
+                        // Initialize fullGrandTotal state
+                        fullGrandTotal = inventory.reduce((sum, item) => 
+                            sum + ((parsePrice(item.basePrice) + parsePrice(item.shipping || 0)) * (item.quantity || 1)), 0
+                        );
+                        
+                        console.log('Calling renderSummary with inventory:', inventory.length, 'items');
+                        // Render the summary with all inventory items
+                        renderSummary(inventory);
+                        
+                        // Stop observing once loaded
+                        summaryObserver.unobserve(summaryHeader);
+                    };
+                    summaryScript.onerror = () => {
+                        console.error('Failed to load summary.js');
+                    };
+                    document.body.appendChild(summaryScript);
+                }
+            });
+        }, { threshold: 0.01 }); // Trigger when 1% of header is visible
+        
+        summaryObserver.observe(summaryHeader);
+    } else {
+        console.warn('Summary header element not found!');
     }
 });              
