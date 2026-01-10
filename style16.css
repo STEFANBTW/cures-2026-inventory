@@ -122,6 +122,7 @@ body.large-font {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative;
 }
 
 .nav-logo-container {
@@ -2405,22 +2406,23 @@ body.large-font {
         align-items: center;
         justify-content: center;
         gap: 0;
+        margin: 10px 0 5px;
     }
     .nav-logo {
-        padding: 15px 0;
+        padding: 5px 0;
     }    
     .logo-interlink {
         margin-bottom: 0;
         position: absolute;
-        top: 0;
-        right: 0;
+        top: 10px;
+        right: 10px;
     }
     .nav-links {
         gap: 20px;
         flex-wrap: wrap;
         justify-content: center;
         background-color: color-mix(in srgb, var(--color-brown-surface), transparent 85%);
-        padding: 10px;
+        padding: 7px;
         width: 100%;
     }
     .nav-links a{
