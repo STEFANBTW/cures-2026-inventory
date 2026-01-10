@@ -127,7 +127,9 @@ body.large-font {
 .nav-logo-container {
     display: flex;
     align-items: center;
+    justify-content: center;
     gap: 15px;
+    margin: 10px 0;
 }
 
 .nav-logo {
@@ -137,7 +139,9 @@ body.large-font {
     text-decoration: none;
     letter-spacing: 2px;
     text-transform: uppercase;
-    padding: 20px;
+    padding: 5px 10px;
+    margin: 0;
+    transition: all var(--transition-speed);
 }
 
 .logo-interlink {
@@ -2412,7 +2416,7 @@ body.large-font {
         gap: 20px;
         flex-wrap: wrap;
         justify-content: center;
-    background-color: color-mix(in srgb, var(--color-brown-surface), transparent 85%);
+        background-color: color-mix(in srgb, var(--color-brown-surface), transparent 85%);
         padding: 10px;
         width: 100%;
     }
