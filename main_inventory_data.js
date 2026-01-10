@@ -2895,7 +2895,7 @@ const inventory = [
         ],
         "productLink": "https://hpanel.hostinger.com/buy-hosting",
         "category": "Productivity",
-        "isEssential": false,
+        "isEssential": true,
         "essentialRank": 1,
         "usage": "Primary: Hosting high-traffic websites. Common: E-commerce stores. Essential: Scalable, reliable web infrastructure.",
         "quantity": 1,
@@ -2936,7 +2936,11 @@ const inventory = [
             "Aliexpress_Downloads/1005005912912649/image_9.jpg"
         ],
         "productLink": "https://www.aliexpress.com/item/1005005912912649.html",
-        "currency": "NGN"
+        "category": "Learning",
+        "isEssential": true,
+        "essentialRank": 2,
+        "quantity": 1,
+        "source": "Aliexpress"
     },
     {
         "id": 48,
@@ -3045,8 +3049,11 @@ const inventory = [
             "Aliexpress_Downloads/1005006144235719/image_9.jpg"
         ],
         "productLink": "https://www.aliexpress.com/item/1005006144235719.html",
+        "category": "Learning & Repair",
+        "isEssential": true,
         "essentialRank": 1,
-        "currency": "NGN"
+        "quantity": 1,
+        "source": "Aliexpress"
     },
     {
         "id": 49,
@@ -3111,7 +3118,11 @@ const inventory = [
             "Aliexpress_Downloads/1005001373582960/image_9.jpg"
         ],
         "productLink": "https://www.aliexpress.com/item/1005001373582960.html",
-        "currency": "NGN"
+        "category": "Repair",
+        "isEssential": true,
+        "essentialRank": 2,
+        "quantity": 1,
+        "source": "Aliexpress"
     },
     {
         "id": 50,
@@ -3143,7 +3154,11 @@ const inventory = [
             "Aliexpress_Downloads/1005008585678646/image_7.jpg"
         ],
         "productLink": "https://www.aliexpress.com/item/1005008585678646.html",
-        "currency": "NGN"
+        "category": "Repair",
+        "isEssential": true,
+        "essentialRank": 2,
+        "quantity": 1,
+        "source": "Aliexpress"
     },
     {
         "id": 51,
@@ -3180,7 +3195,11 @@ const inventory = [
             "Aliexpress_Downloads/1005010247261124/image_9.jpg"
         ],
         "productLink": "https://www.aliexpress.com/item/1005010247261124.html",
-        "currency": "NGN"
+        "category": "Repair",
+        "isEssential": true,
+        "essentialRank": 2,
+        "quantity": 1,
+        "source": "Aliexpress"
     },
     {
         "id": 52,
@@ -3230,7 +3249,11 @@ const inventory = [
             "Aliexpress_Downloads/1005002049014611/image_9.jpg"
         ],
         "productLink": "https://www.aliexpress.com/item/1005002049014611.html",
-        "currency": "NGN"
+        "category": "Repair",
+        "isEssential": true,
+        "essentialRank": 1,
+        "quantity": 1,
+        "source": "Aliexpress"
     },
     {
         "id": 53,
@@ -3270,7 +3293,11 @@ const inventory = [
             "Aliexpress_Downloads/1005007857016814/image_9.jpg"
         ],
         "productLink": "https://www.aliexpress.com/item/1005007857016814.html",
-        "currency": "NGN"
+        "category": "Repair",
+        "isEssential": true,
+        "essentialRank": 2,
+        "quantity": 1,
+        "source": "Aliexpress"
     },
     {
         "id": 54,
@@ -3307,7 +3334,11 @@ const inventory = [
             "Aliexpress_Downloads/1005010317982854/image_9.jpg"
         ],
         "productLink": "https://www.aliexpress.com/item/1005010317982854.html",
-        "currency": "NGN"
+        "category": "Productivity",
+        "isEssential": true,
+        "essentialRank": 1,
+        "quantity": 1,
+        "source": "Aliexpress"
     },
     {
         "id": 55,
@@ -3349,7 +3380,11 @@ const inventory = [
             "Aliexpress_Downloads/1005010104046777/image_7.jpg"
         ],
         "productLink": "https://www.aliexpress.com/item/1005010104046777.html",
-        "currency": "NGN"
+        "category": "Repair",
+        "isEssential": true,
+        "essentialRank": 2,
+        "quantity": 1,
+        "source": "Aliexpress"
     },
     {
         "id": 56,
@@ -3427,9 +3462,34 @@ const inventory = [
         "isEssential": true,
         "essentialRank": 2,
         "quantity": 1,
-        "source": "Aliexpress",
-        "currency": "NGN"
-    }
+        "source": "Aliexpress"
+    },
+    {
+        "id": 58,
+        "name": "DATA BUNDLE 3-Months Plan 60000 350.0GB 120days Airtel Nigeria",
+        "nickname": "Airtel 3-Months Data Bundle",
+        "productStore": "Airtel",
+        "basePrice": 60000,
+        "shipping": 0,
+        "dealTag": "None",
+        "brief": [
+            "Plan Type: 3-Month Plan",
+            "Data Bundle",
+            "Data: 350.0 GB",
+            "Duration: 120",
+            "Price: ₦60,000"
+        ],
+        "images": [
+        ],
+        "description": "Enjoy seamless browsing, streaming, and downloading with Airtel's 3-Months Data Bundle. Get 350.0GB of data valid for 120 days at an unbeatable price of ₦60,000. Stay connected with Airtel's reliable network and experience high-speed internet like never before. Whether you're working, studying, or entertaining yourself online, this data bundle has got you covered for three whole months. Don't miss out on this fantastic offer – recharge now and stay connected with Airtel!",
+        "productLink": "https://airtel.com.ng/prepaid-recharge",
+        "usage": "Primary: Internet browsing, streaming, downloading. Common: Remote work, online learning, social media. Essential: Staying connected for communication and entertainment.",
+        "category": "Productivity",
+        "isEssential": true,
+        "essentialRank": 1,
+        "quantity": 1,
+        "source": "Airtel"
+    },
 ];
 
 if (typeof module !== 'undefined') module.exports = { inventory };

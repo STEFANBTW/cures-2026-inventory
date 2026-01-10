@@ -1428,18 +1428,6 @@ body.large-font {
     box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
 }
 
-/* Mobile Click Hover State */
-.summary-card.mobile-hover-state {
-    padding-bottom: 35px;
-        background-color: var(--color-cream) !important;
-        color: var(--color-brown-darkest) !important;
-        box-shadow: 0 0 8px rgba(255, 140, 0, 0.25);
-        transform: translateY(-1px);
-        contain: layout;
-    display: block;
-    bottom: 0;
-}
-
 /* --- Modern Swipe Hint --- */
 .swipe-hint-container {
     position: absolute;
@@ -1979,6 +1967,9 @@ body.large-font {
         height: 200dvh;
     }
     
+    .tool-bag-nav { 
+        top: 35%;
+    }
 
     .tool-bag-grid {
         width: 55%;
@@ -2281,21 +2272,21 @@ body.large-font {
     .card-inner-body {
         margin: 2px;
     }
-    .card-title {
-        font-size: calc(12px * var(--font-scale, 1));
+    .summary-card .card-title {
+        font-size: calc(13px * var(--font-scale, 1));
         line-height: 1.2;
         margin-bottom: 0.2rem;
     }
     .card-category {
-        font-size: calc(10px * var(--font-scale, 1));
-        padding: 5px 10px !important;
-    }
-    .essential-badge {
         font-size: calc(10.5px * var(--font-scale, 1));
-        padding: 0 8px;
+        padding: 4px 7px !important;
+    }
+    .summary-card .essential-badge {
+        font-size: calc(10.5px * var(--font-scale, 1));
+        padding: 3px 5px 5.5px;
     }
     .rank-badge {
-        font-size: calc(9px * var(--font-scale, 1));
+        font-size: calc(10px * var(--font-scale, 1));
         padding: 5px;
     }
     .source-tag {
@@ -2303,7 +2294,7 @@ body.large-font {
         margin: 2px;
     }
     .price-breakdown {
-        font-size: calc(10.5px * var(--font-scale, 1));
+        font-size: calc(11px * var(--font-scale, 1));
     }
     .final-price-row {
         display: flex;
@@ -2311,17 +2302,17 @@ body.large-font {
         justify-content: space-between;
     }
     .final-price {
-        font-size: calc(15px * var(--font-scale, 1)) !important;
+        font-size: calc(17px * var(--font-scale, 1)) !important;
     }
     .sum-deets {
         font-size: calc(12px * var(--font-scale, 1));
         padding: 5px 0;
     }
-    .shipping-info {
-        font-size: calc(11px * var(--font-scale, 1));
+    .summary-card .shipping-info {
+        font-size: calc(12px * var(--font-scale, 1));
     }
     .summary-card .free-ship-tag {
-        font-size: calc(11px * var(--font-scale, 1));
+        font-size: calc(12px * var(--font-scale, 1));
         padding: 3px 4px;
         margin: 0;
     }
@@ -2672,9 +2663,36 @@ body.large-font {
         height: 270px;
         position: relative;
         z-index: 1;
-    }
+    }    
     .summary-card-wrapper:hover .summary-card {
-        padding-bottom: 25px; /* Expand height on hover */
+        padding-bottom: 0; /* Expand height on hover */
+        transform: translateY(0);
+        box-shadow: none;
+    }
+    .summary-card-wrapper:hover .sum-deets {
+        display: none;
+        bottom: 0; /* Slide into the newly expanded space */
+    }
+
+    /* Mobile Click Hover State */
+     .summary-card-wrapper:hover .summary-card.mobile-hover-state {
+        padding-bottom: 35px;
+        box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+        transform: translateY(-10px);
+        bottom: 0;
+    }
+    .summary-card.essential:hover {
+        box-shadow: none;
+        border: none;
+    }
+     .summary-card-wrapper:hover .summary-card.mobile-hover-state .sum-deets {
+        display: block;
+        bottom: 0; /* Slide into the newly expanded space */
+    }
+
+    .summary-card.essential.mobile-hover-state:hover {
+        box-shadow: 0 0 25px 10px var(--essential-red);
+        border: 2px solid var(--essential-red);
     }
 
     .product-grid {
@@ -2683,5 +2701,9 @@ body.large-font {
         gap: 7px;
         padding-bottom: 50px;
         position: relative;
+    }
+
+    .container {
+        scroll-margin-top: 200px;
     }
 }  

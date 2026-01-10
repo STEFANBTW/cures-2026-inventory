@@ -129,6 +129,8 @@ function renderSummary(items) {
 
         // Mobile: Click to toggle hover state
         card.addEventListener('click', (e) => {
+            if (window.innerWidth > 1200) return;
+
             // Allow links to work without toggling
             if (e.target.closest('a') || e.target.closest('.sum-deets')) return;
 
