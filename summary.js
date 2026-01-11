@@ -73,15 +73,21 @@ function renderSummary(items) {
 
         // Slider Generation - use thumbnail images for faster load times
         const imagesList = item.images && item.images.length > 0 ? item.images : ["https://placehold.co/300x200?text=No+Img"];
-        const thumbnailImagesList = imagesList.map(src => {
-            // Convert original image path to thumbnail version
-            const lastDot = src.lastIndexOf('.');
-            if (lastDot !== -1) {
-                return src.substring(0, lastDot) + '_thumb' + src.substring(lastDot);
+        const sliderHTML = imagesList.map(src => {
+            let thumbSrc = src;
+            // Only attempt thumbnail substitution for local paths
+            if (!src.startsWith('http') && !src.startsWith('data:')) {
+                const lastDot = src.lastIndexOf('.');
+                if (lastDot !== -1) {
+                    thumbSrc = src.substring(0, lastDot) + '_thumb' + src.substring(lastDot);
+                }
             }
-            return src;
-        });
-        const sliderHTML = thumbnailImagesList.map(src => `<img loading="lazy" decoding="async" src="${src}" alt="${item.name}">`).join('');
+            // If we are using a thumbnail, add a fallback to the original image
+            if (thumbSrc !== src) {
+                return `<img loading="lazy" decoding="async" src="${thumbSrc}" alt="${item.name}" onerror="this.onerror=null; this.src='${src}'">`;
+            }
+            return `<img loading="lazy" decoding="async" src="${src}" alt="${item.name}">`;
+        }).join('');
 
         const cardWrapper = document.createElement('div');
         cardWrapper.className = 'summary-card-wrapper';
